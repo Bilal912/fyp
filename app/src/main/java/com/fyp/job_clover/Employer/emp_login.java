@@ -81,9 +81,6 @@ private FirebaseAuth auth;
                                 }
                             });
 
-
-
-
                 }
             }
         });
