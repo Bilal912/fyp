@@ -17,7 +17,6 @@ ElasticButton Seeker,Employer;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         Seeker= (ElasticButton) findViewById(R.id.seeker);
         Employer = (ElasticButton) findViewById(R.id.employer);
 

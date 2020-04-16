@@ -27,6 +27,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:id="@+id/card"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp"
@@ -43,9 +44,13 @@
             />
     </androidx.cardview.widget.CardView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/card"
+        >
     <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginBottom="200dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,4 +94,5 @@
             android:layout_marginBottom="2dp"
             />
     </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
