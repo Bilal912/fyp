@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "402038931735",
+    "firebase_url": "https://job-clover.firebaseio.com",
+    "project_id": "job-clover",
+    "storage_bucket": "job-clover.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402038931735:android:3cbb8797430dc8dbd53752",
+        "android_client_info": {
+          "package_name": "com.fyp.job_clover"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "402038931735-g7a4ebpn28esaereb6g0hescg2ka97r2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6iQVssZ4ZbJ4f5DODMHa9nrXnMCaqTVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "402038931735-g7a4ebpn28esaereb6g0hescg2ka97r2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
