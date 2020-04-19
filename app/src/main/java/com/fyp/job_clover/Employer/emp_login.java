@@ -93,10 +93,16 @@ private FirebaseAuth auth;
                                 public void onFailure(@NonNull Exception e) {
 
                                     dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
-                                    dialog.setTitleText("Account does not Exist");
-                                    dialog.setContentText("Firstly Register Yourself");
+                                    dialog.setTitleText("Email and Password does not Exist");
+                                    dialog.setConfirmText("Register");
                                     dialog.show();
                                     dialog.setCancelable(true);
+                                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            startActivity(new Intent(emp_login.this,emp_register.class));
+                                        }
+                                    });
                                 }
                             });
                 }
