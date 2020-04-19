@@ -3,6 +3,7 @@ package com.fyp.job_clover.Employer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -18,6 +19,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.skydoves.elasticviews.ElasticButton;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class emp_register extends AppCompatActivity {
 TextInputEditText Company_name,Email,Password,City,Address;
@@ -68,6 +71,11 @@ private FirebaseFirestore firestore;
                     final String password = Password.getText().toString();
                     final String address = Address.getText().toString();
 
+                    final SweetAlertDialog dialog = new SweetAlertDialog(emp_register.this,SweetAlertDialog.PROGRESS_TYPE);
+                    dialog.setTitleText("Registration...");
+                    dialog.setCancelable(false);
+                    dialog.show();
+
                     auth.createUserWithEmailAndPassword(email,password)
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
@@ -77,12 +85,23 @@ private FirebaseFirestore firestore;
                                             .set(erd).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(emp_register.this, "Data Insert Successfully.",Toast.LENGTH_SHORT).show();
+
+                                            dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                            dialog.setTitleText("Register Successfully");
+                                            dialog.setConfirmText("OK");
+                                            dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                @Override
+                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                    dialog.dismiss();
+                                                    startActivity(new Intent(emp_register.this,emp_login.class));
+                                                }
+                                            });
                                         }
-                                    })
+                                            })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
+                                                    dialog.dismiss();
                                                     Toast.makeText(emp_register.this, e.toString(),Toast.LENGTH_SHORT).show();
                                                 }
                                             });
@@ -91,7 +110,9 @@ private FirebaseFirestore firestore;
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+                                    dialog.dismiss();
                                     Toast.makeText(emp_register.this, e.toString(),Toast.LENGTH_SHORT).show();
+
                                 }
                             });
 

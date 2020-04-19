@@ -21,6 +21,8 @@ import com.skydoves.elasticviews.ElasticButton;
 
 import org.w3c.dom.Text;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class emp_login extends AppCompatActivity {
 TextView forget,back;
 ElasticButton Login,Register;
@@ -61,26 +63,42 @@ private FirebaseAuth auth;
                     Email.requestFocus();
                 }
                 else {
-                //Hafiz yaha to check kara ga firebase sa
-                //aur jab correct hu ga to data sharedprefrence ma store kr wa kr aga intent laga dai
-
                     String email = Email.getText().toString();
                     String password = Password.getText().toString();
+
+                    final SweetAlertDialog dialog = new SweetAlertDialog(emp_login.this,SweetAlertDialog.PROGRESS_TYPE);
+                    dialog.setTitleText("Loading...");
+                    dialog.setCancelable(false);
+                    dialog.show();
 
                     auth.signInWithEmailAndPassword(email,password)
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    Toast.makeText(emp_login.this,"Successful",Toast.LENGTH_SHORT).show();
+
+                                    dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                    dialog.setTitleText("Login Successfully");
+                                    dialog.setConfirmText("OK");
+                                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            dialog.dismiss();
+                                            startActivity(new Intent(emp_login.this,emp_menu.class));
+                                        }
+                                    });
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(emp_login.this, e.toString(),Toast.LENGTH_SHORT).show();
+
+                                    dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
+                                    dialog.setTitleText("Account does not Exist");
+                                    dialog.setContentText("Firstly Register Yourself");
+                                    dialog.show();
+                                    dialog.setCancelable(true);
                                 }
                             });
-
                 }
             }
         });

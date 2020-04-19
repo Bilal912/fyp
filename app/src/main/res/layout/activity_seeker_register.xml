@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Seeker.seeker_register">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -52,15 +44,17 @@
                     />
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_below="@id/tempy"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tempy"
+        >
+    <androidx.cardview.widget.CardView
                 android:id="@+id/ready"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="20dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="10dp"
                 >
@@ -175,6 +169,7 @@
                         android:gravity="center_vertical">
 
                         <ImageView
+                            android:contentDescription="flag"
                             android:id="@+id/flag"
                             android:src="@drawable/pk"
                             android:layout_width="30dp"
@@ -291,7 +286,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-        </RelativeLayout>
     </ScrollView>
 
 </RelativeLayout>

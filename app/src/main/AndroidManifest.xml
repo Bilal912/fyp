@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/icon_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Seeker.seeker_forget"></activity>
+        <activity android:name=".Seeker.seeker_menu" />
+        <activity android:name=".Employer.emp_menu" />
+        <activity android:name=".Seeker.seeker_forget" />
         <activity android:name=".Employer.emp_forget" />
         <activity android:name=".Seeker.seeker_register" />
         <activity android:name=".Seeker.seeker_login" />

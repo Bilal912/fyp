@@ -45,6 +45,11 @@
             />
     </androidx.cardview.widget.CardView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tempy"
+        >
     <androidx.cardview.widget.CardView
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
@@ -148,5 +153,5 @@
                 android:gravity="end" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
+    </RelativeLayout>
 </RelativeLayout>
