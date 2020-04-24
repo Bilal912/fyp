@@ -3,6 +3,7 @@ package com.fyp.job_clover;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,8 +11,11 @@ import com.fyp.job_clover.Employer.emp_login;
 import com.fyp.job_clover.Seeker.seeker_login;
 import com.skydoves.elasticviews.ElasticButton;
 
+import java.util.Locale;
+
 public class Login extends AppCompatActivity {
-ElasticButton Seeker,Employer;
+
+    ElasticButton Seeker,Employer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
