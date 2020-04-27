@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.fyp.job_clover.Employer.emp_login;
 import com.fyp.job_clover.Seeker.seeker_login;
@@ -36,5 +37,7 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(Login.this, emp_login.class));
             }
         });
+
+        Toast.makeText(this, "I am Ghiyas", Toast.LENGTH_SHORT).show();
     }
 }
