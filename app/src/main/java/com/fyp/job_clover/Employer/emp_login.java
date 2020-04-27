@@ -1,9 +1,11 @@
 package com.fyp.job_clover.Employer;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -11,15 +13,28 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fyp.job_clover.Data_Classes.Employer_Reg_Data;
 import com.fyp.job_clover.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.skydoves.elasticviews.ElasticButton;
+import com.squareup.okhttp.internal.DiskLruCache;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -28,12 +43,21 @@ TextView forget,back;
 ElasticButton Login,Register;
 TextInputEditText Email,Password;
 private FirebaseAuth auth;
+private FirebaseFirestore firestore;
+private DocumentReference docRef;
+private SharedPreferences emp_pref;
+private String emName,emEmail,emCity,emAddress,emp_id;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emp_login);
 
         auth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
+        emp_pref = getApplicationContext().getSharedPreferences("Emp_Pref",  0);
+        final SharedPreferences.Editor editor = emp_pref.edit();
 
         back=findViewById(R.id.back);
         forget=findViewById(R.id.forget);
@@ -75,6 +99,43 @@ private FirebaseAuth auth;
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+
+
+                                    //  fetch employer data
+
+                                   emp_id = auth.getCurrentUser().getUid();
+                                    docRef = firestore.collection("Employer_Data").document(emp_id);
+
+                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                            if (task.isSuccessful()){
+                                                DocumentSnapshot documentSnapshot = task.getResult();
+                                                if (documentSnapshot.exists()){
+
+                                                    emName =  documentSnapshot.getData().get("employer_name").toString();
+                                                    emEmail   =   documentSnapshot.getData().get("employer_email").toString();
+                                                    emCity =  documentSnapshot.getData().get("employer_city").toString();
+                                                    emAddress =  documentSnapshot.getData().get("employer_address").toString();
+
+                                                    // save in Sharedfreferences
+
+                                                    editor.putString("emp_id",emp_id);
+                                                    editor.putString("emp_name",emName);
+                                                    editor.putString("emp_email",emEmail);
+                                                    editor.putString("emp_city",emCity);
+                                                    editor.putString("emp_address",emAddress);
+                                                    editor.commit();
+
+                                                }
+                                            }
+                                        }
+                                    });
+
+
+
+
 
                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     dialog.setTitleText("Login Successfully");
