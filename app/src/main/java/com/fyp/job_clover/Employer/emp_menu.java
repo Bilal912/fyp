@@ -26,13 +26,14 @@ import com.google.android.material.navigation.NavigationView;
 public class emp_menu extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
-    TextView textView;
+    TextView textView,Topname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emp_menu);
 
+        Topname=findViewById(R.id.top_name);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         textView=findViewById(R.id.menu_btn);
         drawer = findViewById(R.id.drawer_layout);
@@ -66,15 +67,30 @@ public class emp_menu extends AppCompatActivity {
                 {
 
                     case R.id.nav_home:
-//                        Fragment newFragment = new Home();
-//                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                        transaction.replace(R.id.nav_fragment, newFragment);
-//                        transaction.commit();
-//                        drawer.closeDrawer(GravityCompat.START);
+                        Fragment newFragment = new emp_home();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.nav_fragment, newFragment);
+                        transaction.commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        Topname.setText(R.string.app_name);
                         break;
 
-                    case R.id.nav_logout:
+                    case R.id.nav_profile:
+                        Fragment newFragment2 = new emp_edit_profile();
+                        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+                        transaction2.replace(R.id.nav_fragment, newFragment2);
+                        transaction2.commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        Topname.setText("Edit Profile");
+                        break;
 
+                    case R.id.nav_post:
+                        Fragment newFragment3 = new post_job();
+                        FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
+                        transaction3.replace(R.id.nav_fragment, newFragment3);
+                        transaction3.commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        Topname.setText("Post A Job");
                         break;
 
                     default:

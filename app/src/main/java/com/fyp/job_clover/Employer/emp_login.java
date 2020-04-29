@@ -88,7 +88,7 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                 }
                 else {
                     String email = Email.getText().toString();
-                    String password = Password.getText().toString();
+                    final String password = Password.getText().toString();
 
                     final SweetAlertDialog dialog = new SweetAlertDialog(emp_login.this,SweetAlertDialog.PROGRESS_TYPE);
                     dialog.setTitleText("Loading...");
@@ -126,16 +126,14 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                                                     editor.putString("emp_email",emEmail);
                                                     editor.putString("emp_city",emCity);
                                                     editor.putString("emp_address",emAddress);
+                                                    editor.putString("emp_password",password);
+                                                    editor.apply();
                                                     editor.commit();
 
                                                 }
                                             }
                                         }
                                     });
-
-
-
-
 
                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     dialog.setTitleText("Login Successfully");

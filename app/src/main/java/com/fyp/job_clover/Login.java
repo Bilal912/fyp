@@ -31,6 +31,7 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(Login.this, seeker_login.class));
             }
         });
+
         Employer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,6 +39,5 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(this, "I am Bilal", Toast.LENGTH_SHORT).show();
     }
 }
