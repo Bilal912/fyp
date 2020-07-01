@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Seeker.SeekerCVMakingActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/textview_border"
+        android:backgroundTint="@color/colorPrimary"
+        />
+    <TextView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_arrow"
+        android:layout_margin="8dp"
+        android:onClick="back"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tempy"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resume"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/gotham"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center"
+            />
+    </androidx.cardview.widget.CardView>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tempy"
+                android:id="@+id/ready"
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/border_gradient"
+                android:orientation="vertical">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/border_gradient"
+                android:padding="20dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    app:errorEnabled="true"
+                    android:id="@+id/passwordsi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/cv_mak_title"
+                        android:layout_width="match_parent"
+                        android:maxLines="1"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gotham"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:hint="Job_title"
+                        android:textColorHint="#000000"
+                        android:textColor="#000000"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/cv_mak_name_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/cv_mak_name_text"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:fontFamily="@font/gotham"
+                         android:textSize="16sp"
+                        android:hint="Name"
+                        android:textColorHint="#000000"
+                        android:textColor="#000000"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cv_mak_email_ly"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/cv_mak_email_text"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:fontFamily="@font/gotham"
+                        android:drawablePadding="10dp"
+                        android:textSize="16sp"
+                        android:hint="Email"
+                        android:textColorHint="#000000"
+                        android:textColor="#000000"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cv_mak_countrypicker"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:contentDescription="flag"
+                        android:id="@+id/cv_mak_flag"
+                        android:src="@drawable/pk"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="4dp"
+                        />
+                    <TextView
+                        android:id="@+id/cv_mak_phone_code"
+                        android:text="+92"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gotham"
+                        android:singleLine="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:inputType="phone"
+                        android:fontFamily="@font/gotham"
+                        android:hint="Phone Number"
+                        android:id="@+id/cv_mak_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:padding="12dp"
+                        android:background="@drawable/lg_button"
+                        android:layout_marginLeft="8dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="40"
+                        android:layout_height="wrap_content"
+                        android:text="Qualification :"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/calibri"
+                        />
+                    <Spinner
+                        android:id="@+id/cv_mak_qual"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="60"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        />
+                </LinearLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/cv_mak_city"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:fontFamily="@font/gotham"
+                        android:drawablePadding="10dp"
+                        android:textSize="16sp"
+                        android:hint="City"
+                        android:textColorHint="#000000"
+                        android:textColor="#000000"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/cv_mak_address"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:fontFamily="@font/gotham"
+                        android:drawablePadding="10dp"
+                        android:textSize="16sp"
+                        android:hint="Address"
+                        android:textColorHint="#000000"
+                        android:textColor="#000000"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Skills"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:padding="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/lg_button"
+                      android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#DCD8D8"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="B"
+                            android:textSize="15sp"
+                            android:textColor="#000"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"
+                            android:padding="5dp"
+                            android:onClick="bold"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":B"
+                            android:textSize="15sp"
+                            android:textColor="#000"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"
+                            android:padding="5dp"
+                            android:onClick="bullet"/>
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/cv_mak_skils"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_height="150dp"
+                        android:focusable="true"
+                        android:textAlignment="textStart"
+                        android:background="@drawable/editextback"
+                        android:gravity="start"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Experience"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:padding="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/lg_button"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#DCD8D8"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="B"
+                            android:textSize="15sp"
+                            android:textColor="#000"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"
+                            android:padding="5dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":B"
+                            android:textSize="15sp"
+                            android:textColor="#000"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"
+                            android:padding="5dp"/>
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/cv_mak_exp"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_height="150dp"
+                         android:focusable="true"
+                        android:textAlignment="textStart"
+                        android:background="@drawable/editextback"
+                        android:gravity="start" />
+
+                </LinearLayout>
+
+
+
+
+                <com.skydoves.elasticviews.ElasticButton
+                    app:button_duration="250"
+                    app:button_scale="0.87"
+                    android:id="@+id/cv_save"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:text="Save CV"
+                    android:textColor="#ffffff"
+                    android:fontFamily="@font/gotham"
+                    android:textSize="18sp"
+                    app:button_cornerRadius="20dp"
+                    />
+
+                <!--            <com.skydoves.elasticviews.ElasticButton-->
+                <!--                app:button_duration="250"-->
+                <!--                app:button_scale="0.87"-->
+                <!--                android:id="@+id/register"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_margin="10dp"-->
+                <!--                android:background="@drawable/border_gradient"-->
+                <!--                android:text="Register"-->
+                <!--                android:textColor="#000000"-->
+                <!--                android:fontFamily="@font/gotham"-->
+                <!--                android:textSize="16sp"-->
+                <!--                />-->
+                <!--            <TextView-->
+                <!--                android:id="@+id/forget"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:text="Forget Password?"-->
+                <!--                android:layout_marginTop="2dp"-->
+                <!--                android:layout_marginRight="12dp"-->
+                <!--                android:textColor="@color/colorPrimary"-->
+                <!--                android:fontFamily="@font/gotham"-->
+                <!--                android:gravity="end" />-->
+
+            </LinearLayout>
+
+
+            </ScrollView>
+
+            </LinearLayout>
+
+
+
+
+
+
+
+</RelativeLayout>

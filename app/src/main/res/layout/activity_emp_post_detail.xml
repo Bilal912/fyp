@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/border_gradient"
+    tools:context=".Employer.EmpPostDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/emp_detail_job_title_view_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Job title"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:layout_marginTop="30dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="3dp"/>
+            <TextView
+                android:id="@+id/emp_detail_company_name_view_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Company name - City"
+                android:textSize="15dp"
+                android:layout_marginBottom="10dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="3dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Job details"
+                android:textSize="25sp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_marginVertical="5dp"
+                android:paddingVertical="3dp"
+                android:paddingHorizontal="20dp"/>
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Salary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingVertical="3dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="20dp"
+                />
+            <TextView
+                android:id="@+id/emp_detail_salary_view_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rs 20000 - Rs 400000"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="3dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Job Type"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingVertical="3dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="20dp"
+                />
+            <TextView
+                android:id="@+id/emp_detail_job_type_view_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Full time"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="3dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No of Position"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingVertical="3dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="20dp"
+                />
+            <TextView
+                android:id="@+id/emp_detail_position_view_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1 - 3"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="3dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:background="@drawable/lg_button"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingVertical="3dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="20dp"
+                />
+            <TextView
+                android:id="@+id/emp_detail_description_view_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="20sp"
+                android:layout_marginBottom="30dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="3dp"/>
+
+
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

@@ -17,23 +17,25 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.skydoves.elasticviews.ElasticButton;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class emp_register extends AppCompatActivity {
-TextInputEditText Company_name,Email,Password,City,Address;
-ElasticButton Register;
+private TextInputEditText Company_name,Email,Password,City,Address;
+private ElasticButton Register;
 private FirebaseAuth auth;
-private FirebaseFirestore firestore;
-    @Override
+private DatabaseReference reference;
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emp_register);
 
         auth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
+       reference = FirebaseDatabase.getInstance().getReference("Employer_Data");
 
         Company_name = findViewById(R.id.company_name);
         Email = findViewById(R.id.email);
@@ -81,8 +83,8 @@ private FirebaseFirestore firestore;
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     Employer_Reg_Data erd = new Employer_Reg_Data(company_name,email,city,address,password);
-                                    firestore.collection("Employer_Data").document(auth.getCurrentUser().getUid())
-                                            .set(erd).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    reference.child(auth.getCurrentUser().getUid())
+                                            .setValue(erd).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
 

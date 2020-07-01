@@ -1,7 +1,9 @@
 package com.fyp.job_clover.Seeker;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fyp.job_clover.Employer.emp_login;
+import com.fyp.job_clover.Employer.emp_menu;
 import com.fyp.job_clover.Employer.emp_register;
 import com.fyp.job_clover.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,6 +37,7 @@ public class seeker_login extends AppCompatActivity {
     TextInputEditText Email,Password;
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
+    private FirebaseUser firebaseUser;
     private DocumentReference docRef;
     private SharedPreferences seeker_pref;
     private String seek_name,seek_email,seek_qualification,seek_address,seek_phone,seek_gender,seeker_id;
@@ -45,6 +50,7 @@ public class seeker_login extends AppCompatActivity {
         setContentView(R.layout.activity_seeker_login);
 
         auth = FirebaseAuth.getInstance();
+        firebaseUser = auth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
         seeker_pref = getApplicationContext().getSharedPreferences("Seeker_Pref",  0);
         final SharedPreferences.Editor editor = seeker_pref.edit();
@@ -83,6 +89,11 @@ public class seeker_login extends AppCompatActivity {
                     String email = Email.getText().toString();
                     String password = Password.getText().toString();
 
+                    final SweetAlertDialog dialog = new SweetAlertDialog(seeker_login.this,SweetAlertDialog.PROGRESS_TYPE);
+                    dialog.setTitleText("Loading...");
+                    dialog.setCancelable(false);
+                    dialog.show();
+
 
                     auth.signInWithEmailAndPassword(email,password)
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -90,43 +101,53 @@ public class seeker_login extends AppCompatActivity {
                                 public void onSuccess(AuthResult authResult) {
                                     Toast.makeText(seeker_login.this,"Successful",Toast.LENGTH_LONG).show();
 
+
                                     seeker_id = auth.getCurrentUser().getUid();
                                     docRef = firestore.collection("Employer_Data").document(seeker_id);
 
-                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//
+//                                            if (task.isSuccessful()){
+//                                                DocumentSnapshot documentSnapshot = task.getResult();
+//                                                if (documentSnapshot.exists()){
+//
+//                                                    seek_name =  documentSnapshot.getData().get("seeker_name").toString();
+//                                                    seek_email   =   documentSnapshot.getData().get("seeker_email").toString();
+//                                                    seek_qualification =  documentSnapshot.getData().get("seeker_qualification").toString();
+//                                                    seek_address =  documentSnapshot.getData().get("seeker_address").toString();
+//                                                    seek_phone  =  documentSnapshot.getData().get("seeker_phone").toString();
+//                                                    seek_gender  =  documentSnapshot.getData().get("seeker_gender").toString();
+//
+//                                                    // save in Sharedfreferences
+//
+//                                                    editor.putString("seek_id",seeker_id);
+//                                                    editor.putString("seek_name",seek_name);
+//                                                    editor.putString("seek_email",seek_email);
+//                                                    editor.putString("seek_qualification", seek_qualification);
+//                                                    editor.putString("seek_address",seek_address);
+//                                                    editor.putString("seek_phone",seek_phone);
+//                                                    editor.putString("seek_gender",seek_gender);
+//                                                    editor.commit();
+//
+//                                                }
+//                                            }
+//                                        }
+//                                    });
+
+                                    dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                    dialog.setTitleText("Login Successfully");
+                                    dialog.setConfirmText("OK");
+                                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                         @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                                            if (task.isSuccessful()){
-                                                DocumentSnapshot documentSnapshot = task.getResult();
-                                                if (documentSnapshot.exists()){
-
-                                                    seek_name =  documentSnapshot.getData().get("seeker_name").toString();
-                                                    seek_email   =   documentSnapshot.getData().get("seeker_email").toString();
-                                                    seek_qualification =  documentSnapshot.getData().get("seeker_qualification").toString();
-                                                    seek_address =  documentSnapshot.getData().get("seeker_address").toString();
-                                                    seek_phone  =  documentSnapshot.getData().get("seeker_phone").toString();
-                                                    seek_gender  =  documentSnapshot.getData().get("seeker_gender").toString();
-
-                                                    // save in Sharedfreferences
-
-                                                    editor.putString("seek_id",seeker_id);
-                                                    editor.putString("seek_name",seek_name);
-                                                    editor.putString("seek_email",seek_email);
-                                                    editor.putString("seek_qualification", seek_qualification);
-                                                    editor.putString("seek_address",seek_address);
-                                                    editor.putString("seek_phone",seek_phone);
-                                                    editor.putString("seek_gender",seek_gender);
-                                                    editor.commit();
-
-                                                }
-                                            }
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            dialog.dismiss();
+                                            startActivity(new Intent(seeker_login.this, Seeker_Menu.class));
                                         }
                                     });
-
-
-
                                 }
+
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -152,6 +173,16 @@ public class seeker_login extends AppCompatActivity {
     }
 
     public void forget(View view) {
-        startActivity(new Intent(seeker_login.this,seeker_forget.class));
+        startActivity(new Intent(seeker_login.this,SeekerCVMakingActivity.class));
     }
+
+    protected void onStart() {
+        super.onStart();
+
+        if (firebaseUser != null){
+            startActivity(new Intent(seeker_login.this,Seeker_Menu.class));
+             finish();
+        }
+    }
+
 }

@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.skydoves.elasticviews.ElasticButton;
 import com.ybs.countrypicker.CountryPicker;
@@ -45,7 +47,7 @@ public class seeker_register extends AppCompatActivity {
     Spinner spinner;
     ArrayList<String> qualification;
     TextInputEditText Name,Email,Password,Address;
-    private FirebaseFirestore firestore;
+    private DatabaseReference reference;
     private FirebaseAuth auth;
 
 
@@ -56,7 +58,7 @@ public class seeker_register extends AppCompatActivity {
         setContentView(R.layout.activity_seeker_register);
 
         auth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference("Seeker_Data");
 
 
         Name = findViewById(R.id.name);
@@ -163,8 +165,8 @@ public class seeker_register extends AppCompatActivity {
 
                                  Seeker_Reg_Data srd = new Seeker_Reg_Data(name,email,study,address,Phone,password,Gender);
 
-                                 firestore.collection("Seeker_Data").document(auth.getCurrentUser().getUid())
-                                         .set(srd).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                 reference.child(auth.getCurrentUser().getUid())
+                                         .setValue(srd).addOnSuccessListener(new OnSuccessListener<Void>() {
                                      @Override
                                      public void onSuccess(Void aVoid) {
                                          Toast.makeText(seeker_register.this, "Data Insert Successfully.", LENGTH_SHORT).show();

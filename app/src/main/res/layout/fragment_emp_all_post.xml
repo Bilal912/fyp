@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/border_gradient"
+    tools:context=".Employer.EmpAllPostFragment">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:drawableLeft="@drawable/ic_search"
+        android:layout_marginHorizontal="10dp"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:hint="Search post by title"
+          android:id="@+id/etpost_search"
+        android:background="@drawable/lg_button"
+        android:layout_marginTop="10dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginHorizontal="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+         android:layout_below="@id/etpost_search"
+        android:id="@+id/emp_all_post_fragment_recycle"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+
+</RelativeLayout>
