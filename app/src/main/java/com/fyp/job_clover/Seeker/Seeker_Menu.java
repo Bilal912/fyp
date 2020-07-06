@@ -1,13 +1,4 @@
-package com.fyp.job_clover.Employer;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+package com.fyp.job_clover.Seeker;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,16 +11,28 @@ import com.fyp.job_clover.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class emp_menu extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+public class Seeker_Menu extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
     TextView textView,Topname;
     private FirebaseAuth auth;
 
+    private AppBarConfiguration mAppBarConfiguration;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_emp_menu);
+        setContentView(R.layout.activity_seeker__menu);
 
         auth = FirebaseAuth.getInstance();
 
@@ -66,8 +69,8 @@ public class emp_menu extends AppCompatActivity {
                 switch(id)
                 {
 
-                    case R.id.nav_home:
-                        Fragment newFragment = new emp_home();
+                    case R.id.nav_home_show:
+                        Fragment newFragment = new SeekerHomeFragment();
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.nav_fragment, newFragment);
                         transaction.commit();
@@ -75,8 +78,8 @@ public class emp_menu extends AppCompatActivity {
                         Topname.setText(R.string.app_name);
                         break;
 
-                    case R.id.nav_profile:
-                        Fragment newFragment2 = new emp_edit_profile();
+                    case R.id.nav_profile_show:
+                        Fragment newFragment2 = new SeekerProfileFragment();
                         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
                         transaction2.replace(R.id.nav_fragment, newFragment2);
                         transaction2.commit();
@@ -84,37 +87,28 @@ public class emp_menu extends AppCompatActivity {
                         Topname.setText("Edit Profile");
                         break;
 
-                    case R.id.nav_post:
-                        Fragment newFragment3 = new Emp_post_job();
+                    case R.id.nav_post_show:
+                        Fragment newFragment3 = new View_Post_Fragment();
                         FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
                         transaction3.replace(R.id.nav_fragment, newFragment3);
                         transaction3.commit();
                         drawer.closeDrawer(GravityCompat.START);
                         Topname.setText("Post A Job");
                         break;
-
-                    case R.id.nav_candidate:
-                        Fragment newFragment4 = new EmpFindCandFragment();
+                    case R.id.nav_cv_show:
+                        Fragment newFragment4 = new SeekerCVFragment();
                         FragmentTransaction transaction4 = getSupportFragmentManager().beginTransaction();
                         transaction4.replace(R.id.nav_fragment, newFragment4);
                         transaction4.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Candidates Resume");
+                        Topname.setText("Post A Job");
                         break;
 
-                    case R.id.nav_my_post:
-                        Fragment newFragment5 = new EmpAllPostFragment();
-                        FragmentTransaction transaction5 = getSupportFragmentManager().beginTransaction();
-                        transaction5.replace(R.id.nav_fragment, newFragment5);
-                        transaction5.commit();
-                        drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("My Posts");
-                        break;
-
-                    case R.id.nav_logout:
+                    case R.id.nav_logout_show:
 
                         auth.signOut();
-                        startActivity(new Intent(emp_menu.this, Login.class));
+                        startActivity(new Intent(Seeker_Menu.this, Login.class));
+                        finish();
 
 
                     default:

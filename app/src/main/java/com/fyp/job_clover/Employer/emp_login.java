@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,6 +45,7 @@ ElasticButton Login,Register;
 TextInputEditText Email,Password;
 private FirebaseAuth auth;
 private FirebaseFirestore firestore;
+private FirebaseUser firebaseUser;
 private DocumentReference docRef;
 private SharedPreferences emp_pref;
 private String emName,emEmail,emCity,emAddress,emp_id;
@@ -55,6 +57,7 @@ private String emName,emEmail,emCity,emAddress,emp_id;
         setContentView(R.layout.activity_emp_login);
 
         auth = FirebaseAuth.getInstance();
+        firebaseUser = auth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
         emp_pref = getApplicationContext().getSharedPreferences("Emp_Pref",  0);
         final SharedPreferences.Editor editor = emp_pref.edit();
@@ -170,11 +173,25 @@ private String emName,emEmail,emCity,emAddress,emp_id;
 
     }
 
-    public void back(View view) {
-        finish();
-    }
+//    public void back(View view) {
+//        finish();
+//    }
 
     public void forget(View view) {
         startActivity(new Intent(emp_login.this,emp_forget.class));
+    }
+
+    protected void onStart() {
+        super.onStart();
+
+        if (firebaseUser != null){
+            sendUserToMainActivity();
+            finish();
+        }
+    }
+
+    private void sendUserToMainActivity() {
+        startActivity(new Intent(getApplicationContext(), emp_menu.class));
+        finish();
     }
 }

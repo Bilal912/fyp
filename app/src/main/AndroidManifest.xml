@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fyp.job_clover">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon_main_round"
@@ -10,7 +12,15 @@
         android:roundIcon="@mipmap/icon_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Seeker.seeker_menu" />
+        <activity android:name=".Employer.EmpPostDetailActivity"></activity>
+        <activity android:name=".Employer.EmpUpdatePostActivity" />
+        <activity android:name=".Employer.EmpViewPostActivity" />
+        <activity android:name=".Seeker.SeekerCVMakingActivity" />
+        <activity android:name=".Seeker.DetailJobViewActivity" />
+        <activity
+            android:name=".Seeker.Seeker_Menu"
+            android:label="@string/title_activity_seeker__menu"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Employer.emp_menu" />
         <activity android:name=".Seeker.seeker_forget" />
         <activity android:name=".Employer.emp_forget" />
