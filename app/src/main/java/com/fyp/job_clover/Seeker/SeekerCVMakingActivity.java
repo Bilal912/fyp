@@ -1,18 +1,30 @@
 package com.fyp.job_clover.Seeker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,16 +47,23 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.skydoves.elasticviews.ElasticButton;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static androidx.core.app.ActivityCompat.requestPermissions;
 
 public class SeekerCVMakingActivity extends AppCompatActivity {
     private static final int STORAGE_CODE = 1000;
@@ -62,7 +81,6 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     private ArrayList<String> education;
     private ArrayList<String> countrylist;
 
-
     private DatabaseReference reference;
     private FirebaseAuth auth;
 
@@ -72,7 +90,19 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker_c_v_making);
 
-        auth = FirebaseAuth.getInstance();
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(SeekerCVMakingActivity.this, new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            }
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(SeekerCVMakingActivity.this, new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            }
+
+            }
+
+            auth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("CV_Data");
 
 
@@ -82,7 +112,16 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
 
         countrypickerVal();
 
-        cv_save_btn.setOnClickListener(new View.OnClickListener() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_DENIED) {
+
+                String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permissions, STORAGE_CODE);
+            }
+        }
+
+            cv_save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -92,6 +131,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
 
 
     }
+
 
     private void getValueFromEditText()
     {
@@ -200,26 +240,8 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     private void savePdf()
     {
 
-        Document document = new Document();
-        String mFileName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
-        String filePath = Environment.getExternalStorageDirectory() + "/" + mFileName + ".pdf";
+        createandDisplayPdf();
 
-        try {
-
-            PdfWriter.getInstance(document,new FileOutputStream(filePath));
-
-            document.addAuthor("Ghiyas");
-            document.add(new Paragraph(cv_job_title));
-
-            document.close();
-
-            Toast.makeText(this, mFileName +".pdf \n is save to \n" + filePath, Toast.LENGTH_SHORT).show();
-
-        }
-        catch (Exception e){
-
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -328,7 +350,6 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     public void back(View view) {
     }
 
-
     public void bold(View view) {
 
         skills.setTypeface(null, Typeface.BOLD);
@@ -359,5 +380,163 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
         });
 
 
+        // Method for opening a pdf file
+//        private void viewPdf(String file, String directory) {
+//
+//            File pdfFile = new File(Environment.getExternalStorageDirectory() + "/" + directory + "/" + file);
+//            Uri path = Uri.fromFile(pdfFile);
+//
+//            // Setting the intent for pdf reader
+//            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+//            pdfIntent.setDataAndType(path, "application/pdf");
+//            pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//            try {
+//                startActivity(pdfIntent);
+//            } catch (ActivityNotFoundException e) {
+//                Toast.makeText(TableActivity.this, "Can't read pdf file", Toast.LENGTH_SHORT).show();
+//            }
+//        }
     }
+
+
+    private void viewPdf(String file, String directory) {
+
+        File pdfFile = new File(Environment.getExternalStorageDirectory() + "/" + directory + "/" + file);
+        Uri path = Uri.fromFile(pdfFile);
+
+        // Setting the intent for pdf reader
+        Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+        pdfIntent.setDataAndType(path, "application/pdf");
+        pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        try {
+            startActivity(pdfIntent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(SeekerCVMakingActivity.this, "Can't read pdf file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public void createandDisplayPdf() {
+
+        Document doc = new Document();
+
+        try {
+            File storageDir = null;
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                storageDir = new File(
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+                                + "/JOB Clover");
+            }
+
+            boolean success = true;
+            if (!storageDir.exists()) {
+                success = storageDir.mkdirs();
+            }
+            if (success) {
+
+//                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Dir";
+//
+//                File dir = new File(path);
+//                if (!dir.exists())
+//                    dir.mkdirs();
+//
+//                File file = new File(dir, "newFile.pdf");
+
+                File file = new File(storageDir, "CV.pdf");
+                String savedImagePath = file.getAbsolutePath();
+
+                FileOutputStream fOut = new FileOutputStream(file);
+
+                PdfWriter.getInstance(doc, fOut);
+
+                //open the document
+                doc.open();
+
+                Paragraph p1 = new Paragraph("Bilal");
+                //Font paraFont= new Font(Font.NORMAL);
+                p1.setAlignment(Paragraph.ALIGN_CENTER);
+                //p1.setFont(paraFont);
+
+                //add paragraph to document
+                doc.add(p1);
+                doc.close();
+
+                Toast.makeText(SeekerCVMakingActivity.this,"Success",Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(SeekerCVMakingActivity.this,"String.valueOf(de)",Toast.LENGTH_LONG).show();
+            }
+        } catch (DocumentException de) {
+            Toast.makeText(SeekerCVMakingActivity.this,String.valueOf(de),Toast.LENGTH_LONG).show();
+            Log.e("PDFCreator", "DocumentException:" + de);
+        } catch (IOException e) {
+            Toast.makeText(SeekerCVMakingActivity.this,String.valueOf(e),Toast.LENGTH_LONG).show();
+
+            Log.e("PDFCreator", "ioException:" + e);
+        }
+        finally {
+            doc.close();
+        }
+
+//        viewPdf("newFile.pdf", "Dir");
+    }
+
+//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//    private void createPdf(){
+//        String sometext = "Bilal";
+//        // create a new document
+//        PdfDocument document = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+//            document = new PdfDocument();
+//        }
+//
+//        // crate a page description
+//        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 1).create();
+//
+//        // start a page
+//        PdfDocument.Page page = document.startPage(pageInfo);
+//        Canvas canvas = page.getCanvas();
+//        Paint paint = new Paint();
+//        paint.setColor(Color.RED);
+//        canvas.drawCircle(50, 50, 30, paint);
+//        paint.setColor(Color.BLACK);
+//        canvas.drawText(sometext, 80, 50, paint);
+//        //canvas.drawt
+//        // finish the page
+//        document.finishPage(page);
+//// draw text on the graphics object of the page
+//
+//        // Create Page 2
+//        pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 2).create();
+//        page = document.startPage(pageInfo);
+//        canvas = page.getCanvas();
+//        paint = new Paint();
+//        paint.setColor(Color.BLUE);
+//        canvas.drawCircle(100, 100, 100, paint);
+//        document.finishPage(page);
+//
+//        // write the document content
+//        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/Job Clover/";
+//        File file = new File(directory_path);
+//
+//        if (!file.exists()) {
+//            file.mkdirs();
+//        }
+//        String targetPdf = directory_path+"test-2.pdf";
+//        File filePath = new File(targetPdf);
+//        try {
+//            document.writeTo(new FileOutputStream(filePath));
+//            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
+//        } catch (IOException e) {
+//            Log.e("main", "error "+e.toString());
+//            Toast.makeText(this, "Something wrong: " + e.toString(),  Toast.LENGTH_LONG).show();
+//        }
+//
+//        // close the document
+//        document.close();
+//    }
+
 }
