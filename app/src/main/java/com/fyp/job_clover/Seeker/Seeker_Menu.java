@@ -75,7 +75,7 @@ public class Seeker_Menu extends AppCompatActivity {
                         transaction.replace(R.id.nav_fragment, newFragment);
                         transaction.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText(R.string.app_name);
+                        Topname.setText("Home");
                         break;
 
                     case R.id.nav_profile_show:
@@ -93,7 +93,7 @@ public class Seeker_Menu extends AppCompatActivity {
                         transaction3.replace(R.id.nav_fragment, newFragment3);
                         transaction3.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Post A Job");
+                        Topname.setText("Jobs");
                         break;
                     case R.id.nav_cv_show:
                         Fragment newFragment4 = new SeekerCVFragment();
@@ -101,7 +101,7 @@ public class Seeker_Menu extends AppCompatActivity {
                         transaction4.replace(R.id.nav_fragment, newFragment4);
                         transaction4.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Post A Job");
+                        Topname.setText("Your CV");
                         break;
 
                     case R.id.nav_logout_show:

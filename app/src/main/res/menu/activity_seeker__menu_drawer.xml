@@ -20,7 +20,8 @@
             android:title="Edit Profile" />
 
         <item android:id="@+id/nav_cv_show"
-              android:title="Your CV" />
+              android:title="Your CV"
+            android:icon="@drawable/ic_cv"/>
 
 
     </group>

@@ -9,15 +9,26 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 Thread t;
+    private FirebaseAuth auth;
+    private FirebaseFirestore firestore;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        auth = FirebaseAuth.getInstance();
+        firebaseUser = auth.getCurrentUser();
 
         t = new Thread() {
             public void run() {

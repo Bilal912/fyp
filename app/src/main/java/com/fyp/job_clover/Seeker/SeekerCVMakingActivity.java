@@ -456,7 +456,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
                 doc.open();
 
                 Paragraph p1 = new Paragraph("Bilal");
-                //Font paraFont= new Font(Font.NORMAL);
+
                 p1.setAlignment(Paragraph.ALIGN_CENTER);
                 //p1.setFont(paraFont);
 
