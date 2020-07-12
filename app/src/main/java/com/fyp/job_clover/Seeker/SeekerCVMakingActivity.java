@@ -174,7 +174,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
 //            });
 //
 
-            //   text convert to pdf file simple
+            //   text convert to pdf file simple open
 
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                 if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
