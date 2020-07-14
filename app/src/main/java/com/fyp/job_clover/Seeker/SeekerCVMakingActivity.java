@@ -80,7 +80,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     private ElasticButton cv_save_btn;
     private ArrayList<String> education;
     private ArrayList<String> countrylist;
-
+private String av;
     private DatabaseReference reference;
     private FirebaseAuth auth;
 
