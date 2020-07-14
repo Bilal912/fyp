@@ -80,7 +80,6 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     private ElasticButton cv_save_btn;
     private ArrayList<String> education;
     private ArrayList<String> countrylist;
-private String av;
     private DatabaseReference reference;
     private FirebaseAuth auth;
 
@@ -348,6 +347,8 @@ private String av;
     }
 
     public void back(View view) {
+        startActivity(new Intent(getApplicationContext(), CV_Upload_Activity.class));
+
     }
 
     public void bold(View view) {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
 import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.R;
 import com.fyp.job_clover.Seeker.DetailJobViewActivity;
+import com.fyp.job_clover.Seeker.SeekerHomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,6 +56,7 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
     private EditText postSearch;
     private String emp_id;
     private View v;
+    private FragmentTransaction transaction;
 
     private FirebaseAuth auth;
     private DatabaseReference reference;
@@ -178,6 +181,36 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
         intent.putExtra("key",key);
         startActivity(intent);
      }
+
+    @Override
+    public void onNext(Bundle b) {
+        String title = b.getString("title");
+        String job_type = b.getString("jobtype");
+        String company_name = b.getString("com_name");
+        String email = b.getString("email");
+        String address = b.getString("address");
+        String phone = b.getString("phone");
+        String edu = b.getString("education");
+        String city = b.getString("city") ;
+        String salaryfrom = b.getString("salaryfrom");
+        String salaryto =  b.getString("salaryto");
+        String description = b.getString("description");
+        String job_position = b.getString("position");
+        String key = b.getString("p_key");
+
+
+        Fragment fg = new EmpFindCandFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("mkey",key);
+        fg.setArguments(bundle1);
+        transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.drawer_layout, fg);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+    }
+
 
     ValueEventListener listener = new ValueEventListener() {
         @Override

@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/icon_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Seeker.CV_Upload_Activity"></activity>
+        <activity android:name=".Seeker.ViewCVActivity"></activity>
+        <activity android:name=".Seeker.CV_Upload_Activity" />
         <activity android:name=".Employer.EmpPostDetailActivity" />
         <activity android:name=".Employer.EmpUpdatePostActivity" />
         <activity android:name=".Employer.EmpViewPostActivity" />

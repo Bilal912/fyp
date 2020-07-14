@@ -45,11 +45,11 @@ import java.util.ArrayList;
 public class EmpUpdatePostActivity extends AppCompatActivity {
     private TextInputLayout title_lay,name_lay,vity_lay,address_lay,salaryFrom_lay,salaryTo_lay,email_lay;
     private TextInputEditText job_title,company_name,address,salary_from,salary_to,email,com_city,educat,no_of_positions,job_radio
-            ,company_phone,job_description;
+            ,company_phone;
     private String title,name,city,c_address,salaryFrom,salaryTo,c_email,phone,description,edu,no_position,key;
     private ElasticButton post_update_btn;
       private String  jobtype ;
-
+    private EditText job_description;
     private FirebaseAuth auth;
      private DatabaseReference reference;
     private FirebaseUser firebaseUser;
@@ -112,7 +112,7 @@ public class EmpUpdatePostActivity extends AppCompatActivity {
         no_of_positions = findViewById(R.id.update_post_spinner_position_id);
         company_phone=findViewById(R.id.update_post_emp_post_phone);
         job_radio=findViewById(R.id.update_post_job_type_radio);
-        job_description = findViewById(R.id.update_post_post_Describion);
+        job_description = (EditText) findViewById(R.id.update_post_post_Describion);
         job_title = findViewById(R.id.update_post_job_title_id);
         company_name = findViewById(R.id.update_post_company_name_id);
         address = findViewById(R.id.update_post_company_address_txt);

@@ -7,7 +7,7 @@ public interface Emp_Interface {
 
     void onNextGo(Bundle bundle);
 
-
+    void onNext(Bundle b);
 
 
 }

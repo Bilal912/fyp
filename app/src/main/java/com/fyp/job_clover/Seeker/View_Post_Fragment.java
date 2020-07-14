@@ -146,6 +146,7 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
         String salary = bundle.getString("salaryfrom")+ " - " + bundle.getString("salaryto");
         String description = bundle.getString("description");
         String job_position = bundle.getString("position");
+        String key = bundle.getString("p_key");
 
 
         Intent intent = new Intent(getContext(), DetailJobViewActivity.class);
@@ -155,7 +156,13 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
         intent.putExtra("salary",salary);
         intent.putExtra("description",description);
         intent.putExtra("position",job_position);
+        intent.putExtra("hkey",key);
         startActivity(intent);
+
+    }
+
+    @Override
+    public void onNext(Bundle bundle) {
 
     }
 }

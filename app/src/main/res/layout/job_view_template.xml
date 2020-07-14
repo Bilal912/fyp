@@ -7,7 +7,7 @@
     <com.skydoves.elasticviews.ElasticCardView
         android:id="@+id/jobview_card"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         app:cardCornerRadius="20dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="5dp"
@@ -98,6 +98,36 @@
                     android:background="#E4E4E4"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_below="@id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <com.skydoves.elasticviews.ElasticButton
+                    android:id="@+id/detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Detail"
+                    android:background="#fff"
+                    android:padding="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textSize="20dp"/>
+
+                <com.skydoves.elasticviews.ElasticButton
+                    android:id="@+id/candidate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Candidate"
+                    android:background="#fff"
+                    android:layout_marginRight="20dp"
+                    android:padding="5dp"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
         </RelativeLayout>
 
     </com.skydoves.elasticviews.ElasticCardView>

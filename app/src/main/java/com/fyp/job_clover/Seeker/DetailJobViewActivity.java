@@ -11,6 +11,7 @@ import com.fyp.job_clover.R;
 
 public class DetailJobViewActivity extends AppCompatActivity {
     private TextView job_title,company_name_city,salary,job_type,description,job_position;
+    private  String key;
 
 
     @Override
@@ -33,10 +34,12 @@ public class DetailJobViewActivity extends AppCompatActivity {
         salary.setText(extras.getString("salary"));
         description.setText(extras.getString("description"));
         job_position.setText(extras.getString("position"));
+        key = extras.getString("hkey");
     }
 
     public void goMakeCV(View view) {
-        Intent intent = new Intent(getApplicationContext(),SeekerCVMakingActivity.class);
+        Intent intent = new Intent(getApplicationContext(),CV_Upload_Activity.class);
+        intent.putExtra("s_key",key);
         startActivity(intent);
     }
 }

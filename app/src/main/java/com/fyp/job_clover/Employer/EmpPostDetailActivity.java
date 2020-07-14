@@ -38,6 +38,20 @@ public class EmpPostDetailActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
+
+
+
+    }
+
+    public void Updatepostpoage(View view) {
+
+        Bundle bundle = getIntent().getExtras();
         String title = bundle.getString("title");
         String job_type = bundle.getString("jobtype");
         String company_name = bundle.getString("com_name");
@@ -69,12 +83,5 @@ public class EmpPostDetailActivity extends AppCompatActivity {
         intent.putExtra("edu",edu);
         intent.putExtra("key",key);
         startActivity(intent);
-
-
-
-
-    }
-
-    public void Updatepostpoage(View view) {
     }
 }

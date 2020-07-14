@@ -45,11 +45,11 @@
             android:gravity="center_horizontal" />
 
         <TextView
-            android:id="@+id/textViewUploads"
+            android:id="@+id/makeCV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="View Uploads"
+            android:text="Make CV"
             android:textAlignment="center"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textColor="@color/colorPrimaryDark"

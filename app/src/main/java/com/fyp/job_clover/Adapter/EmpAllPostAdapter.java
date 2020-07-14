@@ -14,11 +14,14 @@ import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.Employer.EmpAllPostFragment;
 import com.fyp.job_clover.R;
 import com.fyp.job_clover.Seeker.DetailJobViewActivity;
+import com.skydoves.elasticviews.ElasticButton;
 import com.skydoves.elasticviews.ElasticCardView;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.MyHolder> {
@@ -34,10 +37,11 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
         this.empInterface = empInterface;
     }
 
-//    public  void filteredstu(ArrayList<Emp_Post_Data> filterStu) {
+//    public static void filteredstu(ArrayList<Emp_Post_Data> filterStu) {
 //        postList = filterStu;
 //        notifyDataSetChanged();
 //    }
+
 
     @NonNull
     @Override
@@ -61,7 +65,32 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
         holder.salary.setText(totalSalary);
 
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.candidatepost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle bundl = new Bundle();
+                bundl.putString("title",postList.get(holder.getAdapterPosition()).job_title);
+                bundl.putString("com_name",postList.get(holder.getAdapterPosition()).company_name);
+                bundl.putString("email",postList.get(holder.getAdapterPosition()).company_email);
+                bundl.putString("city",postList.get(holder.getAdapterPosition()).company_city);
+                bundl.putString("address",postList.get(holder.getAdapterPosition()).company_address);
+                bundl.putString("phone",postList.get(holder.getAdapterPosition()).company_phone);
+                bundl.putString("education",postList.get(holder.getAdapterPosition()).req_education);
+                bundl.putString("position",postList.get(holder.getAdapterPosition()).company_position);
+                bundl.putString("salaryfrom",postList.get(holder.getAdapterPosition()).salary_from);
+                bundl.putString("salaryto",postList.get(holder.getAdapterPosition()).salary_to);
+                bundl.putString("jobtype",postList.get(holder.getAdapterPosition()).job_type);
+                bundl.putString("description",postList.get(holder.getAdapterPosition()).description);
+                bundl.putString("p_key",postList.get(holder.getAdapterPosition()).getSpecific_key());
+
+                empInterface.onNext(bundl);
+             }
+        });
+
+
+
+        holder.detailpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -97,6 +126,7 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
     public class MyHolder extends RecyclerView.ViewHolder {
         private TextView posttime,jobtitle,com_name,salary,city;
         private ElasticCardView cardView;
+        private ElasticButton detailpost,candidatepost;
 
 
         public MyHolder(@NonNull View itemView) {
@@ -108,6 +138,8 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
             city = itemView.findViewById(R.id.city_view_id);
             salary = itemView.findViewById(R.id.salary_view_id);
             cardView = itemView.findViewById(R.id.jobview_card);
+            detailpost = itemView.findViewById(R.id.detail);
+            candidatepost = itemView.findViewById(R.id.candidate);
 
         }
     }
