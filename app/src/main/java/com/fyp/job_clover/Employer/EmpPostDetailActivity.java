@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.fyp.job_clover.R;
@@ -26,16 +27,54 @@ public class EmpPostDetailActivity extends AppCompatActivity {
         job_position = findViewById(R.id.emp_detail_position_view_id);
 
 
-        Bundle extras = getIntent().getExtras();
-        job_title.setText(extras.getString("title"));
-        job_type.setText(extras.getString("jobtype"));
-        company_name_city.setText(extras.getString("name-city"));
-        salary.setText(extras.getString("salary"));
-        description.setText(extras.getString("description"));
-        job_position.setText(extras.getString("position"));
+        Bundle bundle = getIntent().getExtras();
+        job_title.setText(bundle.getString("title"));
+        job_type.setText(bundle.getString("jobtype"));
+        company_name_city.setText( bundle.getString("name")+ " - " + bundle.getString("city"));
+        salary.setText(bundle.getString("salaryfrom")+ " - " + bundle.getString("salaryto"));
+        description.setText(bundle.getString("description"));
+        job_position.setText(bundle.getString("position"));
 
 
 
 
+        String title = bundle.getString("title");
+        String job_type = bundle.getString("jobtype");
+        String company_name = bundle.getString("com_name");
+        String email = bundle.getString("email");
+        String address = bundle.getString("address");
+        String phone = bundle.getString("phone");
+        String edu = bundle.getString("education");
+        String city = bundle.getString("city") ;
+        String salaryfrom = bundle.getString("salaryfrom");
+        String salaryto =  bundle.getString("salaryto");
+        String description = bundle.getString("description");
+        String job_position = bundle.getString("position");
+        String key = bundle.getString("p_key");
+
+
+
+        Intent intent = new Intent(getApplicationContext(), EmpUpdatePostActivity.class);
+        intent.putExtra("title",title);
+        intent.putExtra("jobtype",job_type);
+        intent.putExtra("name",company_name);
+        intent.putExtra("city",city);
+        intent.putExtra("salaryfrom",salaryfrom);
+        intent.putExtra("salaryto",salaryto);
+        intent.putExtra("description",description);
+        intent.putExtra("position",job_position);
+        intent.putExtra("email",email);
+        intent.putExtra("address",address);
+        intent.putExtra("phone",phone);
+        intent.putExtra("edu",edu);
+        intent.putExtra("key",key);
+        startActivity(intent);
+
+
+
+
+    }
+
+    public void Updatepostpoage(View view) {
     }
 }

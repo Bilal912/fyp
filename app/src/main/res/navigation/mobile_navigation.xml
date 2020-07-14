@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+
+    <fragment
+        android:id="@+id/nav_home_show"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_seeker_home"
+        android:name="com.fyp.job_clover.Seeker.SeekerHomeFragment"
+        />
+    <fragment
+        android:id="@+id/nav_profile_show"
+        android:label="Profile"
+        tools:layout="@layout/fragment_seeker_profile"
+        android:name="com.fyp.job_clover.Seeker.SeekerProfileFragment"
+        />
+
+    <fragment
+        android:id="@+id/nav_view_post_show"
+        android:label="View Post"
+        tools:layout="@layout/fragment_view__post_"
+        android:name="com.fyp.job_clover.Seeker.View_Post_Fragment"
+        />
+
+    <fragment
+        android:id="@+id/nav_cv_show"
+        android:label="Your CV"
+        tools:layout="@layout/fragment_seeker_c_v"
+        android:name="com.fyp.job_clover.Seeker.SeekerCVFragment"
+        />
+
+
+
+
+</navigation>

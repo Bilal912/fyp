@@ -437,14 +437,6 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
             }
             if (success) {
 
-//                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Dir";
-//
-//                File dir = new File(path);
-//                if (!dir.exists())
-//                    dir.mkdirs();
-//
-//                File file = new File(dir, "newFile.pdf");
-
                 File file = new File(storageDir, "CV.pdf");
                 String savedImagePath = file.getAbsolutePath();
 
@@ -455,7 +447,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
                 //open the document
                 doc.open();
 
-                Paragraph p1 = new Paragraph("Bilal");
+                Paragraph p1 = new Paragraph(cv_job_title);
 
                 p1.setAlignment(Paragraph.ALIGN_CENTER);
                 //p1.setFont(paraFont);

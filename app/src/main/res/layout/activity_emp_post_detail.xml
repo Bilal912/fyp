@@ -135,9 +135,20 @@
 
 
 
-
-
-
+            <com.skydoves.elasticviews.ElasticButton
+                app:button_duration="250"
+                app:button_scale="0.87"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Update your post"
+                android:textColor="#ffffff"
+                android:fontFamily="@font/gotham"
+                android:textSize="18sp"
+                app:button_cornerRadius="20dp"
+                android:onClick="Updatepostpoage"
+                />
 
         </LinearLayout>
 

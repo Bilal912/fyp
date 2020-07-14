@@ -149,19 +149,33 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
 
         String title = bundle.getString("title");
         String job_type = bundle.getString("jobtype");
-        String company_name_city = bundle.getString("com_name")+ " - " + bundle.getString("city") ;
-        String salary = bundle.getString("salaryfrom")+ " - " + bundle.getString("salaryto");
+        String company_name = bundle.getString("com_name");
+        String email = bundle.getString("email");
+        String address = bundle.getString("address");
+        String phone = bundle.getString("phone");
+        String edu = bundle.getString("education");
+        String city = bundle.getString("city") ;
+        String salaryfrom = bundle.getString("salaryfrom");
+        String salaryto =  bundle.getString("salaryto");
         String description = bundle.getString("description");
         String job_position = bundle.getString("position");
+        String key = bundle.getString("p_key");
 
 
         Intent intent = new Intent(getContext(), EmpPostDetailActivity.class);
         intent.putExtra("title",title);
         intent.putExtra("jobtype",job_type);
-        intent.putExtra("name-city",company_name_city);
-        intent.putExtra("salary",salary);
+        intent.putExtra("name",company_name);
+        intent.putExtra("city",city);
+        intent.putExtra("salaryfrom",salaryfrom);
+        intent.putExtra("salaryto",salaryto);
         intent.putExtra("description",description);
         intent.putExtra("position",job_position);
+        intent.putExtra("email",email);
+        intent.putExtra("address",address);
+        intent.putExtra("phone",phone);
+        intent.putExtra("edu",edu);
+        intent.putExtra("key",key);
         startActivity(intent);
      }
 

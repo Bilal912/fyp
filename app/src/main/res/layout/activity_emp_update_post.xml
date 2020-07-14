@@ -313,6 +313,7 @@
                 android:textSize="18sp"
                 android:layout_marginBottom="60dp"
                 app:button_cornerRadius="20dp"
+                android:onClick="updatePost"
                 />
 
 

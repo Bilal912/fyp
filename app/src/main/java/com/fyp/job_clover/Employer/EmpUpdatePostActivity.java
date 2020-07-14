@@ -3,7 +3,9 @@ package com.fyp.job_clover.Employer;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +27,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -40,18 +44,18 @@ import java.util.ArrayList;
 
 public class EmpUpdatePostActivity extends AppCompatActivity {
     private TextInputLayout title_lay,name_lay,vity_lay,address_lay,salaryFrom_lay,salaryTo_lay,email_lay;
-    private TextInputEditText job_title,company_name,address,salary_from,salary_to,email,com_city,educat,no_of_positions,job_radio;
-    private String title,name,city,c_address,salaryFrom,salaryTo,c_email,phone,p_code,description,edu,no_position,emp_id;
+    private TextInputEditText job_title,company_name,address,salary_from,salary_to,email,com_city,educat,no_of_positions,job_radio
+            ,company_phone,job_description;
+    private String title,name,city,c_address,salaryFrom,salaryTo,c_email,phone,description,edu,no_position,key;
     private ElasticButton post_update_btn;
-    private EditText company_phone,job_description;
-     private String  jobtype = null;
+      private String  jobtype ;
 
     private FirebaseAuth auth;
-    private FirebaseFirestore firestore;
+     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
-    private DocumentReference docRef,docf;
+
     private SharedPreferences emp_pref;
-    private Query query;
+
 
 
 
@@ -62,9 +66,24 @@ public class EmpUpdatePostActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
-        firestore = FirebaseFirestore.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference("Post_Data");
         emp_pref = getApplicationContext().getSharedPreferences("Emp_Pref",  0);
         final SharedPreferences.Editor editor = emp_pref.edit();
+
+        Bundle bundle = getIntent().getExtras();
+          title = bundle.getString("title");
+          jobtype = bundle.getString("jobtype");
+          name = bundle.getString("name");
+          c_email = bundle.getString("email");
+          c_address = bundle.getString("address");
+          phone = bundle.getString("phone");
+          edu = bundle.getString("edu");
+          city = bundle.getString("city") ;
+          salaryFrom = bundle.getString("salaryfrom");
+          salaryTo =  bundle.getString("salaryto");
+          description = bundle.getString("description");
+          no_position = bundle.getString("position");
+          key = bundle.getString("key");
 
 
 
@@ -75,64 +94,6 @@ public class EmpUpdatePostActivity extends AppCompatActivity {
 
 
 
-        emp_id = auth.getCurrentUser().getUid();
-        docRef = firestore.collection("Emp_Post_Data").document(emp_id).collection("posts").document();
-//        docf = (DocumentReference) firestore.collection("Emp_Post_Data").addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//                if (e != null){
-//                    Toast.makeText(EmpUpdatePostActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-//                }
-//                if (queryDocumentSnapshots != null){
-//                    for (DocumentSnapshot doc : queryDocumentSnapshots){
-//                        Emp_Post_Data epd = doc.toObject(Emp_Post_Data.class);
-//                        epd.setSpecific_key(doc.getSpecific_key());
-//                    }
-//                }
-//
-//            }
-//        });
-
-
-
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                if (task.isSuccessful()){
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()) {
-
-                        title = documentSnapshot.getData().get("job_title").toString();
-                        name = documentSnapshot.getData().get("company_name").toString();
-                        c_email = documentSnapshot.getData().get("company_email").toString();
-                        city = documentSnapshot.getData().get("company_city").toString();
-                        c_address = documentSnapshot.getData().get("company_address").toString();
-                        phone = documentSnapshot.getData().get("company_phone").toString();
-                        edu = documentSnapshot.getData().get("req_education").toString();
-                        no_position = documentSnapshot.getData().get("company_position").toString();
-                        salaryFrom = documentSnapshot.getData().get("salary_from").toString();
-                        salaryTo = documentSnapshot.getData().get("salary_to").toString();
-                        jobtype = documentSnapshot.getData().get("job_type").toString();
-                        description = documentSnapshot.getData().get("description").toString();
-
-
-                        job_title.setText(title);
-                        company_name.setText(name);
-                        email.setText(c_email);
-                        com_city.setText(city);
-                        address.setText(c_address);
-                        company_phone.setText(phone);
-                        educat.setText(edu);
-                        no_of_positions.setText(no_position);
-                        salary_from.setText(salaryFrom);
-                        salary_to.setText(salaryTo);
-                        job_radio.setText(jobtype);
-                        job_description.setText(description);
-                    }
-                }
-            }
-        });
 
 
     }
@@ -141,6 +102,8 @@ public class EmpUpdatePostActivity extends AppCompatActivity {
 
 
 
+
+    @SuppressLint("WrongViewCast")
     private void Initialize()
     {
 
@@ -161,9 +124,64 @@ public class EmpUpdatePostActivity extends AppCompatActivity {
         email = findViewById(R.id.update_post_company_email_id);
 
 
+        job_title.setText(title);
+        company_name.setText(name);
+        email.setText(c_email);
+        com_city.setText(city);
+        address.setText(c_address);
+        company_phone.setText(phone);
+        educat.setText(edu);
+        no_of_positions.setText(no_position);
+        salary_from.setText(salaryFrom);
+        salary_to.setText(salaryTo);
+        job_radio.setText(jobtype);
+        job_description.setText(description);
 
 
     }
 
 
+    public void updatePost(View view) {
+
+        String  titles = job_title.getText().toString();
+        String  names = company_name.getText().toString();
+        String c_emails = email.getText().toString();
+        String citys = com_city.getText().toString();
+        String c_addresses = address.getText().toString();
+        String phones = company_phone.getText().toString();
+        String salaryFroms = salary_from.getText().toString();
+        String salaryTos = salary_to.getText().toString();
+        String descriptions = job_description.getText().toString();
+        String edua = educat.getText().toString();
+        String post_postion = no_of_positions.getText().toString();
+        String jobTy = job_radio.getText().toString();
+
+
+        final SweetAlertDialog dialog = new SweetAlertDialog(getApplicationContext(),SweetAlertDialog.PROGRESS_TYPE);
+        dialog.setTitleText("Posting...");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Emp_Post_Data epd = new Emp_Post_Data(titles,names,c_emails,citys,c_addresses,phones,edua,
+                post_postion,salaryFroms,salaryTos,jobTy,descriptions);
+
+
+        reference.child(auth.getCurrentUser().getUid()).child(key)
+                .setValue(epd).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                dialog.setTitleText("Post Update Successfully");
+                dialog.setConfirmText("OK");
+                dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+    }
 }
