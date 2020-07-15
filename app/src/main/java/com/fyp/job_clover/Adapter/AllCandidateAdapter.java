@@ -28,18 +28,19 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
     private Emp_Interface empInterface;
 
 
-
-    public AllCandidateAdapter(Context applicationContext, List<FileUpload> list, ViewCVActivity viewCVActivity) {
+    public AllCandidateAdapter(Context context, List<FileUpload> list,  ViewCVActivity empInterface) {
         this.context = context;
         this.list = (ArrayList<FileUpload>) list;
-        this.empInterface = (Emp_Interface) viewCVActivity;
-
+        this.empInterface = (Emp_Interface) empInterface;
     }
+
+//    public AllCandidateAdapter(Context applicationContext, List<FileUpload> list, ViewCVActivity viewCVActivity) {
+//    }
 
     @NonNull
     @Override
     public AllCandidateAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-         View v = LayoutInflater.from(context).inflate(R.layout.candidate_view_template,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.candidate_view_template,parent,false);
         return new  MyHolder(v);
     }
 
