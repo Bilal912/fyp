@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,27 +20,14 @@ import com.fyp.job_clover.Adapter.EmpAllPostAdapter;
 import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
 import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.R;
-import com.fyp.job_clover.Seeker.DetailJobViewActivity;
-import com.fyp.job_clover.Seeker.SeekerHomeFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
-
-import static com.google.common.reflect.Reflection.initialize;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +40,6 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
     private EditText postSearch;
     private String emp_id;
     private View v;
-    private FragmentTransaction transaction;
 
     private FirebaseAuth auth;
     private DatabaseReference reference;
@@ -196,18 +179,15 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
         String salaryto =  b.getString("salaryto");
         String description = b.getString("description");
         String job_position = b.getString("position");
-        String key = b.getString("p_key");
+        String keys = b.getString("p_keys");
 
 
-        Fragment fg = new EmpFindCandFragment();
-        Bundle bundle1 = new Bundle();
-        bundle1.putString("mkey",key);
-        fg.setArguments(bundle1);
-        transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.drawer_layout, fg);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.addToBackStack(null);
-        transaction.commit();
+         Intent intent = new Intent(getContext(), ViewCVActivity.class);
+         intent.putExtra("mkey",keys);
+         startActivity(intent);
+
+
+
 
     }
 

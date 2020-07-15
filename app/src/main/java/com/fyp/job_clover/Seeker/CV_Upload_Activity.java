@@ -129,7 +129,7 @@ public class CV_Upload_Activity extends AppCompatActivity {
 
                         Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
                         FileUpload upload = new FileUpload(editTextFilename.getText().toString(), firebaseUri.toString());
-                        mDatabaseReference.child(key).setValue(upload);
+                        mDatabaseReference.child(key).child(auth.getCurrentUser().getUid()).setValue(upload);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

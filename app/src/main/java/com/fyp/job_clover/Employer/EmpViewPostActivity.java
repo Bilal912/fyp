@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -40,6 +41,10 @@ public class EmpViewPostActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("Post_Data");
          final String id = reference.getKey();
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("empasrecid",auth.getCurrentUser().getUid());
+        editor.apply();
 
         Initialize();
 

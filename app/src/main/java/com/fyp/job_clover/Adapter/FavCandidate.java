@@ -11,40 +11,44 @@ import android.widget.TextView;
 
 import com.fyp.job_clover.Data_Classes.FileUpload;
 import com.fyp.job_clover.Emp_Interface;
-import com.fyp.job_clover.Employer.ViewCVActivity;
+import com.fyp.job_clover.Employer.EmpChatActivity;
+import com.fyp.job_clover.Employer.EmpFindCandFragment;
 import com.fyp.job_clover.R;
 import com.skydoves.elasticviews.ElasticImageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapter.MyHolder> {
+public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
     private Context context;
     private ArrayList<FileUpload> list;
     private Emp_Interface empInterface;
 
 
+//    public FavCandidate(Context context, ArrayList<FileUpload> list, EmpFindCandFragment empInterface) {
+//        this.context = context;
+//        this.list = list;
+//        this.empInterface = empInterface;
+//    }
 
-    public AllCandidateAdapter(Context applicationContext, List<FileUpload> list, ViewCVActivity viewCVActivity) {
+    public FavCandidate(Context context, ArrayList<FileUpload> list, Class<EmpFindCandFragment> empFindCandFragmentClass) {
         this.context = context;
-        this.list = (ArrayList<FileUpload>) list;
-        this.empInterface = (Emp_Interface) viewCVActivity;
+        this.list = list;
 
     }
 
     @NonNull
     @Override
-    public AllCandidateAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-         View v = LayoutInflater.from(context).inflate(R.layout.candidate_view_template,parent,false);
+    public FavCandidate.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(context).inflate(R.layout.candidate_view_template,parent,false);
         return new  MyHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AllCandidateAdapter.MyHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final FavCandidate.MyHolder holder, final int position) {
 
         FileUpload fg = list.get(position);
         holder.cvname.setText(fg.name);
@@ -61,17 +65,14 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
 
             }
         });
-
-        holder.favcv.setOnClickListener(new View.OnClickListener() {
+        holder.chatimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                 Bundle bundle = new Bundle();
-                bundle.putString("fkey",list.get(holder.getAdapterPosition()).getKey());
-                bundle.putString("name",list.get(holder.getAdapterPosition()).getName());
-                bundle.putString("url",list.get(holder.getAdapterPosition()).getUrl());
+               Intent intent = new Intent(context, EmpChatActivity.class);
+               intent.putExtra("recKey",list.get(holder.getAdapterPosition()).getKey());
+               context.startActivity(intent);
 
-                empInterface.onNext(bundle);
             }
         });
 
@@ -86,6 +87,7 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
         private TextView title,cvname;
         private ElasticImageView chatimage,videoimage,favcv;
         private CardView cvopen;
+
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -96,7 +98,9 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
             favcv = itemView.findViewById(R.id.favourcvimageview);
             cvopen = itemView.findViewById(R.id.candidateViewTemplate);
 
-            favcv.setVisibility(itemView.getVisibility());
+            chatimage.setVisibility(itemView.getVisibility());
+            videoimage.setVisibility(itemView.getVisibility());
+
 
         }
     }

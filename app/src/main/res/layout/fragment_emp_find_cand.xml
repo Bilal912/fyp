@@ -7,7 +7,7 @@
     tools:context=".Employer.EmpFindCandFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/allcandidateRecycle"
+        android:id="@+id/favcandidateRecycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.fyp.job_clover.Adapter.AllCandidateAdapter;
-import com.fyp.job_clover.Adapter.EmpAllPostAdapter;
+import com.fyp.job_clover.Adapter.FavCandidate;
 import com.fyp.job_clover.Data_Classes.FileUpload;
 import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.R;
@@ -26,18 +24,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EmpFindCandFragment extends Fragment implements Emp_Interface {
+public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
     private String url,fileName;
     DatabaseReference mDatabaseReference;
-    List<FileUpload> list;
+    ArrayList<FileUpload> list;
     private FirebaseAuth auth;
     private RecyclerView recyclerView;
-    private AllCandidateAdapter candidateAdapter;
+    private FavCandidate candidateAdapter;
     private Emp_Interface empInterface;
 
 
@@ -49,37 +46,43 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_emp_find_cand, container, false);
 
-        Bundle bundle = this.getArguments();
-        String key = bundle.getString("mkey");
-        Toast.makeText(getContext(), key, Toast.LENGTH_SHORT).show();
+//        Bundle bundle = this.getArguments();
+//        String key = bundle.getString("ikey");
+//        Toast.makeText(getContext(), key, Toast.LENGTH_SHORT).show();
+
 
         auth = FirebaseAuth.getInstance();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data").child(key);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("Fav_CV_Data");
 
 
         list = new ArrayList<>();
-        recyclerView = v.findViewById(R.id.allcandidateRecycle);
+        recyclerView = v.findViewById(R.id.favcandidateRecycle);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
 //                ,DividerItemDecoration.VERTICAL));
-        candidateAdapter = new AllCandidateAdapter(getContext(),list, EmpFindCandFragment.this);
-        recyclerView.setAdapter(candidateAdapter);
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                FileUpload upload = dataSnapshot.getValue(FileUpload.class);
-                list.add(upload);
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//
-//
-//                }
 
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                        FileUpload upload = snapshot1.getValue(FileUpload.class);
+                        upload.setKey(snapshot1.getKey());
+                        list.add(upload);
+
+                    }
+
+                }
+
+
+                candidateAdapter = new FavCandidate(getContext(),list,EmpFindCandFragment.class);
+                recyclerView.setAdapter(candidateAdapter);
 
             }
 
@@ -92,6 +95,7 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface {
 
         return v;
     }
+
 
     @Override
     public void onNextGo(Bundle bundle) {
