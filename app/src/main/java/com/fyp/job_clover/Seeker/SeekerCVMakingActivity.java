@@ -70,7 +70,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     private EditText skills,exper,phone;
     private TextInputEditText title,name,email,city,address;
     private String cv_job_title,cv_name,cv_email,cv_phone,cv_p_code,cv_req_education,cv_city,cv_address,
-            cv_skills,cv_experience,edu;
+            cv_skills,cv_experience,edu,last;
 
     private LinearLayout countrypicker,country_name_picker;
     private TextView phoneCode,country;
@@ -89,6 +89,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker_c_v_making);
 
+        last = "";
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(SeekerCVMakingActivity.this, new String[]{
@@ -137,54 +138,63 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(title.getText().toString())){
             Toast.makeText(getApplicationContext(), "Job Title is required", Toast.LENGTH_SHORT).show();
         }
-//        else if (TextUtils.isEmpty(name.getText().toString())) {
-//            Toast.makeText(getApplicationContext(), " Name is required", Toast.LENGTH_SHORT).show();
-//
-//        }
-//        else if (TextUtils.isEmpty(email.getText().toString())){
-//            Toast.makeText(getApplicationContext(), "Email is required", Toast.LENGTH_SHORT).show();
-//        }
-//        else if (!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
-//            email.setError("Email is not Valid");
-//            email.requestFocus();
-//        }
-//        else if (TextUtils.isEmpty(city.getText().toString())){
-//            Toast.makeText(getApplicationContext(), "City is required", Toast.LENGTH_SHORT).show();
-//        }
-//        else if (TextUtils.isEmpty(address.getText().toString())){
-//            Toast.makeText(getApplicationContext(), "Address is required", Toast.LENGTH_SHORT).show();
-//        }
-//        else if (TextUtils.isEmpty(phoneCode.getText().toString())){
-//            Toast.makeText(getApplicationContext(), "phone code is required", Toast.LENGTH_SHORT).show();
-//        }
-//        else if (TextUtils.isEmpty(phone.getText().toString())){
-//            Toast.makeText(getApplicationContext(), " phone is required", Toast.LENGTH_SHORT).show();
-//        }
-//        else if (edu == null){
-//            Toast.makeText(getApplicationContext(), "Education is required", Toast.LENGTH_SHORT).show();
-//            educat.requestFocus();
-//        }
-//
-//        else if (TextUtils.isEmpty(skills.getText().toString())){
-//            Toast.makeText(getApplicationContext(), "Skills is  required", Toast.LENGTH_SHORT).show();
-//        }
-//        else if (TextUtils.isEmpty(exper.getText().toString())){
-//            Toast.makeText(getApplicationContext(), "Experience  is required", Toast.LENGTH_SHORT).show();
-//        }
+        else if (TextUtils.isEmpty(name.getText().toString())) {
+            Toast.makeText(getApplicationContext(), " Name is required", Toast.LENGTH_SHORT).show();
+
+        }
+        else if (TextUtils.isEmpty(email.getText().toString())){
+            Toast.makeText(getApplicationContext(), "Email is required", Toast.LENGTH_SHORT).show();
+        }
+        else if (!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+            email.setError("Email is not Valid");
+            email.requestFocus();
+        }
+        else if (TextUtils.isEmpty(city.getText().toString())){
+            Toast.makeText(getApplicationContext(), "City is required", Toast.LENGTH_SHORT).show();
+        }
+        else if (TextUtils.isEmpty(address.getText().toString())){
+            Toast.makeText(getApplicationContext(), "Address is required", Toast.LENGTH_SHORT).show();
+        }
+        else if (TextUtils.isEmpty(phoneCode.getText().toString())){
+            Toast.makeText(getApplicationContext(), "phone code is required", Toast.LENGTH_SHORT).show();
+        }
+        else if (TextUtils.isEmpty(phone.getText().toString())){
+            Toast.makeText(getApplicationContext(), " phone is required", Toast.LENGTH_SHORT).show();
+        }
+        else if (edu == null){
+            Toast.makeText(getApplicationContext(), "Education is required", Toast.LENGTH_SHORT).show();
+            educat.requestFocus();
+        }
+
+        else if (TextUtils.isEmpty(skills.getText().toString())){
+            Toast.makeText(getApplicationContext(), "Skills is  required", Toast.LENGTH_SHORT).show();
+        }
+        else if (TextUtils.isEmpty(exper.getText().toString())){
+            Toast.makeText(getApplicationContext(), "Experience  is required", Toast.LENGTH_SHORT).show();
+        }
 
         else {
-            cv_job_title = title.getText().toString();
-//            cv_name = name.getText().toString();
-//            cv_email = email.getText().toString();
-//            cv_city = city.getText().toString();
-//            cv_address = address.getText().toString();
-//            cv_p_code = phoneCode.getText().toString();
-//            cv_phone = phone.getText().toString();
-//            cv_skills = skills.getText().toString();
-//            cv_experience = exper.getText().toString();
-//
-//            String cv_contact = cv_p_code + cv_phone;
+            //phone
+            cv_p_code = phoneCode.getText().toString();
+            cv_phone = phone.getText().toString();
 
+
+            cv_job_title = title.getText().toString();
+            cv_name = name.getText().toString();
+            cv_email = email.getText().toString();
+            cv_city = city.getText().toString();
+            cv_address = address.getText().toString();
+            cv_skills = skills.getText().toString();
+            cv_experience = exper.getText().toString();
+
+            if (address.getText().toString().length() > 45 ){
+            cv_address = address.getText().toString().substring(0,40);
+            last = address.getText().toString().substring(41,address.getText().toString().length());
+
+            }
+            else {
+                cv_address = address.getText().toString();
+            }
 
 //            final SweetAlertDialog dialog = new SweetAlertDialog(getApplicationContext(),SweetAlertDialog.PROGRESS_TYPE);
 //            dialog.setTitleText("Posting...");
@@ -421,7 +431,6 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
 
     public void createandDisplayPdf() {
 
-        Document doc = new Document();
 
         try {
             File storageDir = null;
@@ -437,42 +446,101 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
                 success = storageDir.mkdirs();
             }
             if (success) {
+                String cv_contact = cv_p_code + cv_phone;
 
-                File file = new File(storageDir, "CV.pdf");
-                String savedImagePath = file.getAbsolutePath();
+                Document doc = new Document();
+                PdfDocument document = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    document = new PdfDocument();
 
-                FileOutputStream fOut = new FileOutputStream(file);
 
-                PdfWriter.getInstance(doc, fOut);
+                Paint mypaint = new Paint();
+                PdfDocument.PageInfo mypageinfo = new PdfDocument.PageInfo.Builder(400,600,1).create();
+                PdfDocument.Page page1 = document.startPage(mypageinfo);
+                Canvas canvas = page1.getCanvas();
 
-                //open the document
-                doc.open();
+                mypaint.setTextAlign(Paint.Align.CENTER);
+                mypaint.setTextSize(20f);
+                canvas.drawText(cv_name,mypageinfo.getPageWidth()/2,30,mypaint);
 
-                Paragraph p1 = new Paragraph(cv_job_title);
+                    mypaint.setTextAlign(Paint.Align.CENTER);
+                    mypaint.setTextSize(14f);
+                    canvas.drawText(cv_job_title,mypageinfo.getPageWidth()/2,50,mypaint);
 
-                p1.setAlignment(Paragraph.ALIGN_CENTER);
-                //p1.setFont(paraFont);
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.rgb(122,119,119));
+                    canvas.drawText("Email : "+cv_email,12,70,mypaint);
 
-                //add paragraph to document
-                doc.add(p1);
-                doc.close();
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.rgb(122,119,119));
+                    canvas.drawText("Phone : "+cv_contact,12,90,mypaint);
 
-                Toast.makeText(SeekerCVMakingActivity.this,"Success",Toast.LENGTH_LONG).show();
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.rgb(122,119,119));
+                    canvas.drawText("City : "+cv_city,12,110,mypaint);
+
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.rgb(122,119,119));
+                    canvas.drawText("Education : "+edu,12,130,mypaint);
+
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.rgb(122,119,119));
+                    canvas.drawText("Address : "+cv_address , 12,150,mypaint);
+
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.rgb(122,119,119));
+                    canvas.drawText(last , 12,165,mypaint);
+
+                    mypaint.setAntiAlias(true);
+                    mypaint.setColor(Color.BLACK);
+                    mypaint.setStrokeWidth(3);
+                    canvas.drawLine(0, 180, 400, 180, mypaint);
+
+                    document.finishPage(page1);
+                    File file = new File(storageDir, "CV.pdf");
+                    String savedPath = file.getAbsolutePath();
+
+                    document.writeTo(new FileOutputStream(file));
+
+                    document.close();
+                }
+
+//                File file = new File(storageDir, "CV.pdf");
+//                String savedPath = file.getAbsolutePath();
+//
+//                document.writeTo(new FileOutputStream(file));
+//
+//                PdfWriter.getInstance(doc, fOut);
+//
+//                //open the document
+//                doc.open();
+//
+//                Paragraph p1 = new Paragraph(cv_job_title);
+//
+//                p1.setAlignment(Paragraph.ALIGN_TOP);
+//
+//                //add paragraph to document
+//                doc.add(p1);
+//                doc.close();
+
+                Toast.makeText(SeekerCVMakingActivity.this,"Create Successfully",Toast.LENGTH_LONG).show();
             }
             else {
                 Toast.makeText(SeekerCVMakingActivity.this,"String.valueOf(de)",Toast.LENGTH_LONG).show();
             }
-        } catch (DocumentException de) {
-            Toast.makeText(SeekerCVMakingActivity.this,String.valueOf(de),Toast.LENGTH_LONG).show();
-            Log.e("PDFCreator", "DocumentException:" + de);
-        } catch (IOException e) {
+        }
+//        catch (DocumentException de) {
+//            Toast.makeText(SeekerCVMakingActivity.this,String.valueOf(de),Toast.LENGTH_LONG).show();
+//            Log.e("PDFCreator", "DocumentException:" + de);
+//        }
+        catch (IOException e) {
             Toast.makeText(SeekerCVMakingActivity.this,String.valueOf(e),Toast.LENGTH_LONG).show();
 
             Log.e("PDFCreator", "ioException:" + e);
         }
-        finally {
-            doc.close();
-        }
+//        finally {
+//            doc.close();
+//        }
 
 //        viewPdf("newFile.pdf", "Dir");
     }

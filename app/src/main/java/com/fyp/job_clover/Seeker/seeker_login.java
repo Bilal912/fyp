@@ -1,6 +1,5 @@
 package com.fyp.job_clover.Seeker;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -39,9 +38,10 @@ public class seeker_login extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private FirebaseUser firebaseUser;
     private DocumentReference docRef;
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
+
     private SharedPreferences seeker_pref;
     private String seek_name,seek_email,seek_qualification,seek_address,seek_phone,seek_gender,seeker_id;
-
 
 
     @Override
@@ -143,6 +143,9 @@ public class seeker_login extends AppCompatActivity {
                                         @Override
                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                                             dialog.dismiss();
+                                            SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                            editors.putString("Type", "Seeker");
+                                            editors.apply();
                                             startActivity(new Intent(seeker_login.this, Seeker_Menu.class));
                                         }
                                     });
@@ -155,11 +158,6 @@ public class seeker_login extends AppCompatActivity {
                                     Toast.makeText(seeker_login.this, e.toString(),Toast.LENGTH_SHORT).show();
                                 }
                             });
-
-
-
-
-
 
 
                 }

@@ -3,13 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/white"
     tools:context=".Seeker.SeekerHomeFragment">
 
-    <com.github.barteksc.pdfviewer.PDFView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/pdfView"
-        />
 
 </FrameLayout>
