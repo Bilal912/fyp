@@ -43,7 +43,9 @@ public class emp_login extends AppCompatActivity {
 TextView forget,back;
 ElasticButton Login,Register;
 TextInputEditText Email,Password;
-private FirebaseAuth auth;
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
+
+    private FirebaseAuth auth;
 private FirebaseFirestore firestore;
 private FirebaseUser firebaseUser;
 private DocumentReference docRef;
@@ -145,6 +147,10 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                                         @Override
                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                                             dialog.dismiss();
+
+                                            SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                            editors.putString("Type", "Employer");
+                                            editors.apply();
                                             startActivity(new Intent(emp_login.this,emp_menu.class));
                                         }
                                     });

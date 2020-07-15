@@ -18,7 +18,6 @@ import com.github.barteksc.pdfviewer.PDFView;
 import java.io.File;
 
 public class SeekerHomeFragment extends Fragment {
-PDFView pdfView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,33 +25,7 @@ PDFView pdfView;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seeker_home, container, false);
 
-        pdfView = view.findViewById(R.id.pdfView);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
-            try {
-
-            File file = new File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-                            + "/JOB Clover/CV.pdf");
-            if (file.exists()){
-                pdfView.fitToWidth();
-                Uri imageUri = Uri.fromFile(file);
-                pdfView.fromUri(imageUri);
-                Toast.makeText(getContext(),"Success",Toast.LENGTH_SHORT).show();
-
-            }
-            else {
-                Toast.makeText(getContext(),"No Path",Toast.LENGTH_SHORT).show();
-
-            }
-            pdfView.fromFile(file);
-
-            }
-            catch (Exception e){
-                Toast.makeText(getContext(),"No Data Found",Toast.LENGTH_SHORT).show();
-            }
-            }
         return view;
     }
 
