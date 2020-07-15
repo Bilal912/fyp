@@ -1,6 +1,7 @@
 package com.fyp.job_clover.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyHolder
 
         String fromuserid = messages.getFrom();
         String frommessagetype = messages.getType();
+
+        SharedPreferences pref = context.getSharedPreferences("MPref", 0);
+       SharedPreferences.Editor editor = pref.edit();
+       editor.putString("from",fromuserid);
+       editor.apply();
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(fromuserid);
 

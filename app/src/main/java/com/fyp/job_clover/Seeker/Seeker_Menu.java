@@ -78,6 +78,15 @@ public class Seeker_Menu extends AppCompatActivity {
                         Topname.setText("Home");
                         break;
 
+                    case R.id.nav_apply_job_show:
+                        Fragment newFragment5 = new AppliedJobsFragment();
+                        FragmentTransaction transaction5 = getSupportFragmentManager().beginTransaction();
+                        transaction5.replace(R.id.nav_fragment, newFragment5);
+                        transaction5.commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        Topname.setText("Your Applied Jobs");
+                        break;
+
                     case R.id.nav_profile_show:
                         Fragment newFragment2 = new SeekerProfileFragment();
                         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();

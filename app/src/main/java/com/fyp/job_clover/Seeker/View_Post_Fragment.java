@@ -116,6 +116,7 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
                 post_list.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                        id = snapshot1.getKey();
                         Emp_Post_Data epd = snapshot1.getValue(Emp_Post_Data.class);
                         epd.setSpecific_key(snapshot1.getKey());
                         post_list.add(epd);
@@ -156,7 +157,7 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
         intent.putExtra("salary",salary);
         intent.putExtra("description",description);
         intent.putExtra("position",job_position);
-        intent.putExtra("hkey",key);
+        intent.putExtra("hkey",id);
         startActivity(intent);
 
     }

@@ -40,11 +40,12 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_c_v);
 
-        key = getIntent().getStringExtra("mkey");
+        Bundle bundle = new Bundle();
+        key = bundle.getString("fkey",null);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("sh_key",key);
@@ -52,7 +53,7 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
         Toast.makeText(getApplicationContext(), key, Toast.LENGTH_SHORT).show();
 
         auth = FirebaseAuth.getInstance();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data").child(key);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data");
         databaseReference = FirebaseDatabase.getInstance().getReference("Fav_CV_Data");
 
 
@@ -67,9 +68,12 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    FileUpload upload = snapshot.getValue(FileUpload.class);
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                        FileUpload upload = snapshot1.getValue(FileUpload.class);
+                        upload.setKey(snapshot1.getKey());
+                        list.add(upload);
+                    }
 
-                    list.add(upload);
                 }
 
 
@@ -97,13 +101,13 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
     public void onNext(Bundle b) {
 
 
-        String name = b.getString("name");
-        String url = b.getString("url");
+        String name = b.getString("name",null);
+        String url = b.getString("url",null);
 
         Toast.makeText(this, key + name+ url, Toast.LENGTH_SHORT).show();
 
         FileUpload upload = new FileUpload(name,url);
-        databaseReference.child(key).push().setValue(upload).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child(auth.getCurrentUser().getUid()).push().setValue(upload).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(ViewCVActivity.this, "Add CV", Toast.LENGTH_SHORT).show();

@@ -38,7 +38,14 @@ public class DetailJobViewActivity extends AppCompatActivity {
     }
 
     public void goMakeCV(View view) {
+        Bundle extras = getIntent().getExtras();
         Intent intent = new Intent(getApplicationContext(),CV_Upload_Activity.class);
+        intent.putExtra("title",extras.getString("title"));
+        intent.putExtra("jobtype",extras.getString("jobtype"));
+        intent.putExtra("name-city",extras.getString("name-city"));
+        intent.putExtra("salary",extras.getString("salary"));
+        intent.putExtra("description",extras.getString("description"));
+        intent.putExtra("position",extras.getString("position"));
         intent.putExtra("s_key",key);
         startActivity(intent);
     }

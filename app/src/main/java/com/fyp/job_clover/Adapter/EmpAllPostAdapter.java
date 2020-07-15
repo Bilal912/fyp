@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.fyp.job_clover.Data_Classes.AppliedJobs;
 import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
 import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.Employer.EmpAllPostFragment;
@@ -36,6 +37,8 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
         this.postList = postList;
         this.empInterface = empInterface;
     }
+
+
 
 //    public static void filteredstu(ArrayList<Emp_Post_Data> filterStu) {
 //        postList = filterStu;

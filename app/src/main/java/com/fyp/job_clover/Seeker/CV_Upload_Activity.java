@@ -12,9 +12,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fyp.job_clover.Data_Classes.AppliedJobs;
 import com.fyp.job_clover.Data_Classes.Constants;
 import com.fyp.job_clover.Data_Classes.FileUpload;
 import com.fyp.job_clover.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -36,8 +38,9 @@ public class CV_Upload_Activity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     StorageReference mStorageReference;
-    DatabaseReference mDatabaseReference;
-    private  String key;
+    DatabaseReference mDatabaseReference,matabaseReference;
+    private  String key,title,jobtype,namecity,salary,description,position;
+    private  FileUpload upload;
 
 
 
@@ -49,12 +52,20 @@ public class CV_Upload_Activity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         key = extras.getString("s_key");
+        title = extras.getString("title");
+        jobtype = extras.getString("jobtype");
+        namecity = extras.getString("name-city");
+        salary = extras.getString("salary");
+        description = extras.getString("description");
+        position = extras.getString("position");
 
         Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
 
         //getting firebase objects
         mStorageReference = FirebaseStorage.getInstance().getReference();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data");
+        matabaseReference = FirebaseDatabase.getInstance().getReference("Applied_Jobs");
+
         auth = FirebaseAuth.getInstance();
 
         //getting the views
@@ -126,10 +137,12 @@ public class CV_Upload_Activity extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressBar.setVisibility(View.GONE);
                         textViewStatus.setText("File Uploaded Successfully");
-
+                  String uid =auth.getCurrentUser().getUid() ;
                         Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
-                        FileUpload upload = new FileUpload(editTextFilename.getText().toString(), firebaseUri.toString());
-                        mDatabaseReference.child(key).child(auth.getCurrentUser().getUid()).setValue(upload);
+                           upload = new FileUpload(editTextFilename.getText().toString(), firebaseUri.toString());
+                        mDatabaseReference.child(uid).child(key).setValue(upload);
+                        AppliedJobs aj = new AppliedJobs(title,jobtype,namecity,salary,description,position);
+                        matabaseReference.child(uid).child(key).setValue(aj);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -146,6 +159,8 @@ public class CV_Upload_Activity extends AppCompatActivity {
                         textViewStatus.setText((int) progress + "% Uploading...");
                     }
                 });
+
+
 
     }
 

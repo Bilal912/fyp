@@ -15,6 +15,11 @@
             android:icon="@drawable/job_icon"
             android:title="View a Job" />
 
+        <item android:id="@+id/nav_apply_job_show"
+            android:title="Applied Jobs"
+            android:icon="@drawable/job_icon"/>
+
+
         <item android:id="@+id/nav_profile_show"
             android:icon="@drawable/update_profile"
             android:title="Edit Profile" />
