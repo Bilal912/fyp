@@ -12,6 +12,12 @@ import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
 import com.fyp.job_clover.Employer.EmpChatActivity;
 import com.fyp.job_clover.R;
 import com.fyp.job_clover.Seeker.SeekerChatActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.skydoves.elasticviews.ElasticCardView;
 import com.skydoves.elasticviews.ElasticImageView;
 
@@ -39,23 +45,28 @@ public class AppliedJobAdapter extends RecyclerView.Adapter<AppliedJobAdapter.My
     @Override
     public void onBindViewHolder(@NonNull final AppliedJobAdapter.MyHolder holder, int position) {
 
-        AppliedJobs aj = list.get(position);
+
+        final AppliedJobs aj = list.get(position);
         holder.jobtitle.setText(aj.title);
         holder.com_name.setText(aj.namecity);
         holder.city.setText(aj.position);
         holder.salary.setText(aj.salary);
 
-         final String emp_id = aj.emp_id;
+        final String emp_id = aj.emp_id;
+        final String company_name = aj.namecity;
 
         holder.chatimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SeekerChatActivity.class);
                 intent.putExtra("emp_id",emp_id);
-
+                intent.putExtra("company_name",company_name);
                 context.startActivity(intent);
             }
         });
+
+
+
     }
 
     @Override
@@ -67,7 +78,12 @@ public class AppliedJobAdapter extends RecyclerView.Adapter<AppliedJobAdapter.My
         private TextView posttime,jobtitle,com_name,salary,city;
 //        private ElasticCardView cardView;
         private ElasticImageView chatimg,videoimg;
-        public MyHolder(@NonNull View itemView) {
+
+        private FirebaseAuth auth;
+        private DatabaseReference RootRef;
+
+
+        public MyHolder(@NonNull final View itemView) {
             super(itemView);
 
             posttime = itemView.findViewById(R.id.post_timeaply);
@@ -78,6 +94,27 @@ public class AppliedJobAdapter extends RecyclerView.Adapter<AppliedJobAdapter.My
 //            cardView = itemView.findViewById(R.id.appliedjobaply);
             chatimg = itemView.findViewById(R.id.chatimageviewaply);
             videoimg = itemView.findViewById(R.id.videoimageviewaply);
+
+            auth = FirebaseAuth.getInstance();
+            RootRef = FirebaseDatabase.getInstance().getReference("Messages").child(auth.getCurrentUser().getUid());
+
+
+            RootRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+
+                        chatimg.setVisibility(itemView.getVisibility());
+                        videoimg.setVisibility(itemView.getVisibility());
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 }

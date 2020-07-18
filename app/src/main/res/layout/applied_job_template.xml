@@ -109,12 +109,14 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:padding="5dp"
+                android:visibility="gone"
                  android:src="@drawable/ic_message"/>
             <com.skydoves.elasticviews.ElasticImageView
                 android:id="@+id/videoimageviewaply"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:padding="5dp"
+                android:visibility="gone"
                  android:src="@drawable/ic_videocam"/>
         </LinearLayout>
     </RelativeLayout>
