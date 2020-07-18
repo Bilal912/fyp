@@ -71,6 +71,7 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
                 bundle.putString("fkey",list.get(holder.getAdapterPosition()).getKey());
                 bundle.putString("name",list.get(holder.getAdapterPosition()).getName());
                 bundle.putString("url",list.get(holder.getAdapterPosition()).getUrl());
+                bundle.putString("sek_id",list.get(holder.getAdapterPosition()).getSek_id());
 
                 empInterface.onNext(bundle);
             }

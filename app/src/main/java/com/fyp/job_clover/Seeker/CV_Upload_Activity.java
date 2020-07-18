@@ -12,17 +12,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fyp.job_clover.Adapter.AllCandidateAdapter;
 import com.fyp.job_clover.Data_Classes.AppliedJobs;
 import com.fyp.job_clover.Data_Classes.Constants;
 import com.fyp.job_clover.Data_Classes.FileUpload;
+import com.fyp.job_clover.Employer.ViewCVActivity;
 import com.fyp.job_clover.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -38,8 +43,8 @@ public class CV_Upload_Activity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     StorageReference mStorageReference;
-    DatabaseReference mDatabaseReference,matabaseReference;
-    private  String key,title,jobtype,namecity,salary,description,position;
+    DatabaseReference mDatabaseReference,matabaseReference,databaseReference;
+    private  String key,title,jobtype,namecity,salary,description,position,emp_id,cv_email, uid;
     private  FileUpload upload;
 
 
@@ -58,15 +63,36 @@ public class CV_Upload_Activity extends AppCompatActivity {
         salary = extras.getString("salary");
         description = extras.getString("description");
         position = extras.getString("position");
-
+        emp_id = extras.getString("emp_id");
         Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
 
         //getting firebase objects
         mStorageReference = FirebaseStorage.getInstance().getReference();
+         matabaseReference = FirebaseDatabase.getInstance().getReference("Applied_Jobs");
+        databaseReference = FirebaseDatabase.getInstance().getReference("CV_Data");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data");
-        matabaseReference = FirebaseDatabase.getInstance().getReference("Applied_Jobs");
+
 
         auth = FirebaseAuth.getInstance();
+
+
+//        databaseReference.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                    FileUpload upload = snapshot.getValue(FileUpload.class);
+//                    cv_email =   upload.getName();
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
 
         //getting the views
         textViewStatus = (TextView) findViewById(R.id.textViewStatus);
@@ -104,7 +130,7 @@ public class CV_Upload_Activity extends AppCompatActivity {
 
         //creating an intent for file chooser
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf");
+        intent.setType("application/*");
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PDF_CODE);
     }
 
@@ -137,12 +163,13 @@ public class CV_Upload_Activity extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressBar.setVisibility(View.GONE);
                         textViewStatus.setText("File Uploaded Successfully");
-                  String uid =auth.getCurrentUser().getUid() ;
                         Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
-                           upload = new FileUpload(editTextFilename.getText().toString(), firebaseUri.toString());
-                        mDatabaseReference.child(uid).child(key).setValue(upload);
-                        AppliedJobs aj = new AppliedJobs(title,jobtype,namecity,salary,description,position);
-                        matabaseReference.child(uid).child(key).setValue(aj);
+                        uid =auth.getCurrentUser().getUid() ;
+                        upload = new FileUpload(editTextFilename.getText().toString(), firebaseUri.toString(),
+                                auth.getCurrentUser().getUid());
+                        mDatabaseReference.child(key).child(uid).setValue(upload);
+                        AppliedJobs aj = new AppliedJobs(title,jobtype,namecity,salary,description, position,emp_id);
+                        matabaseReference.child(key).child(uid).setValue(aj);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

@@ -163,7 +163,7 @@ public class EmpUpdatePostActivity extends AppCompatActivity {
         dialog.show();
 
         Emp_Post_Data epd = new Emp_Post_Data(titles,names,c_emails,citys,c_addresses,phones,edua,
-                post_postion,salaryFroms,salaryTos,jobTy,descriptions);
+                post_postion,salaryFroms,salaryTos,jobTy,descriptions,"");
 
 
         reference.child(auth.getCurrentUser().getUid()).child(key)

@@ -42,7 +42,7 @@ public class SeekerChatActivity extends AppCompatActivity {
     private ImageButton sendMessage, back;
     private EditText inputMessage;
     private FirebaseAuth auth;
-    private DatabaseReference RootRef, Rotref;
+    private DatabaseReference RootRef, Rotref,mDatabaseReference;
     private ArrayList<Messages> list;
     private MessageAdapter myAdapter;
     private RecyclerView messagerecyclerlist;
@@ -52,18 +52,20 @@ public class SeekerChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker_chat);
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
-        SharedPreferences.Editor editor = pref.edit();
-          messageRecieverId = pref.getString("empasrecid",null);
+
+
 
         Toast.makeText(this, messageRecieverId, Toast.LENGTH_SHORT).show();
 
         auth = FirebaseAuth.getInstance();
         RootRef = FirebaseDatabase.getInstance().getReference();
         Rotref = FirebaseDatabase.getInstance().getReference();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data");
 
+        messageRecieverId = getIntent().getStringExtra("emp_id");
+        messSenId = auth.getCurrentUser().getUid();
 
-        messSenId= auth.getCurrentUser().getUid();     // getIntent().getStringExtra("id");
+             // getIntent().getStringExtra("id");
         String messSenName = getIntent().getStringExtra("name");
         messageRecieverName = getIntent().getStringExtra("name");
 
@@ -92,7 +94,7 @@ public class SeekerChatActivity extends AppCompatActivity {
         myAdapter = new MessageAdapter(this,list);
         messagerecyclerlist.setAdapter(myAdapter);
 
-        usernamee.setText(messageRecieverName);
+//        usernamee.setText(messageRecieverName);
        // Picasso.get().load(messageRecieverImage).placeholder(R.drawable.profile_image).into(userimage);
 
         sendMessage.setOnClickListener(new View.OnClickListener() {

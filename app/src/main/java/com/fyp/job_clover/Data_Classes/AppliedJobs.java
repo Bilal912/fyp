@@ -1,18 +1,33 @@
 package com.fyp.job_clover.Data_Classes;
 
 public class AppliedJobs {
-   public String title,jobtype,namecity,salary,description,position,dkey;
+   public String title,jobtype,namecity,salary,description,position,emp_id,dkey;
 
     public AppliedJobs() {
     }
 
-    public AppliedJobs(String title, String jobtype, String namecity, String salary, String description, String position) {
+
+
+    public AppliedJobs(String title, String jobtype, String namecity,
+                       String salary, String description, String position, String emp_id )
+    {
         this.title = title;
         this.jobtype = jobtype;
         this.namecity = namecity;
         this.salary = salary;
         this.description = description;
         this.position = position;
+        this.emp_id = emp_id;
+
+    }
+
+
+    public String getEmp_id() {
+        return emp_id;
+    }
+
+    public void setEmp_id(String emp_id) {
+        this.emp_id = emp_id;
     }
 
     public String getTitle() {

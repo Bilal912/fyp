@@ -85,6 +85,7 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
                 bundl.putString("salaryto",postList.get(holder.getAdapterPosition()).salary_to);
                 bundl.putString("jobtype",postList.get(holder.getAdapterPosition()).job_type);
                 bundl.putString("description",postList.get(holder.getAdapterPosition()).description);
+                bundl.putString("emp_id",postList.get(holder.getAdapterPosition()).emp_id);
                 bundl.putString("p_keys",postList.get(holder.getAdapterPosition()).getSpecific_key());
 
                 empInterface.onNext(bundl);
@@ -111,6 +112,7 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
                 bundle.putString("salaryto",postList.get(holder.getAdapterPosition()).salary_to);
                 bundle.putString("jobtype",postList.get(holder.getAdapterPosition()).job_type);
                 bundle.putString("description",postList.get(holder.getAdapterPosition()).description);
+                bundle.putString("emp_id",postList.get(holder.getAdapterPosition()).emp_id);
                 bundle.putString("p_key",postList.get(holder.getAdapterPosition()).getSpecific_key());
 
                 empInterface.onNextGo(bundle);

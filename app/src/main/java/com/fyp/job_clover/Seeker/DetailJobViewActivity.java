@@ -11,7 +11,7 @@ import com.fyp.job_clover.R;
 
 public class DetailJobViewActivity extends AppCompatActivity {
     private TextView job_title,company_name_city,salary,job_type,description,job_position;
-    private  String key;
+    private  String key,emp_id;
 
 
     @Override
@@ -34,6 +34,7 @@ public class DetailJobViewActivity extends AppCompatActivity {
         salary.setText(extras.getString("salary"));
         description.setText(extras.getString("description"));
         job_position.setText(extras.getString("position"));
+        emp_id = extras.getString("emp_id");
         key = extras.getString("hkey");
     }
 
@@ -46,6 +47,7 @@ public class DetailJobViewActivity extends AppCompatActivity {
         intent.putExtra("salary",extras.getString("salary"));
         intent.putExtra("description",extras.getString("description"));
         intent.putExtra("position",extras.getString("position"));
+        intent.putExtra("emp_id",emp_id);
         intent.putExtra("s_key",key);
         startActivity(intent);
     }

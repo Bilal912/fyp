@@ -104,8 +104,7 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
     {
 
         auth = FirebaseAuth.getInstance();
-        emp_id = auth.getCurrentUser().getUid();
-        reference = FirebaseDatabase.getInstance().getReference("Post_Data").child(emp_id);
+        reference = FirebaseDatabase.getInstance().getReference("Post_Data").child( auth.getCurrentUser().getUid());
 
 
         reference.addListenerForSingleValueEvent(listener);
@@ -145,6 +144,7 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
         String salaryto =  bundle.getString("salaryto");
         String description = bundle.getString("description");
         String job_position = bundle.getString("position");
+        emp_id = bundle.getString("emp_id");
         String key = bundle.getString("p_key");
 
 
@@ -161,6 +161,7 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
         intent.putExtra("address",address);
         intent.putExtra("phone",phone);
         intent.putExtra("edu",edu);
+        intent.putExtra("emp_id",emp_id);
         intent.putExtra("key",key);
         startActivity(intent);
      }
@@ -179,11 +180,13 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
         String salaryto =  b.getString("salaryto");
         String description = b.getString("description");
         String job_position = b.getString("position");
+        String emp_id = b.getString("emp_id");
         String keys = b.getString("p_keys");
 
 
          Intent intent = new Intent(getContext(), ViewCVActivity.class);
          intent.putExtra("mkey",keys);
+         intent.putExtra("emp_id",emp_id);
          startActivity(intent);
 
 

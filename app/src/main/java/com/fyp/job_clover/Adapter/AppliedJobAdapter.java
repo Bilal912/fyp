@@ -45,11 +45,14 @@ public class AppliedJobAdapter extends RecyclerView.Adapter<AppliedJobAdapter.My
         holder.city.setText(aj.position);
         holder.salary.setText(aj.salary);
 
+         final String emp_id = aj.emp_id;
+
         holder.chatimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SeekerChatActivity.class);
-                intent.putExtra("reciKey",list.get(holder.getAdapterPosition()).getDkey());
+                intent.putExtra("emp_id",emp_id);
+
                 context.startActivity(intent);
             }
         });

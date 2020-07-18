@@ -143,21 +143,25 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
 
         String title = bundle.getString("title");
         String job_type = bundle.getString("jobtype");
+        String emp_email = bundle.getString("email");
         String company_name_city = bundle.getString("com_name")+ " - " + bundle.getString("city") ;
         String salary = bundle.getString("salaryfrom")+ " - " + bundle.getString("salaryto");
         String description = bundle.getString("description");
         String job_position = bundle.getString("position");
+        String emp_id = bundle.getString("emp_id");
         String key = bundle.getString("p_key");
 
 
         Intent intent = new Intent(getContext(), DetailJobViewActivity.class);
         intent.putExtra("title",title);
         intent.putExtra("jobtype",job_type);
+        intent.putExtra("emp_email",emp_email);
         intent.putExtra("name-city",company_name_city);
         intent.putExtra("salary",salary);
         intent.putExtra("description",description);
         intent.putExtra("position",job_position);
-        intent.putExtra("hkey",id);
+        intent.putExtra("emp_id",emp_id);
+        intent.putExtra("hkey",key);
         startActivity(intent);
 
     }

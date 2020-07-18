@@ -56,13 +56,14 @@ public class EmpChatActivity extends AppCompatActivity {
         Rotref = FirebaseDatabase.getInstance().getReference();
 
 
-        messSenId=auth.getCurrentUser().getUid();
+//        messSenId=auth.getCurrentUser().getUid();
 
 
+        messSenId = auth.getCurrentUser().getUid();
 
 
-        messageRecieverId =  getIntent().getStringExtra("recKey");
-        Toast.makeText(this, messageRecieverId, Toast.LENGTH_SHORT).show();
+        messageRecieverId =  getIntent().getStringExtra("sek_id");
+        Toast.makeText(this,  messSenId + messageRecieverId, Toast.LENGTH_SHORT).show();
         messageRecieverName = getIntent().getStringExtra("name");
         //      messageRecieverImage = getIntent().getExtras().get("visit_image").toString();
 

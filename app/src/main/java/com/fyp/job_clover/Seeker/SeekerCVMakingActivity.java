@@ -11,6 +11,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -69,7 +70,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     private static final int STORAGE_CODE = 1000;
     private EditText skills,exper,phone;
     private TextInputEditText title,name,email,city,address;
-    private String cv_job_title,cv_name,cv_email,cv_phone,cv_p_code,cv_req_education,cv_city,cv_address,
+    private String cv_job_title,cv_name,cv_email,cv_phone,cv_p_code,cv_req_education,cv_city,cv_address,cv_contact,
             cv_skills,cv_experience,edu,last;
 
     private LinearLayout countrypicker,country_name_picker;
@@ -103,7 +104,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
             }
 
             auth = FirebaseAuth.getInstance();
-        reference = FirebaseDatabase.getInstance().getReference("CV_Data");
+        reference = FirebaseDatabase.getInstance().getReference("CV_Data_App");
 
 
         initializedata();
@@ -177,7 +178,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
             //phone
             cv_p_code = phoneCode.getText().toString();
             cv_phone = phone.getText().toString();
-
+            cv_contact = cv_p_code + cv_phone;
 
             cv_job_title = title.getText().toString();
             cv_name = name.getText().toString();
@@ -191,37 +192,38 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
             cv_address = address.getText().toString().substring(0,40);
             last = address.getText().toString().substring(41,address.getText().toString().length());
 
+
             }
             else {
                 cv_address = address.getText().toString();
             }
 
-//            final SweetAlertDialog dialog = new SweetAlertDialog(getApplicationContext(),SweetAlertDialog.PROGRESS_TYPE);
-//            dialog.setTitleText("Posting...");
-//            dialog.setCancelable(false);
-//            dialog.show();
+            final SweetAlertDialog dialog = new SweetAlertDialog(getApplicationContext(),SweetAlertDialog.PROGRESS_TYPE);
+            dialog.setTitleText("Posting...");
+            dialog.setCancelable(false);
+            dialog.show();
 
 
-//            CV_Making_Data cv = new CV_Making_Data(cv_job_title,cv_name,cv_email,cv_contact,
-//                    edu,cv_city,cv_address,cv_skills,cv_experience);
-//
-//            reference.child(auth.getCurrentUser().getUid())
-//                    .setValue(cv).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//
-//                    dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-//                    dialog.setTitleText("CV Save Successfully");
-//                    dialog.setConfirmText("OK");
-//                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                        @Override
-//                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-//                            dialog.dismiss();
-//                        }
-//                    });
-//                }
-//            });
-//
+            CV_Making_Data cv = new CV_Making_Data(cv_job_title,cv_name,cv_email,cv_contact,
+                    edu,cv_city,cv_address,cv_skills,cv_experience);
+
+            reference.child(auth.getCurrentUser().getUid())
+                    .setValue(cv).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+
+                    dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                    dialog.setTitleText("CV Save Successfully");
+                    dialog.setConfirmText("OK");
+                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            });
+
 
             //   text convert to pdf file simple open
 

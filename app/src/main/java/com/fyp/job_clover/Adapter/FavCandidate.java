@@ -2,6 +2,7 @@ package com.fyp.job_clover.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
     private Context context;
@@ -52,7 +55,7 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
 
         FileUpload fg = list.get(position);
         holder.cvname.setText(fg.name);
-
+        final String sek_id = fg.sek_id;
         holder.cvopen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +72,10 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
             @Override
             public void onClick(View v) {
 
+
                Intent intent = new Intent(context, EmpChatActivity.class);
-               intent.putExtra("recKey",list.get(holder.getAdapterPosition()).getKey());
+                 intent.putExtra("sek_id",sek_id);
+//               intent.putExtra("recKey",list.get(holder.getAdapterPosition()).getKey());
                context.startActivity(intent);
 
             }

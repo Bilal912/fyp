@@ -62,7 +62,7 @@ public class EmpViewPostActivity extends AppCompatActivity {
                 dialog.show();
 
                 Emp_Post_Data epd = new Emp_Post_Data(title,name,c_email,city,c_address,contact,c_education,
-                        c_positions,salaryFrom,salaryTo,jobTy,c_description);
+                        c_positions,salaryFrom,salaryTo,jobTy,c_description,auth.getCurrentUser().getUid());
 
 
                 reference.child(auth.getCurrentUser().getUid()).push()

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.fyp.job_clover.Adapter.AllCandidateAdapter;
+import com.fyp.job_clover.Data_Classes.Fav_CV;
 import com.fyp.job_clover.Data_Classes.FileUpload;
 import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.R;
@@ -27,7 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
-    private String url,fileName,key;
+    private String url,fileName,key,emp_id;
     DatabaseReference mDatabaseReference;
     List<FileUpload> list;
     private FirebaseAuth auth;
@@ -44,13 +45,14 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_c_v);
 
-        Bundle bundle = new Bundle();
-        key = bundle.getString("fkey",null);
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("sh_key",key);
-        editor.apply();
-        Toast.makeText(getApplicationContext(), key, Toast.LENGTH_SHORT).show();
+//        Bundle bundle = new Bundle();
+//
+//
+//        SharedPreferences pref = getApplicationContext().getSharedPreferences("Emp_Email", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = pref.edit();
+//        editor.putString("em_email",email);
+//        editor.apply();
+//        Toast.makeText(getApplicationContext(), email, Toast.LENGTH_SHORT).show();
 
         auth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data");
@@ -71,6 +73,7 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
                     for (DataSnapshot snapshot1 : snapshot.getChildren()){
                         FileUpload upload = snapshot1.getValue(FileUpload.class);
                         upload.setKey(snapshot1.getKey());
+
                         list.add(upload);
                     }
 
@@ -101,13 +104,16 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
     public void onNext(Bundle b) {
 
 
+
+        key = b.getString("fkey",null);
         String name = b.getString("name",null);
         String url = b.getString("url",null);
+        String sek_id = b.getString("sek_id",null);
 
-        Toast.makeText(this, key + name+ url, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,   name+ url, Toast.LENGTH_SHORT).show();
 
-        FileUpload upload = new FileUpload(name,url);
-        databaseReference.child(auth.getCurrentUser().getUid()).push().setValue(upload).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FileUpload upload = new FileUpload(name,url,sek_id);
+        databaseReference.child(auth.getCurrentUser().getUid()).child(key).setValue(upload).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(ViewCVActivity.this, "Add CV", Toast.LENGTH_SHORT).show();
