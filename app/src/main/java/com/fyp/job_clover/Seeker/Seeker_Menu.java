@@ -64,16 +64,17 @@ public class Seeker_Menu extends AppCompatActivity {
         NavigationView navigationView= findViewById(R.id.nav_view);
         View view = navigationView.getHeaderView(0);
 
-        final TextView Name=view.findViewById(R.id.nav_name);
-        final TextView Nav_email=view.findViewById(R.id.nav_email);
+        final TextView Name= view.findViewById(R.id.nav_name);
+        final TextView Nav_email= view.findViewById(R.id.nav_email);
+
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Seeker_Reg_Data srd = dataSnapshot.getValue(Seeker_Reg_Data.class);
-                    Nav_email.setText(srd.seeker_name);
-                    Name.setText(srd.seeker_email);
+//                Seeker_Reg_Data srd = dataSnapshot.getValue(Seeker_Reg_Data.class);
+//                Nav_email.setText(srd.seeker_name);
+//                    Name.setText(srd.seeker_email);
 
             }
 

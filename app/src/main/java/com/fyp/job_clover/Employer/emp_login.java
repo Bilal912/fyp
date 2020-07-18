@@ -43,9 +43,9 @@ public class emp_login extends AppCompatActivity {
 TextView forget,back;
 ElasticButton Login,Register;
 TextInputEditText Email,Password;
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+public static final String MY_PREFS_NAME = "MyPrefsFile";
 
-    private FirebaseAuth auth;
+private FirebaseAuth auth;
 private FirebaseFirestore firestore;
 private FirebaseUser firebaseUser;
 private DocumentReference docRef;

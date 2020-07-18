@@ -47,14 +47,20 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.Line;
 import com.skydoves.elasticviews.ElasticButton;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,10 +74,10 @@ import static androidx.core.app.ActivityCompat.requestPermissions;
 
 public class SeekerCVMakingActivity extends AppCompatActivity {
     private static final int STORAGE_CODE = 1000;
-    private EditText skills,exper,phone;
+    private EditText skills,exper,phone,hobby;
     private TextInputEditText title,name,email,city,address;
     private String cv_job_title,cv_name,cv_email,cv_phone,cv_p_code,cv_req_education,cv_city,cv_address,cv_contact,
-            cv_skills,cv_experience,edu,last;
+            cv_skills,cv_experience,edu,last,cv_hobb;
 
     private LinearLayout countrypicker,country_name_picker;
     private TextView phoneCode,country;
@@ -170,8 +176,12 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
         else if (TextUtils.isEmpty(skills.getText().toString())){
             Toast.makeText(getApplicationContext(), "Skills is  required", Toast.LENGTH_SHORT).show();
         }
-        else if (TextUtils.isEmpty(exper.getText().toString())){
-            Toast.makeText(getApplicationContext(), "Experience  is required", Toast.LENGTH_SHORT).show();
+
+//        else if (TextUtils.isEmpty(exper.getText().toString())){
+//            Toast.makeText(getApplicationContext(), "Experience  is required", Toast.LENGTH_SHORT).show();
+//        }
+        else if (TextUtils.isEmpty(hobby.getText().toString())){
+            Toast.makeText(getApplicationContext(), "Hobby  is required", Toast.LENGTH_SHORT).show();
         }
 
         else {
@@ -179,7 +189,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
             cv_p_code = phoneCode.getText().toString();
             cv_phone = phone.getText().toString();
             cv_contact = cv_p_code + cv_phone;
-
+            cv_hobb = hobby.getText().toString();
             cv_job_title = title.getText().toString();
             cv_name = name.getText().toString();
             cv_email = email.getText().toString();
@@ -201,7 +211,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
             final SweetAlertDialog dialog = new SweetAlertDialog(getApplicationContext(),SweetAlertDialog.PROGRESS_TYPE);
             dialog.setTitleText("Posting...");
             dialog.setCancelable(false);
-            dialog.show();
+            //dialog.show();
 
 
             CV_Making_Data cv = new CV_Making_Data(cv_job_title,cv_name,cv_email,cv_contact,
@@ -339,6 +349,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
 
     private void initializedata()
     {
+        hobby = findViewById(R.id.cv_hobby);
         exper = findViewById(R.id.cv_mak_exp);
         skills = findViewById(R.id.cv_mak_skils);
         education = new ArrayList<String>();
@@ -450,80 +461,117 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
             if (success) {
                 String cv_contact = cv_p_code + cv_phone;
 
-                Document doc = new Document();
-                PdfDocument document = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    document = new PdfDocument();
+                Document document = null;
+                    document = new Document();
 
 
-                Paint mypaint = new Paint();
-                PdfDocument.PageInfo mypageinfo = new PdfDocument.PageInfo.Builder(400,600,1).create();
-                PdfDocument.Page page1 = document.startPage(mypageinfo);
-                Canvas canvas = page1.getCanvas();
+//                Paint mypaint = new Paint();
+//                Document.PageInfo mypageinfo = new PdfDocument.PageInfo.Builder(400,600,1).create();
+//                Document.Page page1 = document.startPage(mypageinfo);
+//                Canvas canvas = page1.getCanvas();
+//
+//                mypaint.setTextAlign(Paint.Align.CENTER);
+//                mypaint.setTextSize(20f);
+//                canvas.drawText(cv_name,mypageinfo.getPageWidth()/2,30,mypaint);
+//
+//                    mypaint.setTextAlign(Paint.Align.CENTER);
+//                    mypaint.setTextSize(14f);
+//                    canvas.drawText(cv_job_title,mypageinfo.getPageWidth()/2,50,mypaint);
+//
+//                    mypaint.setTextAlign(Paint.Align.LEFT);
+//                    mypaint.setColor(Color.rgb(122,119,119));
+//                    canvas.drawText("Email : "+cv_email,12,70,mypaint);
+//
+//                    mypaint.setTextAlign(Paint.Align.LEFT);
+//                    mypaint.setColor(Color.rgb(122,119,119));
+//                    canvas.drawText("Phone : "+cv_contact,12,90,mypaint);
+//
+//                    mypaint.setTextAlign(Paint.Align.LEFT);
+//                    mypaint.setColor(Color.rgb(122,119,119));
+//                    canvas.drawText("City : "+cv_city,12,110,mypaint);
+//
+//                    mypaint.setTextAlign(Paint.Align.LEFT);
+//                    mypaint.setColor(Color.rgb(122,119,119));
+//                    canvas.drawText("Education : "+edu,12,130,mypaint);
+//
+//                    mypaint.setTextAlign(Paint.Align.LEFT);
+//                    mypaint.setColor(Color.rgb(122,119,119));
+//                    canvas.drawText("Address : "+cv_address , 12,150,mypaint);
+//
+//                    mypaint.setTextAlign(Paint.Align.LEFT);
+//                    mypaint.setColor(Color.rgb(122,119,119));
+//                    canvas.drawText(last , 12,165,mypaint);
+//
+//                    mypaint.setAntiAlias(true);
+//                    mypaint.setColor(Color.BLACK);
+//                    mypaint.setStrokeWidth(3);
+//                    canvas.drawLine(0, 180, 400, 180, mypaint);
+//
+//                    mypaint.setTextAlign(Paint.Align.LEFT);
+//                    mypaint.setColor(Color.parseColor("#000000"));
+//                    canvas.drawText("Skills" , 12,195,mypaint);
+//
+//                    mypaint.setTextAlign(Paint.Align.CENTER);
+//                    mypaint.setColor(Color.parseColor("#000000"));
+//                    canvas.drawText(cv_skills ,12,205,mypaint);
 
-                mypaint.setTextAlign(Paint.Align.CENTER);
-                mypaint.setTextSize(20f);
-                canvas.drawText(cv_name,mypageinfo.getPageWidth()/2,30,mypaint);
+//                    document.finishPage(page1);
 
-                    mypaint.setTextAlign(Paint.Align.CENTER);
-                    mypaint.setTextSize(14f);
-                    canvas.drawText(cv_job_title,mypageinfo.getPageWidth()/2,50,mypaint);
-
-                    mypaint.setTextAlign(Paint.Align.LEFT);
-                    mypaint.setColor(Color.rgb(122,119,119));
-                    canvas.drawText("Email : "+cv_email,12,70,mypaint);
-
-                    mypaint.setTextAlign(Paint.Align.LEFT);
-                    mypaint.setColor(Color.rgb(122,119,119));
-                    canvas.drawText("Phone : "+cv_contact,12,90,mypaint);
-
-                    mypaint.setTextAlign(Paint.Align.LEFT);
-                    mypaint.setColor(Color.rgb(122,119,119));
-                    canvas.drawText("City : "+cv_city,12,110,mypaint);
-
-                    mypaint.setTextAlign(Paint.Align.LEFT);
-                    mypaint.setColor(Color.rgb(122,119,119));
-                    canvas.drawText("Education : "+edu,12,130,mypaint);
-
-                    mypaint.setTextAlign(Paint.Align.LEFT);
-                    mypaint.setColor(Color.rgb(122,119,119));
-                    canvas.drawText("Address : "+cv_address , 12,150,mypaint);
-
-                    mypaint.setTextAlign(Paint.Align.LEFT);
-                    mypaint.setColor(Color.rgb(122,119,119));
-                    canvas.drawText(last , 12,165,mypaint);
-
-                    mypaint.setAntiAlias(true);
-                    mypaint.setColor(Color.BLACK);
-                    mypaint.setStrokeWidth(3);
-                    canvas.drawLine(0, 180, 400, 180, mypaint);
-
-                    document.finishPage(page1);
                     File file = new File(storageDir, "CV.pdf");
                     String savedPath = file.getAbsolutePath();
+                    PdfWriter.getInstance(document, new FileOutputStream(file));
 
-                    document.writeTo(new FileOutputStream(file));
+                    //document.writeTo(new FileOutputStream(file));
+
+                    document.open();
+                    document.setPageSize(PageSize.A2);
+
+                    Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD, BaseColor.BLACK);
+                    Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.NORMAL, BaseColor.GRAY);
+                    Font pFont = new Font(Font.FontFamily.UNDEFINED, 20, Font.BOLD, BaseColor.BLACK);
+                    Font line = new Font(Font.FontFamily.UNDEFINED, 20, Font.BOLD, BaseColor.BLUE);
+
+                    Paragraph p1 = new Paragraph(cv_name,redFont);
+                    p1.setAlignment(Paragraph.ALIGN_TOP);
+                    p1.setAlignment(Paragraph.ALIGN_CENTER);
+
+                    Paragraph p2 = new Paragraph(cv_job_title,pFont);
+                    p2.setAlignment(Paragraph.ALIGN_CENTER);
+
+                    Paragraph paragraph = new Paragraph();
+                    paragraph.add(new Paragraph(" "));
+                    paragraph.add(new Paragraph(" "));
+                    paragraph.add(new Paragraph("Email : "+cv_email,catFont));
+                    paragraph.add(new Paragraph("Phone : "+cv_contact,catFont));
+                    paragraph.add(new Paragraph("City : "+cv_city,catFont));
+                    paragraph.add(new Paragraph("Education : "+edu,catFont));
+                    paragraph.add(new Paragraph("Address : "+cv_address,catFont));
+                    paragraph.add(new Paragraph(last,catFont));
+                    paragraph.add(new Paragraph(" "));
+                    paragraph.add(new Paragraph("_____________________________________________",line));
+                    paragraph.add(new Paragraph(" "));
+
+                    paragraph.add(new Paragraph(" "));
+                    paragraph.add(new Paragraph("Skills",pFont));
+                    paragraph.add(new Paragraph(cv_skills,catFont));
+
+                    if (cv_experience.isEmpty()){
+                        paragraph.add(new Paragraph(" "));
+                    }
+                    else {
+                        paragraph.add(new Paragraph(" "));
+                        paragraph.add(new Paragraph("Experience", pFont));
+                        paragraph.add(new Paragraph(cv_experience, catFont));
+                    }
+                    paragraph.add(new Paragraph(" "));
+                    paragraph.add(new Paragraph("Hobbies",pFont));
+                    paragraph.add(new Paragraph(cv_hobb,catFont));
+
+                    document.add(p1);
+                    document.add(p2);
+                    document.add(paragraph);
 
                     document.close();
-                }
-
-//                File file = new File(storageDir, "CV.pdf");
-//                String savedPath = file.getAbsolutePath();
-//
-//                document.writeTo(new FileOutputStream(file));
-//
-//                PdfWriter.getInstance(doc, fOut);
-//
-//                //open the document
-//                doc.open();
-//
-//                Paragraph p1 = new Paragraph(cv_job_title);
-//
-//                p1.setAlignment(Paragraph.ALIGN_TOP);
-//
-//                //add paragraph to document
-//                doc.add(p1);
-//                doc.close();
 
                 Toast.makeText(SeekerCVMakingActivity.this,"Create Successfully",Toast.LENGTH_LONG).show();
             }
@@ -535,71 +583,12 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
 //            Toast.makeText(SeekerCVMakingActivity.this,String.valueOf(de),Toast.LENGTH_LONG).show();
 //            Log.e("PDFCreator", "DocumentException:" + de);
 //        }
-        catch (IOException e) {
+        catch (DocumentException | FileNotFoundException e) {
             Toast.makeText(SeekerCVMakingActivity.this,String.valueOf(e),Toast.LENGTH_LONG).show();
 
             Log.e("PDFCreator", "ioException:" + e);
         }
-//        finally {
-//            doc.close();
-//        }
 
-//        viewPdf("newFile.pdf", "Dir");
     }
-
-//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//    private void createPdf(){
-//        String sometext = "Bilal";
-//        // create a new document
-//        PdfDocument document = null;
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//            document = new PdfDocument();
-//        }
-//
-//        // crate a page description
-//        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 1).create();
-//
-//        // start a page
-//        PdfDocument.Page page = document.startPage(pageInfo);
-//        Canvas canvas = page.getCanvas();
-//        Paint paint = new Paint();
-//        paint.setColor(Color.RED);
-//        canvas.drawCircle(50, 50, 30, paint);
-//        paint.setColor(Color.BLACK);
-//        canvas.drawText(sometext, 80, 50, paint);
-//        //canvas.drawt
-//        // finish the page
-//        document.finishPage(page);
-//// draw text on the graphics object of the page
-//
-//        // Create Page 2
-//        pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 2).create();
-//        page = document.startPage(pageInfo);
-//        canvas = page.getCanvas();
-//        paint = new Paint();
-//        paint.setColor(Color.BLUE);
-//        canvas.drawCircle(100, 100, 100, paint);
-//        document.finishPage(page);
-//
-//        // write the document content
-//        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/Job Clover/";
-//        File file = new File(directory_path);
-//
-//        if (!file.exists()) {
-//            file.mkdirs();
-//        }
-//        String targetPdf = directory_path+"test-2.pdf";
-//        File filePath = new File(targetPdf);
-//        try {
-//            document.writeTo(new FileOutputStream(filePath));
-//            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
-//        } catch (IOException e) {
-//            Log.e("main", "error "+e.toString());
-//            Toast.makeText(this, "Something wrong: " + e.toString(),  Toast.LENGTH_LONG).show();
-//        }
-//
-//        // close the document
-//        document.close();
-//    }
 
 }

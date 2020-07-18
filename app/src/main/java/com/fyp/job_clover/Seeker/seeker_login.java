@@ -99,7 +99,8 @@ public class seeker_login extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    Toast.makeText(seeker_login.this,"Successful",Toast.LENGTH_LONG).show();
+
+                                    //Toast.makeText(seeker_login.this,"Successful",Toast.LENGTH_LONG).show();
 
 
                                     seeker_id = auth.getCurrentUser().getUid();

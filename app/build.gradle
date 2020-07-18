@@ -82,7 +82,4 @@ dependencies {
 
     implementation 'com.itextpdf:itextg:5.5.10'
 
-    //pdf reader
-    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
-
 }
