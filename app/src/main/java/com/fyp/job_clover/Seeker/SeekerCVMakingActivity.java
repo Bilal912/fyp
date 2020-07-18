@@ -90,7 +90,6 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private FirebaseAuth auth;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
