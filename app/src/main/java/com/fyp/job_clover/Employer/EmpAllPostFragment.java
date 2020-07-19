@@ -86,18 +86,7 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
 
         return  view;
     }
-//        private void filter(String txt)
-//    {
-//
-//        ArrayList<Emp_Post_Data> filterStu = new ArrayList<>();
-//        for (Emp_Post_Data stud : post_list){
-//            if (stud.getJob_title().toLowerCase().contains(txt.toLowerCase())){
-//                filterStu.add(stud);
-//            }
-//        }
-//       EmpAllPostAdapter.filteredstu(filterStu);
-//
-//    }
+
 
     private void filter(String txt) {
 

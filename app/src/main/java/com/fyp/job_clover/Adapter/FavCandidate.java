@@ -88,6 +88,11 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
         return list.size();
     }
 
+    public void filteredesCV(ArrayList<FileUpload> filterCV) {
+        list = filterCV;
+        notifyDataSetChanged();
+    }
+
     public class MyHolder extends RecyclerView.ViewHolder {
         private TextView title,cvname;
         private ElasticImageView chatimage,videoimage,favcv;

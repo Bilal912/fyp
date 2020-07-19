@@ -7,12 +7,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fyp.job_clover.Adapter.FavCandidate;
+import com.fyp.job_clover.Data_Classes.Fav_CV;
 import com.fyp.job_clover.Data_Classes.FileUpload;
 import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.R;
@@ -34,6 +38,7 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
     ArrayList<FileUpload> list;
     private FirebaseAuth auth;
     private RecyclerView recyclerView;
+    private EditText search_cv;
     private FavCandidate candidateAdapter;
     private Emp_Interface empInterface;
 
@@ -59,12 +64,16 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("Fav_CV_Data");
 
 
+        search_cv = v.findViewById(R.id.etfav_search);
         list = new ArrayList<>();
         recyclerView = v.findViewById(R.id.favcandidateRecycle);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
 //                ,DividerItemDecoration.VERTICAL));
+        candidateAdapter = new FavCandidate(getContext(),list,EmpFindCandFragment.class);
+        recyclerView.setAdapter(candidateAdapter);
+
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,10 +89,7 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
 
                 }
 
-
-                candidateAdapter = new FavCandidate(getContext(),list,EmpFindCandFragment.class);
-                recyclerView.setAdapter(candidateAdapter);
-
+                candidateAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -93,7 +99,38 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
         });
 
 
+        search_cv.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+                filter(s.toString());
+
+            }
+        });
+
         return v;
+    }
+
+    private void filter(String txt) {
+        ArrayList<FileUpload> filterCV = new ArrayList<>();
+        for (FileUpload pd : list){
+            if (pd.getName().toLowerCase().contains(txt.toLowerCase())){
+                filterCV.add(pd);
+            }
+        }
+        candidateAdapter.filteredesCV(filterCV);
+
     }
 
 
