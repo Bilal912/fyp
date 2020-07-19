@@ -25,6 +25,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,10 +37,9 @@ public class seeker_login extends AppCompatActivity {
     ElasticButton Login,Register;
     TextInputEditText Email,Password;
     private FirebaseAuth auth;
-    private FirebaseFirestore firestore;
+    private DatabaseReference reference;
     private FirebaseUser firebaseUser;
-    private DocumentReference docRef;
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+     public static final String MY_PREFS_NAME = "MyPrefsFile";
 
     private SharedPreferences seeker_pref;
     private String seek_name,seek_email,seek_qualification,seek_address,seek_phone,seek_gender,seeker_id;
@@ -51,8 +52,8 @@ public class seeker_login extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
-        firestore = FirebaseFirestore.getInstance();
-        seeker_pref = getApplicationContext().getSharedPreferences("Seeker_Pref",  0);
+        reference = FirebaseDatabase.getInstance().getReference("Seeker_Data");
+         seeker_pref = getApplicationContext().getSharedPreferences("Seeker_Pref",  0);
         final SharedPreferences.Editor editor = seeker_pref.edit();
 
         back=findViewById(R.id.back);
@@ -103,40 +104,8 @@ public class seeker_login extends AppCompatActivity {
 
 
                                     seeker_id = auth.getCurrentUser().getUid();
-                                    docRef = firestore.collection("Employer_Data").document(seeker_id);
 
-//                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//
-//                                            if (task.isSuccessful()){
-//                                                DocumentSnapshot documentSnapshot = task.getResult();
-//                                                if (documentSnapshot.exists()){
-//
-//                                                    seek_name =  documentSnapshot.getData().get("seeker_name").toString();
-//                                                    seek_email   =   documentSnapshot.getData().get("seeker_email").toString();
-//                                                    seek_qualification =  documentSnapshot.getData().get("seeker_qualification").toString();
-//                                                    seek_address =  documentSnapshot.getData().get("seeker_address").toString();
-//                                                    seek_phone  =  documentSnapshot.getData().get("seeker_phone").toString();
-//                                                    seek_gender  =  documentSnapshot.getData().get("seeker_gender").toString();
-//
-//                                                    // save in Sharedfreferences
-//
-//                                                    editor.putString("seek_id",seeker_id);
-//                                                    editor.putString("seek_name",seek_name);
-//                                                    editor.putString("seek_email",seek_email);
-//                                                    editor.putString("seek_qualification", seek_qualification);
-//                                                    editor.putString("seek_address",seek_address);
-//                                                    editor.putString("seek_phone",seek_phone);
-//                                                    editor.putString("seek_gender",seek_gender);
-//                                                    editor.commit();
-//
-//                                                }
-//                                            }
-//                                        }
-//                                    });
-
-                                    dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     dialog.setTitleText("Login Successfully");
                                     dialog.setConfirmText("OK");
                                     dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {

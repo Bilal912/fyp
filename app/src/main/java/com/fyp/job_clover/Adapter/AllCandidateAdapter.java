@@ -2,6 +2,7 @@ package com.fyp.job_clover.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -67,6 +68,7 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
             @Override
             public void onClick(View v) {
 
+                holder.favcv.setColorFilter(Color.RED);
                  Bundle bundle = new Bundle();
                 bundle.putString("fkey",list.get(holder.getAdapterPosition()).getKey());
                 bundle.putString("name",list.get(holder.getAdapterPosition()).getName());
@@ -82,6 +84,12 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+
+    public void filteredesCV(ArrayList<FileUpload> filterCV) {
+        list = filterCV;
+        notifyDataSetChanged();
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {

@@ -5,10 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/viewcvactivity"
-    tools:context=".Seeker.ViewCVActivity">
+    tools:context=".Employer.ViewCVActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:drawableLeft="@drawable/ic_search"
+        android:layout_marginHorizontal="10dp"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:hint="Search CV by Name"
+        android:id="@+id/etjob_search"
+        android:background="@drawable/lg_button"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allcandidateRecycle"
+        android:layout_below="@id/etjob_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

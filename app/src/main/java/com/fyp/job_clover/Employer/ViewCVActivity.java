@@ -2,9 +2,13 @@ package com.fyp.job_clover.Employer;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fyp.job_clover.Adapter.AllCandidateAdapter;
+import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
 import com.fyp.job_clover.Data_Classes.Fav_CV;
 import com.fyp.job_clover.Data_Classes.FileUpload;
 import com.fyp.job_clover.Emp_Interface;
@@ -33,6 +37,7 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
     List<FileUpload> list;
     private FirebaseAuth auth;
     private RecyclerView recyclerView;
+    private EditText cv_search;
     private AllCandidateAdapter candidateAdapter;
     private Emp_Interface empInterface;
     private FragmentTransaction transaction;
@@ -59,12 +64,15 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
         databaseReference = FirebaseDatabase.getInstance().getReference("Fav_CV_Data");
 
 
+        cv_search = findViewById(R.id.etjob_search);
         list = new ArrayList<>();
         recyclerView = findViewById(R.id.allcandidateRecycle);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 //        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
 //                ,DividerItemDecoration.VERTICAL));
+        candidateAdapter = new AllCandidateAdapter(getApplicationContext(),list,  ViewCVActivity.this);
+        recyclerView.setAdapter(candidateAdapter);
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,11 +86,7 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
                     }
 
                 }
-
-
-
-                candidateAdapter = new AllCandidateAdapter(getApplicationContext(),list,  ViewCVActivity.this);
-                recyclerView.setAdapter(candidateAdapter);
+                candidateAdapter.notifyDataSetChanged();
 
             }
 
@@ -92,6 +96,37 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
             }
         });
 
+        cv_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+                filter(s.toString());
+
+            }
+        });
+
+
+    }
+
+    private void filter(String txt) {
+        ArrayList<FileUpload> filterCV = new ArrayList<>();
+        for (FileUpload pd : list){
+            if (pd.getName().toLowerCase().contains(txt.toLowerCase())){
+                filterCV.add(pd);
+            }
+        }
+        candidateAdapter.filteredesCV(filterCV);
 
     }
 

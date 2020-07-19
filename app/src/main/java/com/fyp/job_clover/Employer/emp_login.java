@@ -23,6 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -46,9 +47,9 @@ TextInputEditText Email,Password;
 public static final String MY_PREFS_NAME = "MyPrefsFile";
 
 private FirebaseAuth auth;
-private FirebaseFirestore firestore;
+private DatabaseReference reference;
 private FirebaseUser firebaseUser;
-private DocumentReference docRef;
+
 private SharedPreferences emp_pref;
 private String emName,emEmail,emCity,emAddress,emp_id;
 
@@ -60,8 +61,7 @@ private String emName,emEmail,emCity,emAddress,emp_id;
 
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
-        firestore = FirebaseFirestore.getInstance();
-        emp_pref = getApplicationContext().getSharedPreferences("Emp_Pref",  0);
+         emp_pref = getApplicationContext().getSharedPreferences("Emp_Pref",  0);
         final SharedPreferences.Editor editor = emp_pref.edit();
 
         back=findViewById(R.id.back);
@@ -109,36 +109,6 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                                     //  fetch employer data
 
                                    emp_id = auth.getCurrentUser().getUid();
-                                    docRef = firestore.collection("Employer_Data").document(emp_id);
-
-                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                                            if (task.isSuccessful()){
-                                                DocumentSnapshot documentSnapshot = task.getResult();
-                                                if (documentSnapshot.exists()){
-
-                                                    emName =  documentSnapshot.getData().get("employer_name").toString();
-                                                    emEmail   =   documentSnapshot.getData().get("employer_email").toString();
-                                                    emCity =  documentSnapshot.getData().get("employer_city").toString();
-                                                    emAddress =  documentSnapshot.getData().get("employer_address").toString();
-
-                                                    // save in Sharedfreferences
-
-                                                    editor.putString("emp_id",emp_id);
-                                                    editor.putString("emp_name",emName);
-                                                    editor.putString("emp_email",emEmail);
-                                                    editor.putString("emp_city",emCity);
-                                                    editor.putString("emp_address",emAddress);
-                                                    editor.putString("emp_password",password);
-                                                    editor.apply();
-                                                    editor.commit();
-
-                                                }
-                                            }
-                                        }
-                                    });
 
                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     dialog.setTitleText("Login Successfully");

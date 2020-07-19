@@ -145,8 +145,7 @@
                 android:fontFamily="@font/gotham"
                 android:textSize="18sp"
                 app:button_cornerRadius="20dp"
-                android:onClick="goMakeCV"
-                />
+                 />
 
 
 

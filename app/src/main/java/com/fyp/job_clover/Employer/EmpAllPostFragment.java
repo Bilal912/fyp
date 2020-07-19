@@ -35,8 +35,8 @@ import java.util.ArrayList;
 public class EmpAllPostFragment extends Fragment implements Emp_Interface {
     private View view;
     private RecyclerView recyclerView;
-    private ArrayList<Emp_Post_Data> post_list;
-    private EmpAllPostAdapter postAdapter;
+    private   ArrayList<Emp_Post_Data> post_list;
+     EmpAllPostAdapter postAdapter;
     private EditText postSearch;
     private String emp_id;
     private View v;
@@ -77,7 +77,7 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
             public void afterTextChanged(Editable s) {
 
 
-//                filter(s.toString());
+                filter(s.toString());
 
             }
         });
@@ -87,18 +87,19 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
         return  view;
     }
 
-//    private void filter(String txt)
-//    {
-//
-//        ArrayList<Emp_Post_Data> filterStu = new ArrayList<>();
-//        for (Emp_Post_Data stud : post_list){
-//            if (stud.getJob_title().toLowerCase().contains(txt.toLowerCase())){
-//                filterStu.add(stud);
-//            }
-//        }
-//       EmpAllPostAdapter.filteredstu(filterStu);
-//
-//    }
+
+    private void filter(String txt) {
+
+        ArrayList<Emp_Post_Data> filterJob = new ArrayList<>();
+        for (Emp_Post_Data pd : post_list){
+            if (pd.getJob_title().toLowerCase().contains(txt.toLowerCase())){
+                filterJob.add(pd);
+            }
+        }
+        postAdapter.filteredesJob(filterJob);
+
+    }
+
 
     private void dataBase()
     {
