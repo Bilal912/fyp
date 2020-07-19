@@ -116,6 +116,20 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                                    emp_id = auth.getCurrentUser().getUid();
 
 
+                                   reference.child(emp_id).addValueEventListener(new ValueEventListener() {
+                                       @Override
+                                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                           Employer_Reg_Data srd = dataSnapshot.getValue(Employer_Reg_Data.class);
+
+                                           emName = srd.employer_name;
+                                                   emEmail = srd.employer_email;
+                                       }
+
+                                       @Override
+                                       public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                       }
+                                   });
 
 
                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
@@ -129,7 +143,10 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                                             SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                                             editors.putString("Type", "Employer");
                                             editors.apply();
-                                            startActivity(new Intent(emp_login.this,emp_menu.class));
+                                            Intent intent = new Intent(emp_login.this,emp_menu.class);
+                                            intent.putExtra("emName",emName);
+                                            intent.putExtra("emEmail",emEmail);
+                                            startActivity(intent);
                                         }
                                     });
                                 }

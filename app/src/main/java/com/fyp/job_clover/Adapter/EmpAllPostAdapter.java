@@ -80,6 +80,9 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
         final String totalSalary = epd.salary_from + "-" + epd.salary_to;
         holder.salary.setText(totalSalary);
 
+        String time = epd.time;
+        holder.postTime.setText(time);
+
         final String deleteKey = epd.getSpecific_key();
 
         holder.candidatepost.setOnClickListener(new View.OnClickListener() {
@@ -156,22 +159,22 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        private TextView posttime,jobtitle,com_name,salary,city;
+        private TextView  jobtitle,com_name,salary,city;
         private ElasticCardView cardView;
         ElasticImageView deletepost;
-        private TextView detailpost,candidatepost;
+        private TextView detailpost,candidatepost,postTime;
 
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
-            posttime = itemView.findViewById(R.id.post_time);
             jobtitle = itemView.findViewById(R.id.job_title_view_id);
             com_name = itemView.findViewById(R.id.company_name_view_id);
             city = itemView.findViewById(R.id.city_view_id);
             salary = itemView.findViewById(R.id.salary_view_id);
             cardView = itemView.findViewById(R.id.jobview_card);
             detailpost = itemView.findViewById(R.id.detail);
+            postTime = itemView.findViewById(R.id.post_time);
             candidatepost = itemView.findViewById(R.id.candidate);
             deletepost = itemView.findViewById(R.id.deleteimg);
 

@@ -42,8 +42,6 @@ public class Seeker_Menu extends AppCompatActivity {
         setContentView(R.layout.activity_seeker__menu);
 
         auth = FirebaseAuth.getInstance();
-        String uid = auth.getCurrentUser().getUid();
-        reference = FirebaseDatabase.getInstance().getReference("Seeker_Data").child(uid);
 
         Topname=findViewById(R.id.top_name);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
@@ -67,21 +65,10 @@ public class Seeker_Menu extends AppCompatActivity {
         final TextView Name= view.findViewById(R.id.nav_name);
         final TextView Nav_email= view.findViewById(R.id.nav_email);
 
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Seeker_Reg_Data srd = dataSnapshot.getValue(Seeker_Reg_Data.class);
-                    Nav_email.setText(srd.seeker_name);
-                    Name.setText(srd.seeker_email);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+        String seek_name = getIntent().getStringExtra("seek_name");
+        String seek_email = getIntent().getStringExtra("seek_email");
+        Nav_email.setText(seek_email);
+        Name.setText(seek_name);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

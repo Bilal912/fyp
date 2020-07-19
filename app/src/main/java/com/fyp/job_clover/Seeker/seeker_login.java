@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fyp.job_clover.Data_Classes.Seeker_Reg_Data;
 import com.fyp.job_clover.Employer.emp_login;
 import com.fyp.job_clover.Employer.emp_menu;
 import com.fyp.job_clover.Employer.emp_register;
@@ -25,8 +26,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -105,7 +109,23 @@ public class seeker_login extends AppCompatActivity {
 
                                     seeker_id = auth.getCurrentUser().getUid();
 
-                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                    reference.child(seeker_id).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                            Seeker_Reg_Data srd = dataSnapshot.getValue(Seeker_Reg_Data.class);
+                                             seek_name = srd.seeker_name;
+                                             seek_email = srd.seeker_email;
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        }
+                                    });
+
+
+                                    dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     dialog.setTitleText("Login Successfully");
                                     dialog.setConfirmText("OK");
                                     dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -115,7 +135,10 @@ public class seeker_login extends AppCompatActivity {
                                             SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                                             editors.putString("Type", "Seeker");
                                             editors.apply();
-                                            startActivity(new Intent(seeker_login.this, Seeker_Menu.class));
+                                            Intent intent = new Intent(seeker_login.this, Seeker_Menu.class);
+                                            intent.putExtra("seek_name",seek_name);
+                                            intent.putExtra("seek_email",seek_email);
+                                            startActivity(intent);
                                         }
                                     });
                                 }

@@ -40,7 +40,7 @@ public class emp_menu extends AppCompatActivity {
         setContentView(R.layout.activity_emp_menu);
 
         auth = FirebaseAuth.getInstance();
-         reference = FirebaseDatabase.getInstance().getReference("Employer_Data").child(auth.getCurrentUser().getUid());
+
 
 
         Topname=findViewById(R.id.top_name);
@@ -65,21 +65,12 @@ public class emp_menu extends AppCompatActivity {
         final TextView Name=view.findViewById(R.id.nav_name);
         final TextView Nav_email=view.findViewById(R.id.nav_email);
 
+        String emName = getIntent().getStringExtra("emName");
+        String emEmail = getIntent().getStringExtra("emEmail");
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        Nav_email.setText(emName);
+        Name.setText(emEmail);
 
-                Employer_Reg_Data srd = dataSnapshot.getValue(Employer_Reg_Data.class);
-                Nav_email.setText(srd.employer_name);
-                Name.setText(srd.employer_email);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
