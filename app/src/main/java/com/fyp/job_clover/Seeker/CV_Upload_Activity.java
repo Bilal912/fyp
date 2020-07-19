@@ -150,9 +150,7 @@ public class CV_Upload_Activity extends AppCompatActivity {
     }
 
 
-    //this method is uploading the file
-    //the code is same as the previous tutorial
-    //so we are not explaining it
+
     private void uploadFile(Uri data) {
         progressBar.setVisibility(View.VISIBLE);
         StorageReference sRef = mStorageReference.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + ".pdf");

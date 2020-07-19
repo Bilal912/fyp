@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fyp.job_clover.Data_Classes.AppliedJobs;
 import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
@@ -15,8 +16,14 @@ import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.Employer.EmpAllPostFragment;
 import com.fyp.job_clover.R;
 import com.fyp.job_clover.Seeker.DetailJobViewActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.skydoves.elasticviews.ElasticButton;
 import com.skydoves.elasticviews.ElasticCardView;
+import com.skydoves.elasticviews.ElasticImageView;
 
 import java.util.ArrayList;
 
@@ -26,9 +33,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.MyHolder> {
+     private   ArrayList<Emp_Post_Data> postList;
     private Context context;
-    private  ArrayList<Emp_Post_Data> postList;
-    private Emp_Interface empInterface;
+     private Emp_Interface empInterface;
+    private DatabaseReference reference;
+    private FirebaseAuth auth;
 
 
 
@@ -36,14 +45,16 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
         this.context = context;
         this.postList = postList;
         this.empInterface = empInterface;
+
+    }
+
+    public void filteredesJob(ArrayList<Emp_Post_Data> filterJob) {
+        postList = filterJob;
+        notifyDataSetChanged();
+
     }
 
 
-
-//    public static void filteredstu(ArrayList<Emp_Post_Data> filterStu) {
-//        postList = filterStu;
-//        notifyDataSetChanged();
-//    }
 
 
     @NonNull
@@ -58,6 +69,8 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
     @Override
     public void onBindViewHolder(@NonNull final EmpAllPostAdapter.MyHolder holder, int position) {
 
+        auth = FirebaseAuth.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference("Post_Data");
 
 
         Emp_Post_Data epd = postList.get(position);
@@ -67,6 +80,7 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
         final String totalSalary = epd.salary_from + "-" + epd.salary_to;
         holder.salary.setText(totalSalary);
 
+        final String deleteKey = epd.getSpecific_key();
 
         holder.candidatepost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +134,19 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
             }
         });
 
+        holder.deletepost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                reference.child(auth.getCurrentUser().getUid()).child(deleteKey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(context, "Post Delete Successfully" + deleteKey, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 
     }
 
@@ -131,7 +158,8 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
     public class MyHolder extends RecyclerView.ViewHolder {
         private TextView posttime,jobtitle,com_name,salary,city;
         private ElasticCardView cardView;
-        private ElasticButton detailpost,candidatepost;
+        ElasticImageView deletepost;
+        private TextView detailpost,candidatepost;
 
 
         public MyHolder(@NonNull View itemView) {
@@ -145,6 +173,11 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
             cardView = itemView.findViewById(R.id.jobview_card);
             detailpost = itemView.findViewById(R.id.detail);
             candidatepost = itemView.findViewById(R.id.candidate);
+            deletepost = itemView.findViewById(R.id.deleteimg);
+
+            detailpost.setVisibility(itemView.getVisibility());
+            candidatepost.setVisibility(itemView.getVisibility());
+            deletepost.setVisibility(itemView.getVisibility());
 
         }
     }

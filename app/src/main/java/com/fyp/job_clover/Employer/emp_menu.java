@@ -15,16 +15,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.fyp.job_clover.Data_Classes.Employer_Reg_Data;
+import com.fyp.job_clover.Data_Classes.Seeker_Reg_Data;
 import com.fyp.job_clover.Login;
 import com.fyp.job_clover.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class emp_menu extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
     TextView textView,Topname;
     private FirebaseAuth auth;
+    private DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,9 @@ public class emp_menu extends AppCompatActivity {
         setContentView(R.layout.activity_emp_menu);
 
         auth = FirebaseAuth.getInstance();
+        String uid = auth.getCurrentUser().getUid();
+        reference = FirebaseDatabase.getInstance().getReference("Employer_Data").child(uid);
+
 
         Topname=findViewById(R.id.top_name);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
@@ -55,8 +66,21 @@ public class emp_menu extends AppCompatActivity {
         final TextView Name=view.findViewById(R.id.nav_name);
         final TextView Nav_email=view.findViewById(R.id.nav_email);
 
-//        Nav_email.setText(Email);
-//        Name.setText(First);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Employer_Reg_Data srd = dataSnapshot.getValue(Employer_Reg_Data.class);
+                Nav_email.setText(srd.employer_name);
+                Name.setText(srd.employer_email);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

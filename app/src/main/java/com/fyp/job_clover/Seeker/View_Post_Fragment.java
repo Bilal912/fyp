@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fyp.job_clover.Adapter.EmpAllPostAdapter;
+import com.fyp.job_clover.Adapter.SeekkerViewPostAdapter;
 import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
 import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.Employer.EmpAllPostFragment;
@@ -47,7 +48,7 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
     private RecyclerView recyclerView;
     private ArrayList<Emp_Post_Data> post_list;
     private ArrayList<Emp_Post_Data> pstlist;
-    private EmpAllPostAdapter postAdapter;
+    private SeekkerViewPostAdapter postAdapter;
     private EditText postSearch;
     private String emp_id;
     private View v;
@@ -102,7 +103,7 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
 //                ,DividerItemDecoration.VERTICAL));
-        postAdapter = new EmpAllPostAdapter(getContext(),post_list, View_Post_Fragment.this);
+        postAdapter = new SeekkerViewPostAdapter(getContext(),post_list, View_Post_Fragment.this);
         recyclerView.setAdapter(postAdapter);
 
 
