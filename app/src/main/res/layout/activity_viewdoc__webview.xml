@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Viewdoc_Webview">
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webview_id"
+        />
+
+<!--    <com.skydoves.elasticviews.ElasticButton-->
+<!--        android:onClick="read"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_weight="10"-->
+<!--        android:id="@+id/read_message"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Read Message"-->
+<!--        android:textSize="14sp"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:padding="5dp"-->
+<!--        android:textColor="@color/white"-->
+<!--        />-->
+
+</RelativeLayout>
