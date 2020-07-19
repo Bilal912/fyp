@@ -94,7 +94,6 @@ public class seeker_login extends AppCompatActivity {
                     dialog.setCancelable(false);
                     dialog.show();
 
-
                     auth.signInWithEmailAndPassword(email,password)
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
