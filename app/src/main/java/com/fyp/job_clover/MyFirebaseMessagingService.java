@@ -36,9 +36,9 @@ public  class MyFirebaseMessagingService extends FirebaseMessagingService {
         if(type==2){
             intent = new Intent(getApplicationContext(), MainActivity.class);
         }
-        else
+        else {
             intent = new Intent(getApplicationContext(), MainActivity.class);
-
+        }
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 101, intent, 0);
 
         NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
@@ -64,8 +64,8 @@ public  class MyFirebaseMessagingService extends FirebaseMessagingService {
                     getApplicationContext(), "222")
                     .setContentTitle(remoteMessage.getNotification().getTitle())
                     .setAutoCancel(true)
-                    .setLargeIcon(((BitmapDrawable)getDrawable(R.drawable.logo_white)).getBitmap())
-                    .setSmallIcon(R.drawable.logo)
+                    .setLargeIcon(((BitmapDrawable)getDrawable(R.drawable.logo)).getBitmap())
+                    .setSmallIcon(R.mipmap.icon_main_round)
                     .setColor(Color.parseColor("#ffffff"))
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setSmallIcon(R.drawable.logo)

@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/icon_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Seeker.SeekerChatActivity"></activity>
+        <activity android:name=".Viewdoc_Webview"></activity>
+        <activity android:name=".Seeker.SeekerChatActivity" />
         <activity android:name=".Employer.EmpChatActivity" />
         <activity android:name=".Seeker.CV_Upload_Activity" />
         <activity android:name=".Employer.EmpPostDetailActivity" />
