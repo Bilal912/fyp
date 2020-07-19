@@ -40,8 +40,7 @@ public class emp_menu extends AppCompatActivity {
         setContentView(R.layout.activity_emp_menu);
 
         auth = FirebaseAuth.getInstance();
-        String uid = auth.getCurrentUser().getUid();
-        reference = FirebaseDatabase.getInstance().getReference("Employer_Data").child(uid);
+         reference = FirebaseDatabase.getInstance().getReference("Employer_Data").child(auth.getCurrentUser().getUid());
 
 
         Topname=findViewById(R.id.top_name);

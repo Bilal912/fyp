@@ -40,7 +40,10 @@ import com.skydoves.elasticviews.ElasticButton;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EmpUpdatePostActivity extends AppCompatActivity {
     private TextInputLayout title_lay,name_lay,vity_lay,address_lay,salaryFrom_lay,salaryTo_lay,email_lay;
@@ -162,8 +165,11 @@ public class EmpUpdatePostActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
 
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String strDate = dateFormat.format(date);
         Emp_Post_Data epd = new Emp_Post_Data(titles,names,c_emails,citys,c_addresses,phones,edua,
-                post_postion,salaryFroms,salaryTos,jobTy,descriptions,auth.getCurrentUser().getUid());
+                post_postion,salaryFroms,salaryTos,jobTy,descriptions,strDate,auth.getCurrentUser().getUid());
 
 
         reference.child(auth.getCurrentUser().getUid()).child(key)

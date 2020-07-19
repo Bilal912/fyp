@@ -55,23 +55,14 @@ public class EmpChatActivity extends AppCompatActivity {
         RootRef = FirebaseDatabase.getInstance().getReference();
         Rotref = FirebaseDatabase.getInstance().getReference();
 
-
-//        messSenId=auth.getCurrentUser().getUid();
-
-
         messSenId = auth.getCurrentUser().getUid();
-
-
         messageRecieverId =  getIntent().getStringExtra("sek_id");
-        Toast.makeText(this,  messSenId + messageRecieverId, Toast.LENGTH_SHORT).show();
-        messageRecieverName = getIntent().getStringExtra("name");
-        //      messageRecieverImage = getIntent().getExtras().get("visit_image").toString();
+         messageRecieverName = getIntent().getStringExtra("sek_name");
 
-        userimage = findViewById(R.id.image);
-        username = findViewById(R.id.chatname);
-        inputMessage = findViewById(R.id.text_content);
+         inputMessage = findViewById(R.id.text_content);
         sendMessage = findViewById(R.id.btn_send);
 
+        username = findViewById(R.id.empchatname);
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +78,7 @@ public class EmpChatActivity extends AppCompatActivity {
         messagerecyclerlist.setAdapter(myAdapter);
 
         username.setText(messageRecieverName);
-//        Picasso.get().load(messageRecieverImage).placeholder(R.drawable.profile_image).into(userimage);
+
 
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override

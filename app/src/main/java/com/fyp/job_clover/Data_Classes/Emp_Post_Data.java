@@ -2,15 +2,17 @@ package com.fyp.job_clover.Data_Classes;
 
 public class Emp_Post_Data {
     public String job_title,company_name,company_email,company_city,company_address,
-            company_phone,req_education,company_position,salary_from,salary_to,job_type,description,emp_id,specific_key;
+            company_phone,req_education,company_position,salary_from,salary_to,job_type,description,time,emp_id,specific_key;
 
     public Emp_Post_Data() {
     }
 
+
+
     public Emp_Post_Data(String job_title, String company_name, String company_email, String company_city, String company_address,
                          String company_phone, String req_education,
                          String company_position, String salary_from, String salary_to,
-                         String job_type, String description, String emp_id) {
+                         String job_type, String description,String time, String emp_id) {
         this.job_title = job_title;
         this.company_name = company_name;
         this.company_email = company_email;
@@ -23,8 +25,17 @@ public class Emp_Post_Data {
         this.salary_to = salary_to;
         this.job_type = job_type;
         this.description = description;
+        this.time = time;
         this.emp_id = emp_id;
 
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getEmp_id() {

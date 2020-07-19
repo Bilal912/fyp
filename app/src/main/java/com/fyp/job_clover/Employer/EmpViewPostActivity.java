@@ -24,6 +24,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.skydoves.elasticviews.ElasticButton;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class EmpViewPostActivity extends AppCompatActivity {
     private TextView job_title,company_name,company_city,address,salary_from,salary_to,education,positions,email,phone,description,jobType;
     private String title,name,city,c_address,salaryFrom,salaryTo,c_email,c_phone,p_code,c_description,c_education,c_positions,jobTy,contact;
@@ -61,8 +65,11 @@ public class EmpViewPostActivity extends AppCompatActivity {
                 dialog.setCancelable(false);
                 dialog.show();
 
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Date date = new Date();
+                String strDate = dateFormat.format(date);
                 Emp_Post_Data epd = new Emp_Post_Data(title,name,c_email,city,c_address,contact,c_education,
-                        c_positions,salaryFrom,salaryTo,jobTy,c_description,auth.getCurrentUser().getUid());
+                        c_positions,salaryFrom,salaryTo,jobTy,c_description,strDate,auth.getCurrentUser().getUid());
 
 
                 reference.child(auth.getCurrentUser().getUid()).push()

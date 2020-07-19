@@ -23,7 +23,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -61,6 +65,7 @@ private String emName,emEmail,emCity,emAddress,emp_id;
 
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Employer_Data");
          emp_pref = getApplicationContext().getSharedPreferences("Emp_Pref",  0);
         final SharedPreferences.Editor editor = emp_pref.edit();
 
@@ -110,6 +115,9 @@ private String emName,emEmail,emCity,emAddress,emp_id;
 
                                    emp_id = auth.getCurrentUser().getUid();
 
+
+
+
                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     dialog.setTitleText("Login Successfully");
                                     dialog.setConfirmText("OK");
@@ -149,9 +157,9 @@ private String emName,emEmail,emCity,emAddress,emp_id;
 
     }
 
-//    public void back(View view) {
-//        finish();
-//    }
+    public void back(View view) {
+        finish();
+    }
 
     public void forget(View view) {
         startActivity(new Intent(emp_login.this,emp_forget.class));

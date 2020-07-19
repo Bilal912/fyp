@@ -64,20 +64,9 @@ public class SeekerChatActivity extends AppCompatActivity {
 
         messageRecieverId = getIntent().getStringExtra("emp_id");
         messSenId = auth.getCurrentUser().getUid();
+        messageRecieverName = getIntent().getStringExtra("company_name");
 
-             // getIntent().getStringExtra("id");
-        String messSenName = getIntent().getStringExtra("name");
-        messageRecieverName = getIntent().getStringExtra("name");
-
-
-
-
-       // messageRecieverId = auth.getCurrentUser().getUid();
-//        messageRecieverName = getIntent().getExtras().get("visit_user_name").toString();
-        //      messageRecieverImage = getIntent().getExtras().get("visit_image").toString();
-
-        userimage = findViewById(R.id.image);
-       // usernamee = findViewById(R.id.chatnamee);
+        usernamee = findViewById(R.id.chatnamee);
         inputMessage = findViewById(R.id.text_content);
         sendMessage = findViewById(R.id.btn_send);
         back = findViewById(R.id.back);
@@ -94,8 +83,7 @@ public class SeekerChatActivity extends AppCompatActivity {
         myAdapter = new MessageAdapter(this,list);
         messagerecyclerlist.setAdapter(myAdapter);
 
-//        usernamee.setText(messageRecieverName);
-       // Picasso.get().load(messageRecieverImage).placeholder(R.drawable.profile_image).into(userimage);
+        usernamee.setText(messageRecieverName);
 
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override

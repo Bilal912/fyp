@@ -55,6 +55,7 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
 
         FileUpload fg = list.get(position);
         holder.cvname.setText(fg.name);
+        final String sek_name = fg.name;
         final String sek_id = fg.sek_id;
         holder.cvopen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +76,8 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
 
                Intent intent = new Intent(context, EmpChatActivity.class);
                  intent.putExtra("sek_id",sek_id);
+                intent.putExtra("sek_name",sek_name);
+
 //               intent.putExtra("recKey",list.get(holder.getAdapterPosition()).getKey());
                context.startActivity(intent);
 
