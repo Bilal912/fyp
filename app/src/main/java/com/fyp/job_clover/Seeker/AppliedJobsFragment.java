@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.fyp.job_clover.Adapter.AppliedJobAdapter;
 import com.fyp.job_clover.Adapter.EmpAllPostAdapter;
 import com.fyp.job_clover.Adapter.FavCandidate;
@@ -32,9 +34,11 @@ import java.util.ArrayList;
 public class AppliedJobsFragment extends Fragment {
     DatabaseReference mDatabaseReference;
     ArrayList<AppliedJobs> list;
+    TextView textView;
     private FirebaseAuth auth;
     private RecyclerView recyclerView;
     private AppliedJobAdapter adapter;
+    ShimmerFrameLayout frameLayout;
 
     public AppliedJobsFragment() {
         // Required empty public constructor
@@ -50,6 +54,8 @@ public class AppliedJobsFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("Applied_Jobs");
 
+        frameLayout = v.findViewById(R.id.shimmer_id);
+        textView = v.findViewById(R.id.texty);
 
         list = new ArrayList<>();
         recyclerView = v.findViewById(R.id.appliedjobRecycle);
@@ -69,12 +75,18 @@ public class AppliedJobsFragment extends Fragment {
                             epd.setDkey(snapshot1.getKey());
                             list.add(epd);
                         }
-
                     }
+                    textView.setVisibility(View.GONE);
+                    frameLayout.stopShimmerAnimation();
+                    frameLayout.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                 }
 
                 else {
+                    textView.setVisibility(View.VISIBLE);
+                    frameLayout.stopShimmerAnimation();
+                    frameLayout.setVisibility(View.GONE);
+
                     Toast.makeText(getContext(), "Record No Found", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -86,4 +98,18 @@ public class AppliedJobsFragment extends Fragment {
         });
         return v;
     }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        frameLayout.startShimmerAnimation();
+    }
+    @Override
+    public void onPause() {
+
+        super.onPause();
+        frameLayout.startShimmerAnimation();
+    }
+
 }

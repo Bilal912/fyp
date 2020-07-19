@@ -51,7 +51,6 @@ public class AppliedJobAdapter extends RecyclerView.Adapter<AppliedJobAdapter.My
         holder.com_name.setText(aj.namecity);
         holder.city.setText(aj.position);
         holder.salary.setText(aj.salary);
-
         final String emp_id = aj.emp_id;
         final String company_name = aj.namecity;
 
@@ -86,7 +85,7 @@ public class AppliedJobAdapter extends RecyclerView.Adapter<AppliedJobAdapter.My
         public MyHolder(@NonNull final View itemView) {
             super(itemView);
 
-            posttime = itemView.findViewById(R.id.post_timeaply);
+//            posttime = itemView.findViewById(R.id.post_timeaply);
             jobtitle = itemView.findViewById(R.id.job_title_view_idaply);
             com_name = itemView.findViewById(R.id.company_name_view_idaply);
             city = itemView.findViewById(R.id.city_view_idaply);
@@ -105,7 +104,7 @@ public class AppliedJobAdapter extends RecyclerView.Adapter<AppliedJobAdapter.My
                     if (dataSnapshot.exists()){
 
                         chatimg.setVisibility(itemView.getVisibility());
-                        videoimg.setVisibility(itemView.getVisibility());
+                        //videoimg.setVisibility(itemView.getVisibility());
 
                     }
                 }

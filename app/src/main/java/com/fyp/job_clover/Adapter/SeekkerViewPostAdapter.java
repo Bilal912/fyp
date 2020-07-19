@@ -41,15 +41,14 @@ public class SeekkerViewPostAdapter extends RecyclerView.Adapter<SeekkerViewPost
 
         Emp_Post_Data epd = postList.get(position);
         holder.jobtitle.setText(epd.job_title);
-        holder.com_name.setText(epd.company_name);
+        holder.com_name.setText("Company : ".concat(epd.company_name));
         holder.city.setText(epd.company_city);
-        final String totalSalary = epd.salary_from + "-" + epd.salary_to;
+        final String totalSalary = "From: ".concat(epd.salary_from) + " - " + "To: ".concat(epd.salary_to);
         holder.salary.setText(totalSalary);
 
-        holder.detailpost.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 Bundle bundle = new Bundle();
                 bundle.putString("title",postList.get(holder.getAdapterPosition()).job_title);
@@ -98,7 +97,7 @@ public class SeekkerViewPostAdapter extends RecyclerView.Adapter<SeekkerViewPost
             detailpost = itemView.findViewById(R.id.detail);
             candidatepost = itemView.findViewById(R.id.candidate);
 
-            detailpost.setVisibility(itemView.getVisibility());
+//            detailpost.setVisibility(itemView.getVisibility());
         }
     }
 }

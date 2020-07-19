@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.fyp.job_clover.Adapter.EmpAllPostAdapter;
 import com.fyp.job_clover.Adapter.SeekkerViewPostAdapter;
 import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
@@ -51,6 +53,9 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
     private SeekkerViewPostAdapter postAdapter;
     private EditText postSearch;
     private String emp_id;
+    TextView textView;
+    ShimmerFrameLayout frameLayout;
+
     private View v;
     private String title,name,city,c_address,salaryFrom,salaryTo,c_email,c_phone,p_code,c_description,c_education,c_positions,jobTy,contact;
 
@@ -63,7 +68,6 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
     public View_Post_Fragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,6 +99,9 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
 
     private void initializedata()
     {
+        frameLayout = v.findViewById(R.id.shimmer_id);
+        textView = v.findViewById(R.id.texty);
+
         recyclerView = v.findViewById(R.id.seeker_job_view_recyclerview);
         postSearch = v.findViewById(R.id.seeker_job_search);
         post_list = new ArrayList<>();
@@ -122,11 +129,16 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
                         epd.setSpecific_key(snapshot1.getKey());
                         post_list.add(epd);
                     }
-
                 }
+                textView.setVisibility(View.GONE);
+                frameLayout.stopShimmerAnimation();
+                frameLayout.setVisibility(View.GONE);
                 postAdapter.notifyDataSetChanged();
             }
             else {
+                frameLayout.stopShimmerAnimation();
+                frameLayout.setVisibility(View.GONE);
+                textView.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Record No Found", Toast.LENGTH_SHORT).show();
             }
         }
@@ -152,7 +164,6 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
         String emp_id = bundle.getString("emp_id");
         String key = bundle.getString("p_key");
 
-
         Intent intent = new Intent(getContext(), DetailJobViewActivity.class);
         intent.putExtra("title",title);
         intent.putExtra("jobtype",job_type);
@@ -171,4 +182,17 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
     public void onNext(Bundle bundle) {
 
     }
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        frameLayout.startShimmerAnimation();
+    }
+    @Override
+    public void onPause() {
+
+        super.onPause();
+        frameLayout.startShimmerAnimation();
+    }
+
 }

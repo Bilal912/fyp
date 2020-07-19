@@ -82,4 +82,8 @@ dependencies {
 
     implementation 'com.itextpdf:itextg:5.5.10'
 
+    //shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.1.0'
+
+
 }

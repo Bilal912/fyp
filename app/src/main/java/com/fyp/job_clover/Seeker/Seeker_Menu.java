@@ -73,7 +73,7 @@ public class Seeker_Menu extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 Seeker_Reg_Data srd = dataSnapshot.getValue(Seeker_Reg_Data.class);
-                Nav_email.setText(srd.seeker_name);
+                    Nav_email.setText(srd.seeker_name);
                     Name.setText(srd.seeker_email);
 
             }
