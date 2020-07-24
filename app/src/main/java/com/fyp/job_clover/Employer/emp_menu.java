@@ -9,7 +9,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.fyp.job_clover.Data_Classes.Employer_Reg_Data;
 import com.fyp.job_clover.Data_Classes.Seeker_Reg_Data;
 import com.fyp.job_clover.Login;
 import com.fyp.job_clover.R;
+import com.fyp.job_clover.Seeker.SeekerHomeFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import static com.fyp.job_clover.Seeker.seeker_login.MY_PREFS_NAME;
 
 public class emp_menu extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
@@ -40,8 +46,6 @@ public class emp_menu extends AppCompatActivity {
         setContentView(R.layout.activity_emp_menu);
 
         auth = FirebaseAuth.getInstance();
-
-
 
         Topname=findViewById(R.id.top_name);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
@@ -64,9 +68,9 @@ public class emp_menu extends AppCompatActivity {
 
         final TextView Name=view.findViewById(R.id.nav_name);
         final TextView Nav_email=view.findViewById(R.id.nav_email);
-
-        String emName = getIntent().getStringExtra("emName");
-        String emEmail = getIntent().getStringExtra("emEmail");
+        SharedPreferences editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String emName = editors.getString("emp_name",null);
+        String emEmail = editors.getString("emp_email",null);
 
         Nav_email.setText(emName);
         Name.setText(emEmail);
@@ -86,7 +90,7 @@ public class emp_menu extends AppCompatActivity {
                         transaction.replace(R.id.nav_fragment, newFragment);
                         transaction.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText(R.string.app_name);
+                        Topname.setText("Home");
                         break;
 
                     case R.id.nav_profile:
@@ -128,8 +132,10 @@ public class emp_menu extends AppCompatActivity {
                     case R.id.nav_logout:
 
                         auth.signOut();
+                        SharedPreferences preferences = getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);
+                        preferences.edit().clear().commit();
                         startActivity(new Intent(emp_menu.this, Login.class));
-
+                        finish();
 
                     default:
                         return true;
@@ -141,11 +147,34 @@ public class emp_menu extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){
+        String jaffery = Topname.getText().toString();
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else {
+        else if(jaffery.equals("Home")){
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.ic_baseline_error_24)
+                    .setTitle("Exit")
+                    .setMessage("Are you sure you want to exit?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
 
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        }
+        else {
+            Fragment newFragment = new SeekerHomeFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_fragment, newFragment);
+            transaction.commit();
+            drawer.closeDrawer(GravityCompat.START);
+            Topname.setText("Home");
         }
     }
 }

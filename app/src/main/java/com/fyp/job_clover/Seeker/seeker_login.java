@@ -43,9 +43,8 @@ public class seeker_login extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
-     public static final String MY_PREFS_NAME = "MyPrefsFile";
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
 
-    private SharedPreferences seeker_pref;
     private String seek_name,seek_email,seek_qualification,seek_address,seek_phone,seek_gender,seeker_id;
 
 
@@ -57,8 +56,6 @@ public class seeker_login extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Seeker_Data");
-         seeker_pref = getApplicationContext().getSharedPreferences("Seeker_Pref",  0);
-        final SharedPreferences.Editor editor = seeker_pref.edit();
 
         back=findViewById(R.id.back);
         forget=findViewById(R.id.forget);
@@ -88,8 +85,6 @@ public class seeker_login extends AppCompatActivity {
                     Email.requestFocus();
                 }
                 else {
-                    //Hafiz yaha to check kara ga firebase sa
-                    //aur jab correct hu ga to data sharedprefrence ma store kr wa kr aga intent laga dai
 
                     String email = Email.getText().toString();
                     String password = Password.getText().toString();
@@ -104,9 +99,6 @@ public class seeker_login extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
 
-                                    //Toast.makeText(seeker_login.this,"Successful",Toast.LENGTH_LONG).show();
-
-
                                     seeker_id = auth.getCurrentUser().getUid();
 
                                     reference.child(seeker_id).addValueEventListener(new ValueEventListener() {
@@ -116,14 +108,12 @@ public class seeker_login extends AppCompatActivity {
                                             Seeker_Reg_Data srd = dataSnapshot.getValue(Seeker_Reg_Data.class);
                                              seek_name = srd.seeker_name;
                                              seek_email = srd.seeker_email;
-
                                         }
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
                                         }
                                     });
-
 
                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     dialog.setTitleText("Login Successfully");
@@ -133,11 +123,11 @@ public class seeker_login extends AppCompatActivity {
                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                                             dialog.dismiss();
                                             SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                            editors.putString("seeker_name",seek_name);
+                                            editors.putString("seeker_email",seek_email);
                                             editors.putString("Type", "Seeker");
                                             editors.apply();
                                             Intent intent = new Intent(seeker_login.this, Seeker_Menu.class);
-                                            intent.putExtra("seek_name",seek_name);
-                                            intent.putExtra("seek_email",seek_email);
                                             startActivity(intent);
                                         }
                                     });

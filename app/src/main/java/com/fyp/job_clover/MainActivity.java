@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
         SharedPreferences editors = getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);

@@ -54,7 +54,6 @@ private FirebaseAuth auth;
 private DatabaseReference reference;
 private FirebaseUser firebaseUser;
 
-private SharedPreferences emp_pref;
 private String emName,emEmail,emCity,emAddress,emp_id;
 
 
@@ -66,8 +65,6 @@ private String emName,emEmail,emCity,emAddress,emp_id;
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Employer_Data");
-         emp_pref = getApplicationContext().getSharedPreferences("Emp_Pref",  0);
-        final SharedPreferences.Editor editor = emp_pref.edit();
 
         back=findViewById(R.id.back);
         forget=findViewById(R.id.forget);
@@ -97,7 +94,7 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                     Email.requestFocus();
                 }
                 else {
-                    String email = Email.getText().toString();
+                    final String email = Email.getText().toString();
                     final String password = Password.getText().toString();
 
                     final SweetAlertDialog dialog = new SweetAlertDialog(emp_login.this,SweetAlertDialog.PROGRESS_TYPE);
@@ -110,7 +107,6 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
 
-
                                     //  fetch employer data
 
                                    emp_id = auth.getCurrentUser().getUid();
@@ -121,7 +117,7 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                            Employer_Reg_Data srd = dataSnapshot.getValue(Employer_Reg_Data.class);
 
-                                           emName = srd.employer_name;
+                                                   emName = srd.employer_name;
                                                    emEmail = srd.employer_email;
                                        }
 
@@ -142,10 +138,10 @@ private String emName,emEmail,emCity,emAddress,emp_id;
 
                                             SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                                             editors.putString("Type", "Employer");
+                                            editors.putString("emp_name",emName);
+                                            editors.putString("emp_email",emEmail);
                                             editors.apply();
                                             Intent intent = new Intent(emp_login.this,emp_menu.class);
-                                            intent.putExtra("emName",emName);
-                                            intent.putExtra("emEmail",emEmail);
                                             startActivity(intent);
                                         }
                                     });

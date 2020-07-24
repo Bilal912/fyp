@@ -1,6 +1,9 @@
 package com.fyp.job_clover.Seeker;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +30,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+import static com.fyp.job_clover.Seeker.seeker_login.MY_PREFS_NAME;
+
 public class Seeker_Menu extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
@@ -48,9 +55,6 @@ public class Seeker_Menu extends AppCompatActivity {
         textView=findViewById(R.id.menu_btn);
         drawer = findViewById(R.id.drawer_layout);
 
-        //        SharedPreferences editors = getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);
-//        String Email = editors.getString("email","Null");
-//        String First = editors.getString("firstname","Null");
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,9 +68,10 @@ public class Seeker_Menu extends AppCompatActivity {
 
         final TextView Name= view.findViewById(R.id.nav_name);
         final TextView Nav_email= view.findViewById(R.id.nav_email);
+        SharedPreferences editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String seek_name = editors.getString("seeker_name",null);
+        String seek_email = editors.getString("seeker_email",null);
 
-        String seek_name = getIntent().getStringExtra("seek_name");
-        String seek_email = getIntent().getStringExtra("seek_email");
         Nav_email.setText(seek_email);
         Name.setText(seek_name);
 
@@ -124,10 +129,31 @@ public class Seeker_Menu extends AppCompatActivity {
 
                     case R.id.nav_logout_show:
 
-                        auth.signOut();
-                        startActivity(new Intent(Seeker_Menu.this, Login.class));
-                        finish();
+                        drawer.closeDrawer(GravityCompat.START);
+                        final SweetAlertDialog dialog = new SweetAlertDialog(Seeker_Menu.this,SweetAlertDialog.WARNING_TYPE);
+                        dialog.setTitleText("Are you sure?");
+                        dialog.setContentText("you want to logout");
+                        dialog.setConfirmText("Yes");
+                        dialog.setCancelText("No");
+                        dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                dialog.dismiss();
+                            }
+                        });
+                        dialog.show();
+                        dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
 
+                                auth.signOut();
+                                SharedPreferences preferences = getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);
+                                preferences.edit().clear().commit();
+                                startActivity(new Intent(Seeker_Menu.this, Login.class));
+                                finish();
+                            }
+                        });
+                        break;
 
                     default:
                         return true;
@@ -139,11 +165,35 @@ public class Seeker_Menu extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){
+
+        String jaffery = Topname.getText().toString();
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else {
+        else if(jaffery.equals("Home")){
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.ic_baseline_error_24)
+                    .setTitle("Exit")
+                    .setMessage("Are you sure you want to exit?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
 
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        }
+        else {
+            Fragment newFragment = new SeekerHomeFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_fragment, newFragment);
+            transaction.commit();
+            drawer.closeDrawer(GravityCompat.START);
+            Topname.setText("Home");
         }
     }
 }

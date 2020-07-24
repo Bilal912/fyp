@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.skydoves.elasticviews.ElasticButton;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -45,6 +47,11 @@ public class SeekerProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_seeker_profile, container, false);
+
+        final SweetAlertDialog dialog = new SweetAlertDialog(getContext(),SweetAlertDialog.PROGRESS_TYPE);
+        dialog.setTitleText("Loading...");
+        dialog.setCancelable(false);
+        dialog.show();
 
         auth = FirebaseAuth.getInstance();
         String uid = auth.getCurrentUser().getUid();
@@ -74,14 +81,13 @@ public class SeekerProfileFragment extends Fragment {
                     gender.setText(srd.seeker_gender);
                     address.setText(srd.seeker_address);
                     password.setText(srd.seeker_password);
-
-
+                    dialog.dismiss();
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                dialog.dismiss();
             }
         });
 
@@ -89,6 +95,10 @@ public class SeekerProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                final SweetAlertDialog dialog2 = new SweetAlertDialog(getContext(),SweetAlertDialog.PROGRESS_TYPE);
+                dialog2.setTitleText("Loading...");
+                dialog2.setCancelable(false);
+                dialog2.show();
 
                 sname = name.getText().toString();
                 semail = email.getText().toString();
@@ -100,10 +110,10 @@ public class SeekerProfileFragment extends Fragment {
 
                 Seeker_Reg_Data sd = new Seeker_Reg_Data(sname,semail,squalification,saddress,sphone,spassword,sgender);
 
-
                 databaseReference.setValue(sd).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        dialog2.dismiss();
                         Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
                     }
                 });
