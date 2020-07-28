@@ -92,4 +92,6 @@ dependencies {
     //agora
     implementation 'io.agora.rtc:full-sdk:3.0.1'
 
+    implementation 'com.github.prabhat1707:Firebase-Push-Notification-Api-:1.1'
+
 }

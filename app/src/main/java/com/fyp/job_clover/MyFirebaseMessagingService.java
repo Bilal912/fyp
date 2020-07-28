@@ -1,79 +1,88 @@
 package com.fyp.job_clover;
 
-import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.AudioAttributes;
-
-import androidx.core.app.NotificationCompat;
+import android.graphics.Bitmap;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import androidx.core.app.NotificationCompat;
+
 public  class MyFirebaseMessagingService extends FirebaseMessagingService {
-    Activity _context;
-    public SharedPreferences settings;
+    private static final String TAG = "FCM Service";
+    private Bitmap bitmap;
+    private Context context = this;
+    public static final String FIREBASE_TOKEN = "token";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        super.onMessageReceived(remoteMessage);
-
-        int type=getSharedPreferences("login_info",MODE_PRIVATE).getInt("usertype",2);
-
-        RemoteMessage.Notification data = remoteMessage.getNotification();
-//        String body = data.get("message");
-//        String title = data.get("title");
-//        Toast.makeText(this, body, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
-
-        Intent intent;
-        if(type==2){
-            intent = new Intent(getApplicationContext(), MainActivity.class);
+        if (remoteMessage.getData().size() > 0) {
+            sendUserNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("text"));
         }
         else {
-            intent = new Intent(getApplicationContext(), MainActivity.class);
-        }
-        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 101, intent, 0);
-
-        NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-
-        NotificationChannel channel = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-
-            AudioAttributes att = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                    .build();
-
-            channel = new NotificationChannel("222", "my_channel", NotificationManager.IMPORTANCE_HIGH);
-            nm.createNotificationChannel(channel);
 
         }
 
-        NotificationCompat.Builder builder =
-                null
-                ;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            builder = new NotificationCompat.Builder(
-                    getApplicationContext(), "222")
-                    .setContentTitle(remoteMessage.getNotification().getTitle())
-                    .setAutoCancel(true)
-                    .setLargeIcon(((BitmapDrawable)getDrawable(R.drawable.logo)).getBitmap())
-                    .setSmallIcon(R.mipmap.icon_main_round)
-                    .setColor(Color.parseColor("#ffffff"))
-                    .setContentText(remoteMessage.getNotification().getBody())
-                    .setSmallIcon(R.drawable.logo)
-                    .setContentIntent(pi);
-        }
-
-        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-        nm.notify(101, builder.build());
     }
 
+
+    private void sendUserNotification(String title, String mess) {
+        int notifyID = 1;
+        Intent intent;
+        NotificationChannel mChannel;
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        String CHANNEL_ID = context.getPackageName();// The id of the channel.
+        CharSequence name = "Sample one";// The user-visible name of the channel.
+        int importance = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            importance = NotificationManager.IMPORTANCE_HIGH;
+        }
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
+        notificationBuilder.setContentTitle(title);
+        notificationBuilder.setAutoCancel(true);
+        notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
+        notificationBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        notificationBuilder.setContentIntent(pendingIntent);
+        notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(mess));
+        notificationBuilder.setContentText(mess);
+        notificationBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
+        notificationBuilder.setSmallIcon(getNotificationIcon(notificationBuilder));
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+        if (notificationManager != null) {
+            notificationManager.notify(notifyID /* ID of notification */, notificationBuilder.build());
+        }
+
+
+    }
+
+    private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int color = 0x036085;
+            notificationBuilder.setColor(color);
+            return R.mipmap.ic_launcher;
+
+        } else {
+            return R.mipmap.ic_launcher;
+        }
+    }
 }

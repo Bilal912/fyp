@@ -1,39 +1,42 @@
 package com.fyp.job_clover.Employer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
 import com.fyp.job_clover.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.ValueEventListener;
 import com.skydoves.elasticviews.ElasticButton;
+import com.trenzlr.firebasenotificationhelper.FirebaseNotiCallBack;
+import com.trenzlr.firebasenotificationhelper.FirebaseNotificationHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class EmpViewPostActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+public class EmpViewPostActivity extends AppCompatActivity implements FirebaseNotiCallBack {
     private TextView job_title,company_name,company_city,address,salary_from,salary_to,education,positions,email,phone,description,jobType;
-    private String title,name,city,c_address,salaryFrom,salaryTo,c_email,c_phone,p_code,c_description,c_education,c_positions,jobTy,contact;
+    private String title,name,city,c_address,salaryFrom,salaryTo,
+            c_email,c_phone,p_code,c_description,c_education,c_positions,jobTy,contact,emp_token,seeker_token;
     private ElasticButton post_upload_btn;
     private FirebaseAuth auth;
     private DatabaseReference reference;
+
 
 
     @Override
@@ -86,6 +89,35 @@ public class EmpViewPostActivity extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         });
+
+                        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference();
+                        reference1.child("Seeker_Token").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                    seeker_token = snapshot.getValue().toString();
+                                    Toast.makeText(EmpViewPostActivity.this, seeker_token, Toast.LENGTH_SHORT).show();
+                                    if(seeker_token != null)
+                                    {
+                                        FirebaseNotificationHelper.initialize("AAAAXZtjQRc:APA91bELwafwrp4EcCTtsTOEjgQSkxvRkx01BYL2n02gEOMWMsiV5dcVzoutoCL_zUcH0kVaiGhd8dfkJ7AINuMWdr34YC-ZsOqXuikVcPvT2o1isG-WimIFpdcXvgiz6Wr6Q-Dzuei0")
+                                                .defaultJson(true, null)
+                                                .title("employer")
+                                                .message("")
+                                                .setCallBack(EmpViewPostActivity.this)
+                                                .receiverFirebaseToken(seeker_token)
+                                                .send();
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
                     }
                 });
             }
@@ -160,5 +192,17 @@ public class EmpViewPostActivity extends AppCompatActivity {
     public void goUpdatebtn(View view) {
         Intent intent = new Intent(getApplicationContext(),EmpUpdatePostActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void success(String s) {
+        Toast.makeText(getApplicationContext(), "YES", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void fail(String s) {
+        Toast.makeText(getApplicationContext(), "No", Toast.LENGTH_SHORT).show();
+
     }
 }

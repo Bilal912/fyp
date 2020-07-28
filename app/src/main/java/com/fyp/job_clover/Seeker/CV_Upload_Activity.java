@@ -16,6 +16,7 @@ import com.fyp.job_clover.Adapter.AllCandidateAdapter;
 import com.fyp.job_clover.Data_Classes.AppliedJobs;
 import com.fyp.job_clover.Data_Classes.Constants;
 import com.fyp.job_clover.Data_Classes.FileUpload;
+import com.fyp.job_clover.Employer.EmpViewPostActivity;
 import com.fyp.job_clover.Employer.ViewCVActivity;
 import com.fyp.job_clover.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,10 +33,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.trenzlr.firebasenotificationhelper.FirebaseNotiCallBack;
+import com.trenzlr.firebasenotificationhelper.FirebaseNotificationHelper;
 
 import java.security.KeyFactory;
 
-public class CV_Upload_Activity extends AppCompatActivity {
+public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNotiCallBack {
     final static int PICK_PDF_CODE = 2342;
     TextView textViewStatus;
     EditText editTextFilename;
@@ -44,7 +47,7 @@ public class CV_Upload_Activity extends AppCompatActivity {
     private FirebaseAuth auth;
     StorageReference mStorageReference;
     DatabaseReference mDatabaseReference,matabaseReference,databaseReference;
-    private  String key,title,jobtype,namecity,salary,description,position,emp_id,cv_email, uid;
+    private  String key,title,jobtype,namecity,salary,description,position,emp_id,cv_email, uid,emp_token,seeker_token;
     private  FileUpload upload;
 
 
@@ -168,6 +171,33 @@ public class CV_Upload_Activity extends AppCompatActivity {
                         mDatabaseReference.child(key).child(uid).setValue(upload);
                         AppliedJobs aj = new AppliedJobs(title,jobtype,namecity,salary,description, position,emp_id);
                         matabaseReference.child(key).child(uid).setValue(aj);
+
+
+                        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference();
+                        reference1.child("Employer_Token").child(emp_id).child("token").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                emp_token = dataSnapshot.getValue().toString();
+                                Toast.makeText(CV_Upload_Activity.this, emp_token, Toast.LENGTH_SHORT).show();
+                                if(emp_token != null)
+                                {
+                                    FirebaseNotificationHelper.initialize("AAAAXZtjQRc:APA91bELwafwrp4EcCTtsTOEjgQSkxvRkx01BYL2n02gEOMWMsiV5dcVzoutoCL_zUcH0kVaiGhd8dfkJ7AINuMWdr34YC-ZsOqXuikVcPvT2o1isG-WimIFpdcXvgiz6Wr6Q-Dzuei0")
+                                            .defaultJson(true, null)
+                                            .title(title+"Candidate CV ")
+                                            .message("")
+                                            .setCallBack(CV_Upload_Activity.this)
+                                            .receiverFirebaseToken(emp_token)
+                                            .send();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -190,7 +220,15 @@ public class CV_Upload_Activity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void success(String s) {
+        Toast.makeText(getApplicationContext(), "YES", Toast.LENGTH_SHORT).show();
 
+    }
 
+    @Override
+    public void fail(String s) {
+        Toast.makeText(getApplicationContext(), "No", Toast.LENGTH_SHORT).show();
 
+    }
 }

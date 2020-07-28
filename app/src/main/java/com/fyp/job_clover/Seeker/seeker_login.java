@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.skydoves.elasticviews.ElasticButton;
 
 public class seeker_login extends AppCompatActivity {
@@ -115,6 +116,19 @@ public class seeker_login extends AppCompatActivity {
                                         }
                                     });
 
+                                    String token = FirebaseInstanceId.getInstance().getToken();
+                                    String uid = auth.getCurrentUser().getUid();
+
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Seeker_Token")
+                                            .child(uid);
+                                    reference.child("token").setValue(token).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                        }
+                                    });
+
+
                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     dialog.setTitleText("Login Successfully");
                                     dialog.setConfirmText("OK");
@@ -131,6 +145,8 @@ public class seeker_login extends AppCompatActivity {
                                             startActivity(intent);
                                         }
                                     });
+
+
                                 }
 
                             })
