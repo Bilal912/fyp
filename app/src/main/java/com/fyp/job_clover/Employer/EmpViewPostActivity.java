@@ -35,7 +35,7 @@ public class EmpViewPostActivity extends AppCompatActivity implements FirebaseNo
             c_email,c_phone,p_code,c_description,c_education,c_positions,jobTy,contact,emp_token,seeker_token;
     private ElasticButton post_upload_btn;
     private FirebaseAuth auth;
-    private DatabaseReference reference;
+    private DatabaseReference reference,reference2;
 
 
 
@@ -90,24 +90,27 @@ public class EmpViewPostActivity extends AppCompatActivity implements FirebaseNo
                             }
                         });
 
-                        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference();
-                        reference1.child("Seeker_Token").addValueEventListener(new ValueEventListener() {
+                          reference2 = FirebaseDatabase.getInstance().getReference("Seeker_Token");
+                         reference2.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                    seeker_token = snapshot.getValue().toString();
-                                    Toast.makeText(EmpViewPostActivity.this, seeker_token, Toast.LENGTH_SHORT).show();
-                                    if(seeker_token != null)
-                                    {
-                                        FirebaseNotificationHelper.initialize("AAAAXZtjQRc:APA91bELwafwrp4EcCTtsTOEjgQSkxvRkx01BYL2n02gEOMWMsiV5dcVzoutoCL_zUcH0kVaiGhd8dfkJ7AINuMWdr34YC-ZsOqXuikVcPvT2o1isG-WimIFpdcXvgiz6Wr6Q-Dzuei0")
-                                                .defaultJson(true, null)
-                                                .title("employer")
-                                                .message("")
-                                                .setCallBack(EmpViewPostActivity.this)
-                                                .receiverFirebaseToken(seeker_token)
-                                                .send();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                                    for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                                        seeker_token = snapshot1.getValue().toString();
+                                        Toast.makeText(EmpViewPostActivity.this, seeker_token, Toast.LENGTH_SHORT).show();
+                                        if (seeker_token != null) {
+                                            FirebaseNotificationHelper.initialize("AAAAXZtjQRc:APA91bELwafwrp4EcCTtsTOEjgQSkxvRkx01BYL2n02gEOMWMsiV5dcVzoutoCL_zUcH0kVaiGhd8dfkJ7AINuMWdr34YC-ZsOqXuikVcPvT2o1isG-WimIFpdcXvgiz6Wr6Q-Dzuei0")
+                                                    .defaultJson(true,null)
+                                                    .title(name + " "+"Require"+" "+title)
+                                                    .message(c_description)
+                                                    .setCallBack(EmpViewPostActivity.this)
+                                                    .receiverFirebaseToken(seeker_token)
+                                                    .send();
+                                        }
                                     }
+
                                 }
 
                             }
@@ -194,10 +197,10 @@ public class EmpViewPostActivity extends AppCompatActivity implements FirebaseNo
         startActivity(intent);
     }
 
+
     @Override
     public void success(String s) {
-        Toast.makeText(getApplicationContext(), "YES", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(getApplicationContext(), "Yes", Toast.LENGTH_SHORT).show();
     }
 
     @Override
