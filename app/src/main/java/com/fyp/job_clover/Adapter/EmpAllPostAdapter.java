@@ -61,7 +61,7 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
     @Override
     public EmpAllPostAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.emp_all_post,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.all_post_emp,parent,false);
         return new MyHolder(v);
 
      }

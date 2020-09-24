@@ -51,8 +51,6 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
     private  FileUpload upload;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +69,7 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
 
         //getting firebase objects
         mStorageReference = FirebaseStorage.getInstance().getReference();
-         matabaseReference = FirebaseDatabase.getInstance().getReference("Applied_Jobs");
+        matabaseReference = FirebaseDatabase.getInstance().getReference("Applied_Jobs");
         databaseReference = FirebaseDatabase.getInstance().getReference("CV_Data");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data");
 
@@ -98,6 +96,7 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
 
 
         //getting the views
+
         textViewStatus = (TextView) findViewById(R.id.textViewStatus);
         editTextFilename = (EditText) findViewById(R.id.editTextFileName);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
@@ -134,7 +133,7 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
         //creating an intent for file chooser
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("application/*");
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PDF_CODE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), PICK_PDF_CODE);
     }
 
     @Override
@@ -153,7 +152,6 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
     }
 
 
-
     private void uploadFile(Uri data) {
         progressBar.setVisibility(View.VISIBLE);
         StorageReference sRef = mStorageReference.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + ".pdf");
@@ -165,38 +163,37 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
                         progressBar.setVisibility(View.GONE);
                         textViewStatus.setText("File Uploaded Successfully");
                         Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
-                        uid =auth.getCurrentUser().getUid() ;
+                        uid =auth.getCurrentUser().getUid();
                         upload = new FileUpload(editTextFilename.getText().toString(), firebaseUri.toString(),
                                 auth.getCurrentUser().getUid());
                         mDatabaseReference.child(key).child(uid).setValue(upload);
                         AppliedJobs aj = new AppliedJobs(title,jobtype,namecity,salary,description, position,emp_id);
                         matabaseReference.child(key).child(uid).setValue(aj);
 
-
-                        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference();
-                        reference1.child("Employer_Token").child(emp_id).child("token").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                emp_token = dataSnapshot.getValue().toString();
-                                Toast.makeText(CV_Upload_Activity.this, emp_token, Toast.LENGTH_SHORT).show();
-                                if(emp_token != null)
-                                {
-                                    FirebaseNotificationHelper.initialize("AAAAXZtjQRc:APA91bELwafwrp4EcCTtsTOEjgQSkxvRkx01BYL2n02gEOMWMsiV5dcVzoutoCL_zUcH0kVaiGhd8dfkJ7AINuMWdr34YC-ZsOqXuikVcPvT2o1isG-WimIFpdcXvgiz6Wr6Q-Dzuei0")
-                                            .defaultJson(true, null)
-                                            .title(title+"Candidate CV ")
-                                            .message("")
-                                            .setCallBack(CV_Upload_Activity.this)
-                                            .receiverFirebaseToken(emp_token)
-                                            .send();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+//                        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference();
+//                        reference1.child("Employer_Token").child(emp_id).child("token").addValueEventListener(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                                emp_token = dataSnapshot.getValue().toString();
+//                                Toast.makeText(CV_Upload_Activity.this, emp_token, Toast.LENGTH_SHORT).show();
+//                                if(emp_token != null)
+//                                {
+//                                    FirebaseNotificationHelper.initialize("AAAAXZtjQRc:APA91bELwafwrp4EcCTtsTOEjgQSkxvRkx01BYL2n02gEOMWMsiV5dcVzoutoCL_zUcH0kVaiGhd8dfkJ7AINuMWdr34YC-ZsOqXuikVcPvT2o1isG-WimIFpdcXvgiz6Wr6Q-Dzuei0")
+//                                            .defaultJson(true, null)
+//                                            .title(title+"Candidate CV ")
+//                                            .message("")
+//                                            .setCallBack(CV_Upload_Activity.this)
+//                                            .receiverFirebaseToken(emp_token)
+//                                            .send();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                            }
+//                        });
 
                     }
                 })
@@ -215,20 +212,15 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
                     }
                 });
 
-
-
     }
-
 
     @Override
     public void success(String s) {
         Toast.makeText(getApplicationContext(), "YES", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
     public void fail(String s) {
         Toast.makeText(getApplicationContext(), "No", Toast.LENGTH_SHORT).show();
-
     }
 }

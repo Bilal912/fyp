@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <com.skydoves.elasticviews.ElasticCardView
         android:id="@+id/jobview_card"
         android:layout_width="match_parent"
@@ -114,7 +113,6 @@
                     android:text="Detail"
                     android:padding="10dp"
                     android:textColor="#878585"
-                    android:visibility="gone"
                     android:layout_marginRight="5dp"
                     android:textSize="20dp"/>
 
@@ -126,7 +124,6 @@
                     android:layout_marginRight="20dp"
                     android:padding="10dp"
                     android:textColor="#878585"
-                    android:visibility="gone"
                     android:textSize="20dp"/>
                 <com.skydoves.elasticviews.ElasticImageView
                     android:id="@+id/deleteimg"
@@ -135,12 +132,10 @@
                     android:src="@drawable/ic_delete"
                     android:padding="5dp"
                     android:layout_marginRight="20dp"
-                    android:visibility="gone"
                     android:textSize="20dp"/>
 
             </LinearLayout>
         </RelativeLayout>
 
     </com.skydoves.elasticviews.ElasticCardView>
-
 </RelativeLayout>

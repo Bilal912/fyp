@@ -14,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.fyp.job_clover.Adapter.EmpAllPostAdapter;
 import com.fyp.job_clover.Data_Classes.Emp_Post_Data;
 import com.fyp.job_clover.Emp_Interface;
@@ -40,7 +42,9 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
     private EditText postSearch;
     private String emp_id;
     private View v;
+    ShimmerFrameLayout frameLayout;
 
+    TextView textView;
     private FirebaseAuth auth;
     private DatabaseReference reference;
     private Emp_Interface empInterface;
@@ -56,6 +60,7 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_emp_all_post, container, false);
+
 
 
         initializeData();
@@ -114,6 +119,9 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
 
     private void initializeData()
     {
+
+        frameLayout = view.findViewById(R.id.shimmer_id);
+        textView = view.findViewById(R.id.texty);
 
         recyclerView = view.findViewById(R.id.emp_all_post_fragment_recycle);
         postSearch = view.findViewById(R.id.etpost_search);
@@ -207,18 +215,41 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
                      epd.setSpecific_key(snapshot.getKey());
                      post_list.add(epd);
                 }
+                textView.setVisibility(View.GONE);
+                frameLayout.stopShimmerAnimation();
+                frameLayout.setVisibility(View.GONE);
+
                 postAdapter.notifyDataSetChanged();
             }
             else {
+                textView.setVisibility(View.VISIBLE);
+                frameLayout.stopShimmerAnimation();
+                frameLayout.setVisibility(View.GONE);
+
                 Toast.makeText(getContext(), "Record No Found", Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
+            textView.setVisibility(View.GONE);
+            frameLayout.stopShimmerAnimation();
+            frameLayout.setVisibility(View.GONE);
 
             Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_SHORT).show();
         }
     };
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        frameLayout.startShimmerAnimation();
+    }
+    @Override
+    public void onPause() {
+
+        super.onPause();
+        frameLayout.startShimmerAnimation();
+    }
 
 }

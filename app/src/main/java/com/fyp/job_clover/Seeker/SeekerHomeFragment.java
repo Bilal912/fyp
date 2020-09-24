@@ -1,5 +1,8 @@
 package com.fyp.job_clover.Seeker;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,15 +20,19 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.fyp.job_clover.R;
+import com.fyp.job_clover.Viewdoc_Webview;
 import com.skydoves.elasticviews.ElasticCardView;
 
 import java.io.File;
 import java.util.HashMap;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.fyp.job_clover.Seeker.seeker_login.MY_PREFS_NAME;
+
 public class SeekerHomeFragment extends Fragment {
 private SliderLayout mDemoSlider;
 ElasticCardView View,Apply,CV;
-
+String cv_path;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,6 +42,10 @@ ElasticCardView View,Apply,CV;
         mDemoSlider = view.findViewById(R.id.slider);
         Slider_view();
 
+        SharedPreferences editors = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        cv_path = editors.getString("cv_path",null);
+//        Toast.makeText(getActivity(), cv_path, Toast.LENGTH_SHORT).show();
+
         View = view.findViewById(R.id.view_job);
         Apply = view.findViewById(R.id.apply_job);
         CV = view.findViewById(R.id.cv);
@@ -42,7 +53,6 @@ ElasticCardView View,Apply,CV;
         View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
-
 
             }
         });

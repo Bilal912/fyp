@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.fyp.job_clover.Adapter.FavCandidate;
 import com.fyp.job_clover.Data_Classes.Fav_CV;
 import com.fyp.job_clover.Data_Classes.FileUpload;
@@ -36,18 +38,13 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
     private String url,fileName;
     DatabaseReference mDatabaseReference;
     ArrayList<FileUpload> list;
+    TextView textView;
     private FirebaseAuth auth;
     private RecyclerView recyclerView;
     private EditText search_cv;
     private FavCandidate candidateAdapter;
     private Emp_Interface empInterface;
-
-
-
-    public EmpFindCandFragment() {
-        // Required empty public constructor
-    }
-
+    ShimmerFrameLayout frameLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +60,8 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
         auth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("Fav_CV_Data");
 
+        frameLayout = v.findViewById(R.id.shimmer_id);
+        textView = v.findViewById(R.id.texty);
 
         search_cv = v.findViewById(R.id.etfav_search);
         list = new ArrayList<>();
@@ -79,21 +78,36 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()){
-                        FileUpload upload = snapshot1.getValue(FileUpload.class);
-                        upload.setKey(snapshot1.getKey());
-                        list.add(upload);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                            FileUpload upload = snapshot1.getValue(FileUpload.class);
+                            upload.setKey(snapshot1.getKey());
+                            list.add(upload);
+
+                        }
+                        textView.setVisibility(View.GONE);
+                        frameLayout.stopShimmerAnimation();
+                        frameLayout.setVisibility(View.GONE);
 
                     }
 
+                    candidateAdapter.notifyDataSetChanged();
                 }
-
-                candidateAdapter.notifyDataSetChanged();
+                else {
+                    frameLayout.stopShimmerAnimation();
+                    frameLayout.setVisibility(View.GONE);
+                    textView.setVisibility(View.VISIBLE);
+                    Toast.makeText(getContext(), "Record No Found", Toast.LENGTH_SHORT).show();
+                }
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                textView.setVisibility(View.GONE);
+                frameLayout.stopShimmerAnimation();
+                frameLayout.setVisibility(View.GONE);
 
             }
         });
@@ -143,4 +157,17 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
     public void onNext(Bundle b) {
 
     }
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        frameLayout.startShimmerAnimation();
+    }
+    @Override
+    public void onPause() {
+
+        super.onPause();
+        frameLayout.startShimmerAnimation();
+    }
+
 }

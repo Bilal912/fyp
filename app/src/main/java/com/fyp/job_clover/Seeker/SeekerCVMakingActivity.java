@@ -78,6 +78,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     private TextInputEditText title,name,email,city,address;
     private String cv_job_title,cv_name,cv_email,cv_phone,cv_p_code,cv_req_education,cv_city,cv_address,cv_contact,
             cv_skills,cv_experience,edu,last,cv_hobb;
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
 
     private LinearLayout countrypicker,country_name_picker;
     private TextView phoneCode,country;
@@ -369,8 +370,7 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
     }
 
     public void back(View view) {
-        startActivity(new Intent(getApplicationContext(), CV_Upload_Activity.class));
-
+        finish();
     }
 
     public void bold(View view) {
@@ -573,6 +573,13 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
                     document.close();
 
                 Toast.makeText(SeekerCVMakingActivity.this,"Create Successfully",Toast.LENGTH_LONG).show();
+
+                SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editors.putString("cv_path",savedPath);
+                editors.apply();
+
+
+
             }
             else {
                 Toast.makeText(SeekerCVMakingActivity.this,"String.valueOf(de)",Toast.LENGTH_LONG).show();
@@ -589,5 +596,4 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
         }
 
     }
-
 }
