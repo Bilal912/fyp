@@ -46,8 +46,7 @@ public class seeker_login extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
 
-    private String seek_name,seek_email,seek_qualification,seek_address,seek_phone,seek_gender,seeker_id;
-
+    String seek_name,seek_email,seek_qualification,seek_address,seek_phone,seek_gender,seeker_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +106,8 @@ public class seeker_login extends AppCompatActivity {
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             Seeker_Reg_Data srd = dataSnapshot.getValue(Seeker_Reg_Data.class);
-                                             seek_name = srd.seeker_name;
-                                             seek_email = srd.seeker_email;
+                                            seek_name = srd.seeker_name;
+                                            seek_email = srd.seeker_email;
                                         }
 
                                         @Override
@@ -128,7 +127,6 @@ public class seeker_login extends AppCompatActivity {
                                         }
                                     });
 
-
                                     dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     dialog.setTitleText("Login Successfully");
                                     dialog.setConfirmText("OK");
@@ -146,7 +144,6 @@ public class seeker_login extends AppCompatActivity {
                                         }
                                     });
 
-
                                 }
 
                             })
@@ -156,8 +153,6 @@ public class seeker_login extends AppCompatActivity {
                                     Toast.makeText(seeker_login.this, e.toString(),Toast.LENGTH_SHORT).show();
                                 }
                             });
-
-
                 }
             }
         });

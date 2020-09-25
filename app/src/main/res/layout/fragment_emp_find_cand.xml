@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00A4A4"
+    android:background="@color/white"
     tools:context=".Employer.EmpFindCandFragment">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:drawableLeft="@drawable/ic_search"
         android:layout_marginHorizontal="10dp"
         android:drawablePadding="10dp"
@@ -17,10 +17,42 @@
         android:hint="Search CV by Name"
         android:id="@+id/etfav_search"
         android:background="@drawable/lg_button"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_id"
+        android:layout_below="@id/etfav_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:duration="800"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <include layout="@layout/shimmer_one"/>
+            <include layout="@layout/shimmer_one"/>
+            <include layout="@layout/shimmer_one"/>
+            <include layout="@layout/shimmer_one"/>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No Record Found "
+        android:textStyle="italic"
+        android:id="@+id/texty"
+        android:gravity="center_vertical|center_horizontal"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favcandidateRecycle"
         android:layout_below="@id/etfav_search"

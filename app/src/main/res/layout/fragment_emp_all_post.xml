@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
-    android:background="@drawable/border_gradient"
     tools:context=".Employer.EmpAllPostFragment">
 
     <EditText
@@ -20,16 +20,50 @@
         android:layout_marginTop="10dp"
         />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_id"
+        android:layout_below="@id/etpost_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:duration="800"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <include layout="@layout/shimmer_one"/>
+            <include layout="@layout/shimmer_one"/>
+            <include layout="@layout/shimmer_one"/>
+            <include layout="@layout/shimmer_one"/>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No Record Found "
+        android:textStyle="italic"
+        android:id="@+id/texty"
+        android:gravity="center_vertical|center_horizontal"
+        />
+
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
          android:layout_below="@id/etpost_search"
         android:id="@+id/emp_all_post_fragment_recycle"
-        >
+        />
 
-    </androidx.recyclerview.widget.RecyclerView>
 
 
 

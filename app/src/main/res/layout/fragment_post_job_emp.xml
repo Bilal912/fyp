@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -31,7 +32,7 @@
                         android:layout_height="50dp"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:hint="Job Title"
                         android:textAlignment="center"
                         android:textColorHint="#000000"
@@ -52,7 +53,7 @@
                         android:id="@+id/company_name_id"
                         android:layout_height="50dp"
                         android:inputType="text"
-                         android:textSize="20sp"
+                         android:textSize="16sp"
                         android:hint="Company Name"
                         android:textAlignment="center"
                         android:textColorHint="#000000"
@@ -72,7 +73,7 @@
                         android:id="@+id/company_email_id"
                         android:layout_height="50dp"
                         android:inputType="text"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:hint="Email"
                         android:textAlignment="center"
                         android:textColorHint="#000000"
@@ -93,7 +94,7 @@
                         android:layout_height="50dp"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:hint="City"
                         android:textAlignment="center"
                         android:textColorHint="#000000"
@@ -113,7 +114,7 @@
                         android:id="@+id/company_address_txt"
                         android:layout_height="50dp"
                         android:inputType="text"
-                         android:textSize="20sp"
+                         android:textSize="16sp"
                         android:hint="Company Address"
                         android:textAlignment="center"
                         android:textColorHint="#000000"
@@ -154,7 +155,7 @@
                         android:id="@+id/emp_post_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:padding="12dp"
                         android:layout_marginLeft="8dp" />
                 </LinearLayout>
@@ -165,7 +166,6 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-
                     android:gravity="center_horizontal"
                     />
 
@@ -176,7 +176,6 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-
                     android:gravity="center_horizontal"
                     />
                  <LinearLayout
@@ -200,7 +199,7 @@
                             android:layout_height="50dp"
                             android:inputType="number"
                             android:maxLines="1"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:hint="Salary : PKR From"
                             android:textAlignment="center"
                             android:textColorHint="#000000"
@@ -211,7 +210,7 @@
                     <TextView
                         android:id="@+id/to"
                         android:text="to"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:singleLine="true"
                         android:layout_weight="3"
                         android:textAlignment="center"
@@ -244,7 +243,7 @@
                             android:layout_height="50dp"
                             android:inputType="number"
                             android:maxLines="1"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:hint="PKR "
                             android:textAlignment="center"
                             android:textColorHint="#000000"
@@ -272,7 +271,7 @@
                     android:text="What type of is it ?"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                     android:textSize="20sp"
+                     android:textSize="18sp"
                     android:layout_marginHorizontal="20dp"
                     android:fontFamily="@font/calibri"
                     />
@@ -320,7 +319,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/describe"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:layout_marginHorizontal="20dp"
                     android:fontFamily="@font/calibri"
                     />
@@ -354,12 +353,7 @@
                     app:button_cornerRadius="20dp"
                     />
 
-
             </LinearLayout>
         </ScrollView>
-
-
-
-
 
 </RelativeLayout>

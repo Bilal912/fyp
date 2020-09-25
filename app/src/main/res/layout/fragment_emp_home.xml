@@ -2,17 +2,130 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".Employer.emp_home">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:textColor="@color/black"
+    <RelativeLayout
+        android:background="#F5FFFA"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Still Working..."
-        android:gravity="center"
-        />
+        >
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            >
+        </com.daimajia.slider.library.SliderLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/linear"
+            android:layout_below="@id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <com.skydoves.elasticviews.ElasticCardView
+                android:id="@+id/view_job"
+                app:button_duration="100"
+                app:button_scale="0.87"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                >
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/working"
+                    android:layout_marginLeft="20dp"
+                    />
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Post A Job"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    />
+            </com.skydoves.elasticviews.ElasticCardView>
+
+            <com.skydoves.elasticviews.ElasticCardView
+                android:id="@+id/apply_job"
+                app:button_duration="100"
+                app:button_scale="0.87"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                >
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/web"
+                    android:layout_marginLeft="20dp"
+                    />
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Post"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    />
+            </com.skydoves.elasticviews.ElasticCardView>
+
+            <com.skydoves.elasticviews.ElasticCardView
+                android:id="@+id/cv"
+                app:button_duration="100"
+                app:button_scale="0.87"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                >
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/cv"
+                    android:layout_marginLeft="20dp"
+                    />
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Find Candidate"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    />
+            </com.skydoves.elasticviews.ElasticCardView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
 </FrameLayout>

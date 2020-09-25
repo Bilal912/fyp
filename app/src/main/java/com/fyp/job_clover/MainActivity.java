@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
                     t.sleep(1000);
 
-
                     if (type == null) {
                         Intent i = new Intent(MainActivity.this, onboard.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

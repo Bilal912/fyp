@@ -54,6 +54,8 @@ public class AppliedJobsFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("Applied_Jobs");
 
+        final String uid = auth.getCurrentUser().getUid();
+
         frameLayout = v.findViewById(R.id.shimmer_id);
         textView = v.findViewById(R.id.texty);
 

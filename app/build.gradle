@@ -94,4 +94,5 @@ dependencies {
 
     implementation 'com.github.prabhat1707:Firebase-Push-Notification-Api-:1.1'
 
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 }

@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="15dp"
     app:cardElevation="5dp"
-    app:cardCornerRadius="4dp"
-    app:contentPadding="10dp"
+    app:cardCornerRadius="10dp"
+    app:contentPadding="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Job_title"
-            android:textSize="25dp"
+            android:textSize="22sp"
+            android:textColor="@color/black"
             android:padding="5dp"
             android:layout_margin="5dp"/>
 
@@ -28,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CV"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:padding="5dp"
             android:layout_margin="5dp"/>
 
