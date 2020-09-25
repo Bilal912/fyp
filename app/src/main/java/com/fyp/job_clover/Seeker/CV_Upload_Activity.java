@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,11 +44,11 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
     TextView textViewStatus;
     EditText editTextFilename;
     ProgressBar progressBar;
-
+    private Button cvupload;
     private FirebaseAuth auth;
     StorageReference mStorageReference;
     DatabaseReference mDatabaseReference,matabaseReference,databaseReference;
-    private  String key,title,jobtype,namecity,salary,description,position,emp_id,cv_email, uid,emp_token,seeker_token;
+    private  String key,title,jobtype,namecity,salary,description,position,emp_id,cv_email, uid,emp_token,seeker_token,name;
     private  FileUpload upload;
 
 
@@ -100,14 +101,27 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
         textViewStatus = (TextView) findViewById(R.id.textViewStatus);
         editTextFilename = (EditText) findViewById(R.id.editTextFileName);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
-
+        cvupload = findViewById(R.id.buttonUploadFile);
         //attaching listeners to views
-        findViewById(R.id.buttonUploadFile).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getPDF();
-            }
-        });
+
+
+            cvupload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    name = editTextFilename.getText().toString();
+
+                    if (name.equals(""))
+                    {
+
+                        Toast.makeText(CV_Upload_Activity.this, "Enter Your Name", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        getPDF();
+                    }
+                }
+            });
+
+
         findViewById(R.id.makeCV).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,11 +178,11 @@ public class CV_Upload_Activity extends AppCompatActivity implements FirebaseNot
                         textViewStatus.setText("File Uploaded Successfully");
                         Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
                         uid =auth.getCurrentUser().getUid();
-                        upload = new FileUpload(editTextFilename.getText().toString(), firebaseUri.toString(),
+                        upload = new FileUpload(name, firebaseUri.toString(),
                                 auth.getCurrentUser().getUid());
                         mDatabaseReference.child(key).child(uid).setValue(upload);
                         AppliedJobs aj = new AppliedJobs(title,jobtype,namecity,salary,description, position,emp_id);
-                        matabaseReference.child(key).child(uid).setValue(aj);
+                        matabaseReference.child(uid).child(key).setValue(aj);
 
 //                        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference();
 //                        reference1.child("Employer_Token").child(emp_id).child("token").addValueEventListener(new ValueEventListener() {

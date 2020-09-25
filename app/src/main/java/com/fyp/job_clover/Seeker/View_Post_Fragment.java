@@ -57,7 +57,8 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
     ShimmerFrameLayout frameLayout;
 
     private View v;
-    private String title,name,city,c_address,salaryFrom,salaryTo,c_email,c_phone,p_code,c_description,c_education,c_positions,jobTy,contact;
+    private String title,name,city,c_address,salaryFrom,salaryTo,c_email,
+            c_phone,p_code,c_description,c_education,c_positions,jobTy,contact;
 
     private FirebaseAuth auth;
     private DatabaseReference reference;

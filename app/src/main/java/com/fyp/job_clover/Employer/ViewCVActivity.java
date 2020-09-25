@@ -32,7 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
-    private String url,fileName,key,emp_id;
+    private String url,fileName,key,emp_id,mkey;
     DatabaseReference mDatabaseReference;
     List<FileUpload> list;
     private FirebaseAuth auth;
@@ -50,6 +50,8 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_c_v);
 
+
+        mkey = getIntent().getStringExtra("mkey");
 //        Bundle bundle = new Bundle();
 //
 //
@@ -60,7 +62,7 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
 //        Toast.makeText(getApplicationContext(), email, Toast.LENGTH_SHORT).show();
 
         auth = FirebaseAuth.getInstance();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("CV_Data").child(mkey);
         databaseReference = FirebaseDatabase.getInstance().getReference("Fav_CV_Data");
 
 
@@ -78,12 +80,11 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()){
-                        FileUpload upload = snapshot1.getValue(FileUpload.class);
-                        upload.setKey(snapshot1.getKey());
+                    FileUpload upload = snapshot.getValue(FileUpload.class);
+                        upload.setKey(snapshot.getKey());
 
                         list.add(upload);
-                    }
+
 
                 }
                 candidateAdapter.notifyDataSetChanged();

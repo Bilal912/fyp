@@ -66,24 +66,24 @@ public class AppliedJobsFragment extends Fragment {
         adapter = new AppliedJobAdapter(getContext(),list);
         recyclerView.setAdapter(adapter);
 
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+        mDatabaseReference.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     list.clear();
+
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        for (DataSnapshot snapshot1 : snapshot.getChildren()){
-                            AppliedJobs epd = snapshot1.getValue(AppliedJobs.class);
-                            epd.setDkey(snapshot1.getKey());
-                            list.add(epd);
-                        }
+
+                        AppliedJobs epd = snapshot.getValue(AppliedJobs.class);
+                        epd.setDkey(snapshot.getKey());
+                        list.add(epd);
+
                     }
                     textView.setVisibility(View.GONE);
                     frameLayout.stopShimmerAnimation();
                     frameLayout.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                 }
-
                 else {
                     textView.setVisibility(View.VISIBLE);
                     frameLayout.stopShimmerAnimation();
@@ -91,6 +91,8 @@ public class AppliedJobsFragment extends Fragment {
 
                     Toast.makeText(getContext(), "Record No Found", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
 
             @Override
@@ -98,7 +100,7 @@ public class AppliedJobsFragment extends Fragment {
 
             }
         });
-        return v;
+         return v;
     }
 
     @Override
