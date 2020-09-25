@@ -46,6 +46,10 @@ public class SeekkerViewPostAdapter extends RecyclerView.Adapter<SeekkerViewPost
         final String totalSalary = "From: ".concat(epd.salary_from) + " - " + "To: ".concat(epd.salary_to);
         holder.salary.setText(totalSalary);
 
+        String time = epd.time;
+        holder.posttime.setText(time);
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
