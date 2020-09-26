@@ -50,11 +50,10 @@ public class Seeker_Menu extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        Topname=findViewById(R.id.top_name);
+        //Topname=findViewById(R.id.top_name);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         textView=findViewById(R.id.menu_btn);
         drawer = findViewById(R.id.drawer_layout);
-
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +67,7 @@ public class Seeker_Menu extends AppCompatActivity {
 
         final TextView Name= view.findViewById(R.id.nav_name);
         final TextView Nav_email= view.findViewById(R.id.nav_email);
-        SharedPreferences editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences editors = getSharedPreferences(seeker_login.MY_PREFS_NAME, MODE_PRIVATE);
         String seek_name = editors.getString("seeker_name",null);
         String seek_email = editors.getString("seeker_email",null);
 
@@ -89,7 +88,7 @@ public class Seeker_Menu extends AppCompatActivity {
                         transaction.replace(R.id.nav_fragment, newFragment);
                         transaction.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Home");
+                        //Topname.setText("Home");
                         break;
 
                     case R.id.nav_apply_job_show:
@@ -98,7 +97,7 @@ public class Seeker_Menu extends AppCompatActivity {
                         transaction5.replace(R.id.nav_fragment, newFragment5);
                         transaction5.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Your Applied Jobs");
+                        //Topname.setText("Your Applied Jobs");
                         break;
 
                     case R.id.nav_profile_show:
@@ -107,7 +106,7 @@ public class Seeker_Menu extends AppCompatActivity {
                         transaction2.replace(R.id.nav_fragment, newFragment2);
                         transaction2.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Edit Profile");
+                        //Topname.setText("Edit Profile");
                         break;
 
                     case R.id.nav_post_show:
@@ -116,15 +115,16 @@ public class Seeker_Menu extends AppCompatActivity {
                         transaction3.replace(R.id.nav_fragment, newFragment3);
                         transaction3.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Jobs");
+                        //Topname.setText("Jobs");
                         break;
                     case R.id.nav_cv_show:
-                        Fragment newFragment4 = new SeekerCVFragment();
-                        FragmentTransaction transaction4 = getSupportFragmentManager().beginTransaction();
-                        transaction4.replace(R.id.nav_fragment, newFragment4);
-                        transaction4.commit();
-                        drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Your CV");
+//                        Fragment newFragment4 = new SeekerCVFragment();
+//                        FragmentTransaction transaction4 = getSupportFragmentManager().beginTransaction();
+//                        transaction4.replace(R.id.nav_fragment, newFragment4);
+//                        transaction4.commit();
+//                        drawer.closeDrawer(GravityCompat.START);
+//                        Topname.setText("Your CV");
+                        startActivity(new Intent(Seeker_Menu.this,SeekerCVMakingActivity.class));
                         break;
 
                     case R.id.nav_logout_show:
@@ -166,12 +166,13 @@ public class Seeker_Menu extends AppCompatActivity {
     @Override
     public void onBackPressed(){
 
-        String jaffery = Topname.getText().toString();
+        //String jaffery = Topname.getText().toString();
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else if(jaffery.equals("Home")){
+        else {
+        //else if(jaffery.equals("Home")){
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_baseline_error_24)
                     .setTitle("Exit")
@@ -187,13 +188,14 @@ public class Seeker_Menu extends AppCompatActivity {
                     .setNegativeButton("No", null)
                     .show();
         }
-        else {
-            Fragment newFragment = new SeekerHomeFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_fragment, newFragment);
-            transaction.commit();
-            drawer.closeDrawer(GravityCompat.START);
-            Topname.setText("Home");
-        }
+//        else {
+//            Fragment newFragment = new SeekerHomeFragment();
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.nav_fragment, newFragment);
+//            transaction.commit();
+//            drawer.closeDrawer(GravityCompat.START);
+//            Topname.setText("Home");
+//        }
+
     }
 }

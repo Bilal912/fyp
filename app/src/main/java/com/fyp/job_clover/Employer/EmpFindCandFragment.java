@@ -43,7 +43,6 @@ public class EmpFindCandFragment extends Fragment implements Emp_Interface  {
     private RecyclerView recyclerView;
     private EditText search_cv;
     private FavCandidate candidateAdapter;
-    private Emp_Interface empInterface;
     ShimmerFrameLayout frameLayout;
 
     @Override

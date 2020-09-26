@@ -43,8 +43,6 @@ public class ViewCVActivity extends AppCompatActivity implements Emp_Interface {
     private FragmentTransaction transaction;
     DatabaseReference databaseReference;
 
-
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

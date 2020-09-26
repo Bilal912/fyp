@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -18,13 +19,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.skydoves.elasticviews.ElasticButton;
 
+import static com.fyp.job_clover.Seeker.seeker_login.MY_PREFS_NAME;
+
 public class DetailJobViewActivity extends AppCompatActivity {
     private TextView job_title,company_name_city,salary,job_type,description,job_position;
     private ElasticButton gomake_cv;
     private  String key,emp_id;
     private DatabaseReference reference,databaseReference;
     private FirebaseAuth auth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,15 +86,34 @@ public class DetailJobViewActivity extends AppCompatActivity {
 
     public void goMakeCV() {
         Bundle extras = getIntent().getExtras();
-        Intent intent = new Intent(getApplicationContext(),CV_Upload_Activity.class);
-        intent.putExtra("title",extras.getString("title"));
-        intent.putExtra("jobtype",extras.getString("jobtype"));
-        intent.putExtra("name-city",extras.getString("name-city"));
-        intent.putExtra("salary",extras.getString("salary"));
-        intent.putExtra("description",extras.getString("description"));
-        intent.putExtra("position",extras.getString("position"));
-        intent.putExtra("emp_id",emp_id);
-        intent.putExtra("s_key",key);
-        startActivity(intent);
+        SharedPreferences editors = getSharedPreferences(seeker_login.MY_PREFS_NAME, MODE_PRIVATE);
+        String url = editors.getString("cv_path",null);
+
+        if (url == null){
+            Intent intent = new Intent(getApplicationContext(),CV_Upload_Activity.class);
+            intent.putExtra("title",extras.getString("title"));
+            intent.putExtra("jobtype",extras.getString("jobtype"));
+            intent.putExtra("name-city",extras.getString("name-city"));
+            intent.putExtra("salary",extras.getString("salary"));
+            intent.putExtra("description",extras.getString("description"));
+            intent.putExtra("position",extras.getString("position"));
+            intent.putExtra("emp_id",emp_id);
+            intent.putExtra("s_key",key);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(),Previuos_cv.class);
+            intent.putExtra("title",extras.getString("title"));
+            intent.putExtra("jobtype",extras.getString("jobtype"));
+            intent.putExtra("name-city",extras.getString("name-city"));
+            intent.putExtra("salary",extras.getString("salary"));
+            intent.putExtra("description",extras.getString("description"));
+            intent.putExtra("position",extras.getString("position"));
+            intent.putExtra("emp_id",emp_id);
+            intent.putExtra("s_key",key);
+            startActivity(intent);
+        }
+
+
     }
 }

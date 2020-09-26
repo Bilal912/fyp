@@ -20,14 +20,12 @@
             android:title="Edit Profile" />
 
         <item android:id="@+id/nav_candidate"
-            android:icon="@drawable/ic_candidate_search"
-            android:title="Find Candidate" />
+            android:icon="@drawable/favy"
+            android:title="Favourite Candidate" />
 
         <item android:id="@+id/nav_my_post"
             android:icon="@drawable/ic_my_posts"
             android:title="My Posts" />
-
-
 
 
     </group>

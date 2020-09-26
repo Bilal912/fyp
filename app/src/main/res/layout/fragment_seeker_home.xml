@@ -7,10 +7,16 @@
     android:background="#F5FFFA"
     tools:context=".Seeker.SeekerHomeFragment">
 
-    <RelativeLayout
-        android:background="#F5FFFA"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#F5FFFA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         >
       <com.daimajia.slider.library.SliderLayout
           android:id="@+id/slider"
@@ -22,7 +28,6 @@
         <LinearLayout
             android:layout_marginTop="20dp"
             android:id="@+id/linear"
-            android:layout_below="@id/slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -116,7 +121,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Your CV"
+                    android:text="Create CV"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -125,6 +130,7 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

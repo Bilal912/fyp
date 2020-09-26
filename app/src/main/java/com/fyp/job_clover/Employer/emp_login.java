@@ -192,17 +192,18 @@ private String emName,emEmail,emCity,emAddress,emp_id;
         startActivity(new Intent(emp_login.this,emp_forget.class));
     }
 
-    protected void onStart() {
-        super.onStart();
-
-        if (firebaseUser != null){
-            sendUserToMainActivity();
-            finish();
-        }
-    }
+//    protected void onStart() {
+//        super.onStart();
+//
+//        if (firebaseUser != null){
+//            sendUserToMainActivity();
+//            finish();
+//        }
+//    }
 
     private void sendUserToMainActivity() {
         startActivity(new Intent(getApplicationContext(), emp_menu.class));
         finish();
     }
+
 }

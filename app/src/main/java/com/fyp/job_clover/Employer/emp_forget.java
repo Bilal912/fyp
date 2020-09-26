@@ -3,6 +3,7 @@ package com.fyp.job_clover.Employer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -38,18 +39,25 @@ public class emp_forget extends AppCompatActivity {
                     Toast.makeText(emp_forget.this, "Email is required", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    final android.app.AlertDialog loading = new ProgressDialog(emp_forget.this);
+                    loading.setMessage("Reset...");
+                    loading.show();
+
 
                     String Email = editText.getText().toString();
                     auth.sendPasswordResetEmail(Email).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(emp_forget.this, "Email Sent", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(emp_forget.this, "Your request Sent , please wait for email", Toast.LENGTH_SHORT).show();
+                            loading.dismiss();
+                            finish();
 
                         }
                     })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+                                    loading.dismiss();
                                     Toast.makeText(emp_forget.this,  e.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             });

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Seeker.Previuos_cv">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_margin="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:background="@drawable/cv"
+        />
+
+    <com.skydoves.elasticviews.ElasticButton
+        app:button_duration="250"
+        app:button_scale="0.87"
+        android:id="@+id/continu"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Continue with previous Upload CV"
+        android:textColor="#ffffff"
+        android:layout_below="@id/image"
+        android:fontFamily="@font/gotham"
+        android:textSize="14sp"
+        app:button_cornerRadius="20dp"
+        />
+
+    <TextView
+        android:textAlignment="center"
+        android:text="-OR-"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview"
+        android:layout_below="@id/continu"
+        android:gravity="center_horizontal" />
+
+    <com.skydoves.elasticviews.ElasticButton
+        app:button_duration="250"
+        app:button_scale="0.87"
+        android:id="@+id/upload"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Upload New CV"
+        android:layout_below="@id/textview"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/gotham"
+        android:textSize="14sp"
+        app:button_cornerRadius="20dp"
+        />
+
+</RelativeLayout>

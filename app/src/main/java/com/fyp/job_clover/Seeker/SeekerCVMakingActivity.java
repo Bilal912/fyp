@@ -443,7 +443,6 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
 
     public void createandDisplayPdf() {
 
-
         try {
             File storageDir = null;
 
@@ -574,10 +573,10 @@ public class SeekerCVMakingActivity extends AppCompatActivity {
 
                 Toast.makeText(SeekerCVMakingActivity.this,"Create Successfully",Toast.LENGTH_LONG).show();
 
-                SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editors.putString("cv_path",savedPath);
-                editors.apply();
 
+//                SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+//                editors.putString("cv_path",savedPath);
+//                editors.apply();
 
 
             }

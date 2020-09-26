@@ -3,6 +3,7 @@ package com.fyp.job_clover.Seeker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -64,7 +65,7 @@ public class seeker_register extends AppCompatActivity {
         Name = findViewById(R.id.name);
         Email = findViewById(R.id.email);
         Password = findViewById(R.id.password);
-        Address = findViewById(R.id.password);
+        Address = findViewById(R.id.address);
 
         qualification = new ArrayList<String>();
         spinner = findViewById(R.id.spinner_id);
@@ -121,22 +122,22 @@ public class seeker_register extends AppCompatActivity {
             public void onClick(View view) {
 
              if (TextUtils.isEmpty(Name.getText().toString())){
-                    makeText(seeker_register.this, "Name is required", LENGTH_SHORT).show();
+                    Toast.makeText(seeker_register.this, "Name is required", Toast.LENGTH_SHORT).show();
              }
              else if (TextUtils.isEmpty(Email.getText().toString())){
-                 makeText(seeker_register.this, "Email is required", LENGTH_SHORT).show();
+                 Toast.makeText(seeker_register.this, "Email is required", Toast.LENGTH_SHORT).show();
              }
              else if (TextUtils.isEmpty(Address.getText().toString())){
-                 makeText(seeker_register.this, "Address is required", LENGTH_SHORT).show();
+                 Toast.makeText(seeker_register.this, "Address is required", Toast.LENGTH_SHORT).show();
              }
              else if (TextUtils.isEmpty(phone.getText().toString())){
-                 makeText(seeker_register.this, "Phone Number is required", LENGTH_SHORT).show();
+                 Toast.makeText(seeker_register.this, "Phone Number is required", Toast.LENGTH_SHORT).show();
              }
              else if (TextUtils.isEmpty(Password.getText().toString())){
-                 makeText(seeker_register.this, "Password is required", LENGTH_SHORT).show();
+                 Toast.makeText(seeker_register.this, "Password is required", Toast.LENGTH_SHORT).show();
              }
              else if (radioGroup.getCheckedRadioButtonId() == -1){
-                 Toast.makeText(seeker_register.this,"Select Gender", LENGTH_SHORT).show();
+                 Toast.makeText(seeker_register.this,"Select Gender", Toast.LENGTH_SHORT).show();
              }
              else if (!Patterns.EMAIL_ADDRESS.matcher(Email.getText().toString()).matches()){
                  Email.setError("Email is not Valid");
@@ -145,36 +146,39 @@ public class seeker_register extends AppCompatActivity {
 
              else {
 
-                 //ye sari values ha hafiz okaa
-                 //Good Luck
+                 final android.app.AlertDialog loading = new ProgressDialog(seeker_register.this);
+                 loading.setMessage("Registering...");
+                 loading.show();
 
-
-                 final String Phone = phoneCode.getText().toString().concat(phone.getText().toString());
-                 final String Gender = gender;
-                 final String name = Name.getText().toString();
                  final String email = Email.getText().toString();
-                 final String address = Address.getText().toString();
                  final String password = Password.getText().toString();
-                 final String study = spinner.getSelectedItem().toString();
-
 
                  auth.createUserWithEmailAndPassword(email,password)
                          .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                              @Override
                              public void onSuccess(AuthResult authResult) {
 
-                                 Seeker_Reg_Data srd = new Seeker_Reg_Data(name,email,study,address,Phone,password,Gender);
+                                 Seeker_Reg_Data srd = new Seeker_Reg_Data(Name.getText().toString()
+                                         ,Email.getText().toString()
+                                         ,spinner.getSelectedItem().toString()
+                                         ,Address.getText().toString()
+                                         ,phoneCode.getText().toString().concat(phone.getText().toString())
+                                         ,Password.getText().toString()
+                                         ,gender);
 
                                  reference.child(auth.getCurrentUser().getUid())
                                          .setValue(srd).addOnSuccessListener(new OnSuccessListener<Void>() {
                                      @Override
                                      public void onSuccess(Void aVoid) {
-                                         Toast.makeText(seeker_register.this, "Data Insert Successfully.", LENGTH_SHORT).show();
+                                         Toast.makeText(seeker_register.this, "Register Successfully.", LENGTH_SHORT).show();
+                                         loading.dismiss();
+                                         finish();
                                      }
                                  })
                                          .addOnFailureListener(new OnFailureListener() {
                                              @Override
                                              public void onFailure(@NonNull Exception e) {
+                                                 loading.dismiss();
                                                  Toast.makeText(seeker_register.this, e.toString(), LENGTH_SHORT).show();
                                              }
                                          });
@@ -183,7 +187,7 @@ public class seeker_register extends AppCompatActivity {
                          .addOnFailureListener(new OnFailureListener() {
                              @Override
                              public void onFailure(@NonNull Exception e) {
-
+                                 loading.dismiss();
                                  Toast.makeText(seeker_register.this, e.toString(), LENGTH_SHORT).show();
                              }
                          });

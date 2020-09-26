@@ -164,16 +164,15 @@ public class seeker_login extends AppCompatActivity {
     }
 
     public void forget(View view) {
-        startActivity(new Intent(seeker_login.this,SeekerCVMakingActivity.class));
+        startActivity(new Intent(seeker_login.this,seeker_forget.class));
     }
 
-    protected void onStart() {
-        super.onStart();
-
-        if (firebaseUser != null){
-            startActivity(new Intent(seeker_login.this,Seeker_Menu.class));
-             finish();
-        }
-    }
+//    protected void onStart() {
+//        super.onStart();
+//        if (firebaseUser != null){
+//            startActivity(new Intent(seeker_login.this,Seeker_Menu.class));
+//             finish();
+//        }
+//    }
 
 }

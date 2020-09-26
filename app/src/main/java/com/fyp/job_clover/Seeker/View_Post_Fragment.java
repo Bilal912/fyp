@@ -108,7 +108,11 @@ public class View_Post_Fragment extends Fragment implements Emp_Interface {
         post_list = new ArrayList<>();
         pstlist = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager lm = new LinearLayoutManager(getContext());
+        lm.setReverseLayout(true);
+        lm.setStackFromEnd(true);
+
+        recyclerView.setLayoutManager(lm);
 //        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
 //                ,DividerItemDecoration.VERTICAL));
         postAdapter = new SeekkerViewPostAdapter(getContext(),post_list, View_Post_Fragment.this);

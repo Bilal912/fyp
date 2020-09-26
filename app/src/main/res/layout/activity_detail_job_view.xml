@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Job title"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 android:textColor="#000"
                 android:layout_marginTop="10dp"
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Job details"
-                android:textSize="25sp"
+                android:textSize="22sp"
                 android:textColor="#000"
                 android:textStyle="bold"
                 android:layout_marginVertical="5dp"
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Salary"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:paddingVertical="3dp"
                 android:layout_marginTop="20dp"
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Rs 20000 - Rs 400000"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_marginBottom="10dp"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="3dp"/>
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Full time"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_marginBottom="10dp"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="3dp"/>
@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1 - 3"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_marginBottom="10dp"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="3dp"/>
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Full time"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_marginBottom="30dp"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="3dp"/>
@@ -143,14 +143,9 @@
                 android:text="Apply for Job"
                 android:textColor="#ffffff"
                 android:fontFamily="@font/gotham"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:button_cornerRadius="20dp"
                  />
-
-
-
-
-
 
         </LinearLayout>
 

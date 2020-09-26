@@ -7,12 +7,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -32,7 +35,6 @@ import static com.fyp.job_clover.Seeker.seeker_login.MY_PREFS_NAME;
 public class SeekerHomeFragment extends Fragment {
 private SliderLayout mDemoSlider;
 ElasticCardView View,Apply,CV;
-String cv_path;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,10 +44,6 @@ String cv_path;
         mDemoSlider = view.findViewById(R.id.slider);
         Slider_view();
 
-        SharedPreferences editors = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        cv_path = editors.getString("cv_path",null);
-//        Toast.makeText(getActivity(), cv_path, Toast.LENGTH_SHORT).show();
-
         View = view.findViewById(R.id.view_job);
         Apply = view.findViewById(R.id.apply_job);
         CV = view.findViewById(R.id.cv);
@@ -53,6 +51,10 @@ String cv_path;
         View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
+                Fragment newFragment5 = new View_Post_Fragment();
+                FragmentTransaction transaction5 = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction5.replace(R.id.nav_fragment, newFragment5);
+                transaction5.commit();
 
             }
         });
@@ -60,13 +62,17 @@ String cv_path;
             @Override
             public void onClick(android.view.View v) {
 
-
-            }
+                Fragment newFragment5 = new AppliedJobsFragment();
+                FragmentTransaction transaction5 = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction5.replace(R.id.nav_fragment, newFragment5);
+                transaction5.commit();
+                }
         });
         CV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
 
+                startActivity(new Intent(getActivity(),SeekerCVMakingActivity.class));
 
             }
         });
