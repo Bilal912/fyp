@@ -112,7 +112,6 @@ private String emName,emEmail,emCity,emAddress,emp_id;
 
                                    emp_id = auth.getCurrentUser().getUid();
 
-
                                    reference.child(emp_id).addValueEventListener(new ValueEventListener() {
                                        @Override
                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -123,7 +122,7 @@ private String emName,emEmail,emCity,emAddress,emp_id;
 
                                        @Override
                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                           dialog.dismiss();
                                        }
                                    });
 
