@@ -66,6 +66,7 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
 
      }
 
+
     @Override
     public void onBindViewHolder(@NonNull final EmpAllPostAdapter.MyHolder holder, int position) {
 
