@@ -23,6 +23,7 @@ import com.fyp.job_clover.Data_Classes.Seeker_Reg_Data;
 import com.fyp.job_clover.Login;
 import com.fyp.job_clover.R;
 import com.fyp.job_clover.Seeker.SeekerHomeFragment;
+import com.fyp.job_clover.Seeker.Seeker_Menu;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.fyp.job_clover.Seeker.seeker_login.MY_PREFS_NAME;
 
@@ -127,11 +130,31 @@ public class emp_menu extends AppCompatActivity {
 
                     case R.id.nav_logout:
 
-                        auth.signOut();
-                        SharedPreferences preferences = getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);
-                        preferences.edit().clear().commit();
-                        startActivity(new Intent(emp_menu.this, Login.class));
-                        finish();
+                        drawer.closeDrawer(GravityCompat.START);
+                        final SweetAlertDialog dialog = new SweetAlertDialog(emp_menu.this,SweetAlertDialog.WARNING_TYPE);
+                        dialog.setTitleText("Are you sure?");
+                        dialog.setContentText("you want to logout");
+                        dialog.setConfirmText("Yes");
+                        dialog.setCancelText("No");
+                        dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                dialog.dismiss();
+                            }
+                        });
+                        dialog.show();
+                        dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                auth.signOut();
+                                SharedPreferences preferences = getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);
+                                preferences.edit().clear().commit();
+                                startActivity(new Intent(emp_menu.this, Login.class));
+                                finish();
+                            }
+                        });
+
 
                     default:
                         return true;

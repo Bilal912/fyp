@@ -54,6 +54,7 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
         final FileUpload fg = list.get(position);
         holder.cvname.setText(fg.name);
 
+        holder.favcv.setVisibility(View.VISIBLE);
         File storageDir = null;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
@@ -77,7 +78,7 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
             public void onClick(View v) {
 
                 holder.favcv.setColorFilter(Color.RED);
-                 Bundle bundle = new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putString("fkey",list.get(holder.getAdapterPosition()).getKey());
                 bundle.putString("name",list.get(holder.getAdapterPosition()).getName());
                 bundle.putString("url",list.get(holder.getAdapterPosition()).getUrl());
@@ -114,8 +115,6 @@ public class AllCandidateAdapter extends RecyclerView.Adapter<AllCandidateAdapte
             videoimage = itemView.findViewById(R.id.videoimageview);
             favcv = itemView.findViewById(R.id.favourcvimageview);
             cvopen = itemView.findViewById(R.id.candidateViewTemplate);
-
-            favcv.setVisibility(itemView.getVisibility());
 
         }
     }

@@ -67,24 +67,7 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
             @Override
             public void onClick(View v) {
 
-//                FileUpload fg = list.get(position);
-//
-//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-//                intent.setDataAndType(Uri.parse(fg.url), "application/*");
-//                context.startActivity(Intent.createChooser(intent, "Choose an Application:"));
-
                 downloadFile(context,new Date()+fg.name+" CV",".pdf", finalStorageDir.getAbsolutePath(),fg.url);
-
-//                DownloadManager downloadmanager = (DownloadManager) context.
-//                        getSystemService(Context.DOWNLOAD_SERVICE);
-//                Uri uri = Uri.parse(list.get(position).url);
-//                DownloadManager.Request request = new DownloadManager.Request(uri);
-//
-//                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-//                request.setDestinationInExternalFilesDir(context, destinationDirectory, new Date()+fg.name+" CV"+ ".pdf");
-//
-//                return downloadmanager.enqueue(request);
-//
 
             }
         });
@@ -92,10 +75,9 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
             @Override
             public void onClick(View v) {
 
-
                Intent intent = new Intent(context, EmpChatActivity.class);
-                 intent.putExtra("sek_id",sek_id);
-                intent.putExtra("sek_name",sek_name);
+               intent.putExtra("sek_id",sek_id);
+               intent.putExtra("sek_name",sek_name);
 
 //               intent.putExtra("recKey",list.get(holder.getAdapterPosition()).getKey());
                context.startActivity(intent);
@@ -134,15 +116,13 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
             chatimage.setVisibility(itemView.getVisibility());
             videoimage.setVisibility(itemView.getVisibility());
 
-
         }
     }
 
     public long downloadFile(Context context, String fileName, String fileExtension, String destinationDirectory, String url) {
 
 
-        DownloadManager downloadmanager = (DownloadManager) context.
-                getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager downloadmanager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(url);
         DownloadManager.Request request = new DownloadManager.Request(uri);
 
