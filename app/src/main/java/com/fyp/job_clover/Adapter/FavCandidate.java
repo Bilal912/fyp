@@ -17,6 +17,8 @@ import com.fyp.job_clover.Emp_Interface;
 import com.fyp.job_clover.Employer.EmpChatActivity;
 import com.fyp.job_clover.Employer.EmpFindCandFragment;
 import com.fyp.job_clover.R;
+import com.fyp.job_clover.VideoActivity;
+import com.fyp.job_clover.VideoChatViewActivity;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.skydoves.elasticviews.ElasticImageView;
@@ -78,9 +80,19 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
                Intent intent = new Intent(context, EmpChatActivity.class);
                intent.putExtra("sek_id",sek_id);
                intent.putExtra("sek_name",sek_name);
-
 //               intent.putExtra("recKey",list.get(holder.getAdapterPosition()).getKey());
                context.startActivity(intent);
+
+            }
+        });
+
+        holder.videoimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VideoChatViewActivity.class);
+//                intent.putExtra("sek_id",sek_id);
+//                intent.putExtra("sek_name",sek_name);
+                context.startActivity(intent);
 
             }
         });
