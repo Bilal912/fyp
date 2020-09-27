@@ -117,7 +117,6 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                                        @Override
                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                            Employer_Reg_Data srd = dataSnapshot.getValue(Employer_Reg_Data.class);
-
                                                    emName = srd.employer_name;
                                                    emEmail = srd.employer_email;
                                        }
@@ -149,7 +148,6 @@ private String emName,emEmail,emCity,emAddress,emp_id;
                                         @Override
                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                                             dialog.dismiss();
-
                                             SharedPreferences.Editor editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                                             editors.putString("Type", "Employer");
                                             editors.putString("emp_name",emName);

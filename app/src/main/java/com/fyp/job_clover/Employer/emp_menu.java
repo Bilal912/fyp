@@ -47,14 +47,10 @@ public class emp_menu extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        Topname=findViewById(R.id.top_name);
+        //Topname=findViewById(R.id.top_name);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         textView=findViewById(R.id.menu_btn);
         drawer = findViewById(R.id.drawer_layout);
-
-        //        SharedPreferences editors = getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);
-//        String Email = editors.getString("email","Null");
-//        String First = editors.getString("firstname","Null");
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +64,7 @@ public class emp_menu extends AppCompatActivity {
 
         final TextView Name=view.findViewById(R.id.nav_name);
         final TextView Nav_email=view.findViewById(R.id.nav_email);
-        SharedPreferences editors = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences editors = getSharedPreferences(emp_login.MY_PREFS_NAME, MODE_PRIVATE);
         String emName = editors.getString("emp_name",null);
         String emEmail = editors.getString("emp_email",null);
 
@@ -90,7 +86,7 @@ public class emp_menu extends AppCompatActivity {
                         transaction.replace(R.id.nav_fragment, newFragment);
                         transaction.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Home");
+                        //Topname.setText("Home");
                         break;
 
                     case R.id.nav_profile:
@@ -99,7 +95,7 @@ public class emp_menu extends AppCompatActivity {
                         transaction2.replace(R.id.nav_fragment, newFragment2);
                         transaction2.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Edit Profile");
+                        //Topname.setText("Edit Profile");
                         break;
 
                     case R.id.nav_post:
@@ -108,7 +104,7 @@ public class emp_menu extends AppCompatActivity {
                         transaction3.replace(R.id.nav_fragment, newFragment3);
                         transaction3.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Post A Job");
+                        //Topname.setText("Post A Job");
                         break;
 
                     case R.id.nav_candidate:
@@ -117,7 +113,7 @@ public class emp_menu extends AppCompatActivity {
                         transaction4.replace(R.id.nav_fragment, newFragment4);
                         transaction4.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("Candidates Resume");
+                        //Topname.setText("Candidates Resume");
                         break;
 
                     case R.id.nav_my_post:
@@ -126,7 +122,7 @@ public class emp_menu extends AppCompatActivity {
                         transaction5.replace(R.id.nav_fragment, newFragment5);
                         transaction5.commit();
                         drawer.closeDrawer(GravityCompat.START);
-                        Topname.setText("My Posts");
+                        //Topname.setText("My Posts");
                         break;
 
                     case R.id.nav_logout:
@@ -147,12 +143,13 @@ public class emp_menu extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){
-        String jaffery = Topname.getText().toString();
+//        String jaffery = Topname.getText().toString();
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else if(jaffery.equals("Home")){
+        else {
+        //else if(jaffery.equals("Home")){
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_baseline_error_24)
                     .setTitle("Exit")
@@ -168,13 +165,13 @@ public class emp_menu extends AppCompatActivity {
                     .setNegativeButton("No", null)
                     .show();
         }
-        else {
-            Fragment newFragment = new SeekerHomeFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_fragment, newFragment);
-            transaction.commit();
-            drawer.closeDrawer(GravityCompat.START);
-            Topname.setText("Home");
-        }
+//        else {
+//            Fragment newFragment = new SeekerHomeFragment();
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.nav_fragment, newFragment);
+//            transaction.commit();
+//            drawer.closeDrawer(GravityCompat.START);
+//            Topname.setText("Home");
+//        }
     }
 }

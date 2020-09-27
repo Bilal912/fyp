@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.view.LayoutInflater;
@@ -50,12 +53,20 @@ public class emp_home extends Fragment {
         View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
+                Fragment newFragment3 = new Emp_post_job();
+                FragmentTransaction transaction3 = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction3.replace(R.id.nav_fragment, newFragment3);
+                transaction3.commit();
 
             }
         });
         Apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
+                Fragment newFragment3 = new EmpAllPostFragment();
+                FragmentTransaction transaction3 = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction3.replace(R.id.nav_fragment, newFragment3);
+                transaction3.commit();
 
 
             }
@@ -64,6 +75,10 @@ public class emp_home extends Fragment {
             @Override
             public void onClick(android.view.View v) {
 
+                Fragment newFragment3 = new EmpFindCandFragment();
+                FragmentTransaction transaction3 = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction3.replace(R.id.nav_fragment, newFragment3);
+                transaction3.commit();
 
             }
         });
@@ -82,10 +97,10 @@ public class emp_home extends Fragment {
 
 //        from drawable
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Job Clover",R.drawable.frg1);
-        file_maps.put("Apply Job",R.drawable.frg2);
-        file_maps.put("Create CV",R.drawable.frg3);
-        file_maps.put("View Jobs",R.drawable.frg2);
+        file_maps.put("Job Clover",R.drawable.emp_banner1);
+        file_maps.put("Post Job",R.drawable.emp_banner2);
+        file_maps.put("Check CV",R.drawable.emp_banner3);
+        file_maps.put("View Cadidates",R.drawable.emp_banner2);
 
         for(String name : file_maps.keySet()){
             TextSliderView textSliderView = new TextSliderView(getContext());
