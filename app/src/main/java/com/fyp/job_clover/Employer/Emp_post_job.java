@@ -33,15 +33,14 @@ public class Emp_post_job extends Fragment {
     private LinearLayout countrypicker,country_name_picker;
     private TextView phoneCode,country;
     private ImageView flg;
-    private Spinner educat,no_of_positions,salary_wise;
+    private Spinner educat,no_of_positions;
     private TextInputLayout title_lay,name_lay,vity_lay,address_lay,salaryFrom_lay,salaryTo_lay,email_lay;
     private TextInputEditText job_title,company_name,address,salary_from,salary_to,email,com_city;
     private String title,name,city,c_address,salaryFrom,salaryTo,c_email,phone,p_code,description,edu,no_position;
     private ElasticButton post_continue_btn;
     private ArrayList<String> education;
     private ArrayList<String> noofpostion;
-    private ArrayList<String> salarylist;
-    private ArrayList<String> countrylist;
+     private ArrayList<String> countrylist;
     private EditText company_phone,job_description;
     private RadioGroup radioGroup;
     private String  jobtype = null;
@@ -232,14 +231,9 @@ public class Emp_post_job extends Fragment {
         noofpostion.add("5-10 hires");
         noofpostion.add("10+ hires");
 
-        salarylist.add("per hour");
-        salarylist.add("per day");
-        salarylist.add("per month");
-        salarylist.add("per year");
 
         educat.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, education));
         no_of_positions.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line,  noofpostion));
-        salary_wise.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line,  salarylist));
 
         educat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -315,11 +309,9 @@ public class Emp_post_job extends Fragment {
 
         education = new ArrayList<String>();
         noofpostion = new ArrayList<>();
-        salarylist = new ArrayList<>();
-        countrylist = new ArrayList<>();
+         countrylist = new ArrayList<>();
         educat = view.findViewById(R.id.spinner_career_id);
-        salary_wise = view.findViewById(R.id.spinner_salary_id);
-        no_of_positions = view.findViewById(R.id.spinner_position_id);
+         no_of_positions = view.findViewById(R.id.spinner_position_id);
         countrypicker=view.findViewById(R.id.post_countrypicker);
         phoneCode=view.findViewById(R.id.emp_post_phone_code);
         flg=view.findViewById(R.id.emp_post_flag);
