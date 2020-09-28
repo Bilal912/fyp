@@ -109,6 +109,17 @@ public class Seeker_Menu extends AppCompatActivity {
                         //Topname.setText("Edit Profile");
                         break;
 
+                    case R.id.nav_share_show:
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                                "Hey check out this app at: https://play.google.com/store/apps/details?id="
+                                        +getApplicationContext().getPackageName());
+                        sendIntent.setType("text/plain");
+                        startActivity(sendIntent);
+                        drawer.closeDrawers();
+                        break;
+
                     case R.id.nav_post_show:
                         Fragment newFragment3 = new View_Post_Fragment();
                         FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();

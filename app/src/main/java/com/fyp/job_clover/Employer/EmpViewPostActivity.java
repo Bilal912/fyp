@@ -38,7 +38,6 @@ public class EmpViewPostActivity extends AppCompatActivity implements FirebaseNo
     private DatabaseReference reference,reference2;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

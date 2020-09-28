@@ -128,6 +128,17 @@ public class emp_menu extends AppCompatActivity {
                         //Topname.setText("My Posts");
                         break;
 
+                    case R.id.nav_share:
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                                "Hey check out this app at: https://play.google.com/store/apps/details?id="
+                                        +getApplicationContext().getPackageName());
+                        sendIntent.setType("text/plain");
+                        startActivity(sendIntent);
+                        drawer.closeDrawers();
+                        break;
+
                     case R.id.nav_logout:
 
                         drawer.closeDrawer(GravityCompat.START);

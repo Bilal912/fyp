@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Seeker.seeker_login">
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
     <View
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -45,13 +55,9 @@
             />
     </androidx.cardview.widget.CardView>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tempy"
-        >
-
     <RelativeLayout
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/tempy"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -160,5 +166,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     </RelativeLayout>
+        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

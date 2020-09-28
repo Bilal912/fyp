@@ -249,6 +249,7 @@
 
             <com.skydoves.elasticviews.ElasticButton
                 app:button_duration="250"
+                android:visibility="gone"
                 app:button_scale="0.87"
                 android:id="@+id/post_go_update_btn"
                 android:layout_width="match_parent"
@@ -262,9 +263,6 @@
                 android:textSize="16sp"
                 android:onClick="goUpdatebtn"
                 />
-
-
-
 
 
         </LinearLayout>
