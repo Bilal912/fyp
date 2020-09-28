@@ -91,7 +91,6 @@ public class seeker_login extends AppCompatActivity {
 
                     final SweetAlertDialog dialog = new SweetAlertDialog(seeker_login.this,SweetAlertDialog.PROGRESS_TYPE);
                     dialog.setTitleText("Loading...");
-                    dialog.setCancelable(false);
                     dialog.show();
 
                     auth.signInWithEmailAndPassword(email,password)
@@ -112,6 +111,7 @@ public class seeker_login extends AppCompatActivity {
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            dialog.dismiss();
                                         }
                                     });
 
@@ -151,6 +151,7 @@ public class seeker_login extends AppCompatActivity {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(seeker_login.this, e.toString(),Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
                                 }
                             });
                 }

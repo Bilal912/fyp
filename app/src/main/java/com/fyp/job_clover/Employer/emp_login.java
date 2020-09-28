@@ -100,7 +100,6 @@ private String emName,emEmail,emCity,emAddress,emp_id;
 
                     final SweetAlertDialog dialog = new SweetAlertDialog(emp_login.this,SweetAlertDialog.PROGRESS_TYPE);
                     dialog.setTitleText("Loading...");
-                    dialog.setCancelable(false);
                     dialog.show();
 
                     auth.signInWithEmailAndPassword(email,password)

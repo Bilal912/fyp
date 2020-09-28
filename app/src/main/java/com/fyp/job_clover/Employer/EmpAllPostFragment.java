@@ -112,7 +112,6 @@ public class EmpAllPostFragment extends Fragment implements Emp_Interface {
         auth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Post_Data").child( auth.getCurrentUser().getUid());
 
-
         reference.addListenerForSingleValueEvent(listener);
 
     }

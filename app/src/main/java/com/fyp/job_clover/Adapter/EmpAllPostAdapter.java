@@ -148,6 +148,7 @@ public class EmpAllPostAdapter extends RecyclerView.Adapter<EmpAllPostAdapter.My
                         Toast.makeText(context, "Post Delete Successfully" + deleteKey, Toast.LENGTH_SHORT).show();
                     }
                 });
+
             }
         });
 
