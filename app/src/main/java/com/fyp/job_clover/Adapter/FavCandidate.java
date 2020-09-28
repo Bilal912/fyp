@@ -89,10 +89,10 @@ public class FavCandidate extends RecyclerView.Adapter<FavCandidate.MyHolder> {
         holder.videoimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, VideoChatViewActivity.class);
-//                intent.putExtra("sek_id",sek_id);
-//                intent.putExtra("sek_name",sek_name);
-                context.startActivity(intent);
+//                Intent intent = new Intent(context, VideoChatViewActivity.class);
+////                intent.putExtra("sek_id",sek_id);
+////                intent.putExtra("sek_name",sek_name);
+//                context.startActivity(intent);
 
             }
         });
